@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets";
+import back from '@assets/icons/material/back.png';
+import backNeon from '@assets/icons/material/back_neon.png';
+
+---
+
+<div id="go-back" class="fixed top-6 left-6 z-1000 sm:w-20 sm:h-20 w-10 h-10 z-50">
+  <a href="/main" >
+    <Image src={back} alt="back to homepage" class="inline pointer-events-none" width={170}/><span class="inline"></span>
+    <Image src={backNeon} alt="back to homepage" class="absolute top-0 neon-glow" width={170}/><span class="inline"></span>
+  </a>
+</div>

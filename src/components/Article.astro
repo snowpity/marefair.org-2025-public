@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import type { NewsArticle } from '@data/NewsArticle';
+
+// Import article images
+import article1 from "@assets/pages/news/article1.png";
+import article2 from "@assets/pages/news/article2.png";
+import article3 from "@assets/pages/news/article3.png";
+import article4 from "@assets/pages/news/article4.png";
+import article5 from "@assets/pages/news/article5.png";
+import article6 from "@assets/pages/news/article6.png";
+
+// Define two groups of images for conditional randomization
+const articleImagesWithHero = [
+  article3,
+  article4,
+  article5,
+  article6
+];
+
+const articleImagesWithoutHero = [
+  article1,
+  article2
+];
+
+interface Props {
+  article: NewsArticle;
+  index: number;
+}
+
+const { article } = Astro.props;
+
+// Function to generate a random article image based on the presence of a hero image
+function getRandomArticle(): ImageMetadata {
+  const images = article.heroImage ? articleImagesWithHero : articleImagesWithoutHero;
+  const randomIndex = Math.floor(Math.random() * images.length);
+  return images[randomIndex];
+}
+---
+
+<div class="relative group h-auto left-1/2 -translate-x-1/2" style=`width:${article3.width}px; height:${article3.height}px`>
+    <!-- Background Asset -->
+    <Image src={getRandomArticle()} format="avif" alt="" width={article3.width} height={article3.height} class="absolute inset-0 w-full h-full object-contain z-0"/>
+
+
+    <!-- Content Layer -->
+    <div class="relative flex flex-col h-full px-10 py-10">
+        <!-- Title -->
+        <h2 class="text-lg font-bold leading-tight mb-1 mt-6 announcement-padding">{article.title}</h2>
+
+        <!-- Date -->
+        <p class="text-sm text-gray-600 mb-4 announcement-padding">{new Date(article.createdAt).toLocaleDateString()}</p>
+
+        <!-- Preview Text -->
+        <p class="text-sm text-gray-800 mt-0 line-clamp-3 announcement-padding pb-6">
+            {article.previewText || 'No description available.'}
+        </p>
+
+        {article.heroImage && (
+            <!-- Hero Image -->
+            <img src={article.heroImage}
+          alt={article.title}
+          class="w-full aspect-[3/2] object-cover mx-auto rounded-lg"/>
+        )}
+    </div>
+</div>

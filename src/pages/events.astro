@@ -1,0 +1,755 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+import Banner from "@components/Banner.astro";
+import {AUCTRIA_SITE} from "@components/Banner.astro";
+
+import tendiesRAW from "@assets/events/new/tendies.png";
+const tendies = await getImage({ src: tendiesRAW, format:"avif", width: 1800, height: 1200});
+
+import galleryRAW from "@assets/events/new/gallery.png";
+const gallery = await getImage({ src: galleryRAW, format:"avif", width: 1800, height: 1200});
+
+import auctionRAW from "@assets/events/new/auction.png";
+const auction = await getImage({ src: auctionRAW, format:"avif", width: 1800, height: 1200});
+
+import cruiseRAW from "@assets/events/new/cruise.png";
+const cruise = await getImage({ src: cruiseRAW, format:"avif", width: 1800, height: 1200});
+
+import galleryMobileRAW from "@assets/events/new/gallery-mobile.png";
+const galleryMobile = await getImage({ src: galleryMobileRAW, format:"avif", width: 600, height: 1163});
+
+import cruiseMobileRAW from "@assets/events/new/cruise-mobile.png";
+const cruiseMobile = await getImage({ src: cruiseMobileRAW, format:"avif", width: 600, height: 1069});
+
+import tendiesMobileRAW from "@assets/events/new/tendies-mobile.png";
+const tendiesMobile = await getImage({ src: tendiesMobileRAW, format:"avif", width: 600, height: 1388});
+
+import auctionMobileRAW from "@assets/events/new/aunction-mobile.png";
+const auctionMobile = await getImage({ src: auctionMobileRAW, format:"avif", width: 600, height: 1796});
+
+import movieRAW from "@assets/events/new/cinema.png";
+const movie = await getImage({ src: movieRAW, format:"avif", width: 1800, height: 1200});
+
+import movieMobileRAW from "@assets/events/new/cinema-mobile.png";
+const movieMobile = await getImage({ src: movieMobileRAW, format:"avif", width: 600, height: 1650});
+
+import cosplayRAW from "@assets/events/cosplay_contest.png";
+const cosplay = await getImage({ src: cosplayRAW, format:"avif", width: 1800, height: 1200});
+
+import cosplayMobileRAW from "@assets/events/cosplay_contest_mobile.png";
+const cosplayMobile = await getImage({ src: cosplayMobileRAW, format:"avif", width: 600, height: 1650});
+
+//xl: 1
+//lg: 0.72 xl
+//md: 0.8 lg
+---
+
+<Layout title="Our Events | Mare Fair 2025">
+    <Back />
+    <div id="super-wrapper" class="relative w-screen h-screen ">
+        <Banner/>
+        <input type="radio" name="modal-toggle" id="mare-gallery-toggle" class="hidden" />
+        <input type="radio" name="modal-toggle" id="tendies-dinner-toggle" class="hidden" />
+        <input type="radio" name="modal-toggle" id="mare-day-toggle" class="hidden" />
+        <input type="radio" name="modal-toggle" id="cosplay-toggle" class="hidden" />
+        <input type="radio" name="modal-toggle" id="charity-auction-toggle" class="hidden" />
+        <input type="radio" name="modal-toggle" id="cinemare-night-toggle" class="hidden" />
+        <input type="radio" name="modal-toggle" id="default-toggle" class="hidden" checked />
+
+        <div id="back-bg" class="fixed top-0 left-0 w-screen h-screen bg-black opacity-70">
+            <label for="default-toggle" class="absolute top-0 left-0 w-full h-full cursor-pointer"> </label>
+        </div>
+        <div id="brochure-wrapper" class="relative z-[2] drop-shadow">
+
+
+            <div id="mare-gallery" class="modal reddit-sans xl:text-[1.4rem] leading-[125%] lg:text-[0.98rem] md:text-[0.8rem]">
+                <div class="pointer-events-auto">
+                    <div class="brochure-page" style={`background-image: url(${gallery.src}); background-position: -${0}%;`}></div>
+                </div>
+                <div class="modal-hide-md flex-col md:flex-row">
+                    <div class="">
+                        <div class="brochure-page" style={`background-image: url(${gallery.src}); background-position: -${100}%;`}></div>
+                        <div class="absolute top-0 left-0 xl:p-5 lg:p-4 md:p-3 p-2 w-1/2 pointer-events-auto">
+                            <p class="pb-[2%]">
+                                <strong> Friday </strong> 1:00 PM - 8:00 PM
+                                <br/>
+                                <strong> Saturday </strong> 10:00 AM - 5:00 PM
+                            </p>
+
+                            <p>
+                                Stop by the <strong>Mare Gallery</strong> on to admire artwork from talented fandom creators. Explore original paintings, digital illustrations, and traditional fan art — this is your opportunity to appreciate the community's creativity up close.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="brochure-page" style={`background-image: url(${gallery.src}); background-position: -${200}%;`}></div>
+                    </div>
+                </div>
+                <div class="brochure-mobile">
+                    <div class="brochure-page !aspect-[600/1163]" style={`background-image: url(${galleryMobile.src});`}></div>
+                    <div class="absolute top-0 left-0 p-[5%] text-[3.5vw] leading-[125%] pointer-events-auto">
+                        <p class="pb-[2%]">
+                            <strong> Friday </strong> 1:00 PM - 8:00 PM
+                            <br/>
+                            <strong> Saturday </strong> 10:00 AM - 5:00 PM
+                        </p>
+
+                        <p>
+                            Stop by the <strong>Mare Gallery</strong> on to admire artwork from talented fandom creators. Explore original paintings, digital illustrations, and traditional fan art — this is your opportunity to appreciate the community's creativity up close.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tendies-dinner" class="modal merriweather-regular xl:text-[1.1rem] leading-[125%] lg:text-[0.8rem] md:text-[0.63rem]">
+                <div class="pointer-events-auto">
+                    <div class="brochure-page-width" style={`background-image: url(${tendies.src}); background-position: -${0}%;`}></div>
+                </div>
+                <div class="modal-hide-md flex-col md:flex-row pointer-events-auto">
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${tendies.src}); background-position: -${100}%;`}></div>
+                        <div class="absolute top-0 left-0
+                                    xl:pl-[4rem] lg:pl-[2.7rem] md:pl-9 pl-2
+                                    xl:pr-2 lg:pr-1 md:pr-0
+                                    xl:pt-[4rem] lg:pt-[2.7rem] md:pt-9 pt-2
+                                    w-1/2 pointer-events-auto">
+                            <p>
+                                <strong> Location: </strong> Café Gauguin in the Rosen Centre
+                                <br/>
+                                <strong> Date: </strong> September 5, 2025
+                                <br/>
+                                <strong> Time: </strong> 7PM - 10PM, entry ends at 9
+                            </p>
+
+                            <hr class="h-[3px] w-[90%] my-[2%] bg-gray-200 border-0 dark:bg-gray-700">
+
+                            <p class="pb-[2%]">
+                                Dear <strong> Mare Fair attendees, </strong>
+                            </p>
+                            <p class="indent-5">
+                                We cordially invite you to our annual <strong><i> Spaghetti and Tendie Dinner.</i></strong>
+                            </p>
+                            <p class="indent-5">
+                                A portion of every ticket sold will be set aside for our charities this year.
+                            </p>
+                            <p class="pb-[2%] indent-5">
+                                A ticket is included with <strong><i> Mare Connoisseur and above. </i></strong> You can reserve a spot for $40 by following the link below:
+                            </p>
+                            <center class="italic font-bold">
+                                <a href="https://tendies.marefair.org" class="text-center" target="_blank" rel="noopener noreferrer" >
+                                    tendies.marefair.org
+                                </a>
+                            </center>
+                            <p>
+                                Sincerely,
+                                <br/>
+                                <i class="pl-5"> Mare Fair</i>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="merriweather-regular">
+                        <div class="brochure-page-width" style={`background-image: url(${tendies.src}); background-position: -${200}%;`}></div>
+                    </div>
+                </div>
+                <div class="brochure-mobile">
+                    <div class="brochure-page !aspect-[600/1388]" style={`background-image: url(${tendiesMobile.src});`}></div>
+                    <div class="absolute top-0 left-0
+                                p-[11%] text-[2.9vw] leading-[125%]
+                                pointer-events-auto">
+                        <p>
+                            <strong> Location: </strong> Café Gauguin in the Rosen Centre
+                            <br/>
+                            <strong> Date: </strong> September 5, 2025
+                            <br/>
+                            <strong> Time: </strong> 7PM - 10PM, entry ends at 9
+                        </p>
+
+                        <hr class="h-[3px] w-[90%] my-[2%] bg-gray-200 border-0 dark:bg-gray-700">
+
+                        <p class="pb-[2%]">
+                            Dear <strong> Mare Fair attendees, </strong>
+                        </p>
+                        <p class="indent-5">
+                            We cordially invite you to our annual <strong><i> Spaghetti and Tendie Dinner.</i></strong>
+                        </p>
+                        <p class="indent-5">
+                            A portion of every ticket sold will be set aside for our charities this year.
+                        </p>
+                        <p class="pb-[2%] indent-5">
+                            A ticket is included with <strong><i> Mare Connoisseur and above. </i></strong> You can reserve a spot for $40 by following the link below:
+                        </p>
+                        <center class="italic font-bold">
+                            <a href="https://tendies.marefair.org" class="text-center" target="_blank" rel="noopener noreferrer" >
+                                tendies.marefair.org
+                            </a>
+                        </center>
+                        <p>
+                            Sincerely,
+                            <br/>
+                            <i class="pl-5"> Mare Fair</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mare-day" class="modal">
+                <div class="pointer-events-auto">
+                    <div class="brochure-page-width" style={`background-image: url(${cruise.src}); background-position: -${0}%;`}></div>
+                </div>
+                <div class="modal-hide-md flex-col md:flex-row pointer-events-auto reddit-sans">
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${cruise.src}); background-position: -${100}%;`}></div>
+                        <div class="absolute top-[67%] left-0 xl:p-5 lg:p-4 md:p-3 p-2 w-1/2 pointer-events-auto">
+                            <p class="pb-[2%] xl:text-[1.5rem] leading-[125%] lg:text-[1.08rem] md:text-[0.8rem]">
+                                <strong>AVAILABLE TO MARE AFICIONADO BADGE TIERS AND ABOVE</strong>
+                            </p>
+
+                            <p class="xl:text-[1.5rem] leading-[125%] lg:text-[1.08rem] md:text-[0.8rem]">
+                                Wrap up your Mare Fair weekend with a leisurely cruise on <strong>Monday, September 8th! </strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${cruise.src}); background-position: -${200}%;`}></div>
+                        <div class="absolute top-[67%] left-0 xl:p-5 lg:p-4 md:p-3 p-2 pointer-events-auto  leading-[135%] xl:text-[1.35rem] lg:text-[0.97rem] md:text-[0.77rem]">
+                            <p>
+                                Set sail with fellow pony enthusiasts for a relaxing journey featuring scenic views, refreshments, and potential excursions to islands. Whether you're looking to unwind after a busy weekend or extend your convention memories a bit longer, the Mare Charter Day Cruise is the perfect finale to your Mare Fair experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="brochure-mobile">
+                    <div class="brochure-page !aspect-[600/1069]" style={`background-image: url(${cruiseMobile.src});`}></div>
+
+                    <div class="absolute top-[10%] left-0 p-[5%] text-[3.5vw] leading-[125%] pointer-events-auto">
+                        <p class="pb-[2%] text-[4vw]">
+                            <strong>AVAILABLE TO MARE AFICIONADO BADGE TIERS AND ABOVE</strong>
+                        </p>
+
+                        <p class="pb-[10%]">
+                            Wrap up your Mare Fair weekend with a leisurely cruise on <strong>Monday, September 8th! </strong>
+                        </p>
+
+                        <p>
+                            Set sail with fellow pony enthusiasts for a relaxing journey featuring scenic views, refreshments, and potential excursions to islands. Whether you're looking to unwind after a busy weekend or extend your convention memories a bit longer, the Mare Charter Day Cruise is the perfect finale to your Mare Fair experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cosplay" class="modal">
+                <div class="pointer-events-auto">
+                    <div class="brochure-page-width" style={`background-image: url(${cosplay.src}); background-position: -${0}%;`}></div>
+                </div>
+                <div class="modal-hide-md flex-col md:flex-row pointer-events-auto reddit-sans">
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${cosplay.src}); background-position: -${100}%;`}></div>
+                        <div class="absolute top-0 left-0 xl:p-5 lg:p-4 md:p-3 p-2 w-1/2 pointer-events-auto text-white space-y-[2%]">
+                            <p class="pb-[2%] xl:text-[1.5rem] leading-[125%] lg:text-[1.08rem] md:text-[0.8rem] rubik-800">
+                                <strong>Fort Reckless</strong>
+                                </br>
+                                <strong>Saturday, September 6</strong>
+                                </br>
+                                <strong>01:00 PM</strong>
+                            </p>
+
+                            <p class="xl:indent-5 lg:indent-4 md:indent-3 indent-3 xl:text-[1.5rem] leading-[125%] lg:text-[1.07rem] md:text-[0.8rem] reddit-sans">
+                                Whether you're a cosplay veteran or just dangerously confident with a hot glue gun, you're invited.
+                            </p>
+                            <p class="xl:indent-5 lg:indent-4 md:indent-3 indent-3 xl:text-[1.5rem] leading-[125%] lg:text-[1.07rem] md:text-[0.8rem] reddit-sans">
+                                Matinée and Soirée's cosplay contest welcomes all skill levels, all costumes, and all legal definitions of "horse."
+                            </p>
+                            <p class="xl:indent-5 lg:indent-4 md:indent-3 indent-3 xl:text-[1.5rem] leading-[125%] lg:text-[1.07rem] md:text-[0.8rem] reddit-sans">
+                                Come on stage. Confuse us. Win prizes!
+                            </p>
+
+                            <center> <a href="https://cosplay.marefair.org/" target="_blank" rel="noopener noreferrer" class="xl:indent-5 lg:indent-4 md:indent-3 indent-3 xl:text-[1.5rem] leading-[125%] lg:text-[1.07rem] md:text-[0.8rem] reddit-sans font-bold "> COSPLAY.MAREFAIR.ORG </a></center>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${cosplay.src}); background-position: -${200}%;`}></div>
+                    </div>
+                </div>
+                <div class="brochure-mobile">
+                    <div class="brochure-page !aspect-[632/1749]" style={`background-image: url(${cosplayMobile.src});`}></div>
+
+                    <div class="absolute top-[32%] left-0 p-[5%] text-[4vw] leading-[125%] pointer-events-auto text-white space-y-[2%] reddit-sans">
+                        <p class="pb-[2%] text-[5vw] rubik-800">
+                            <strong>Fort Reckless</strong>
+                            </br>
+                            <strong>Saturday, September 6</strong>
+                            </br>
+                            <strong>01:00 PM</strong>
+                        </p>
+
+                        <p class="indent-[5%]">
+                            Whether you're a cosplay veteran or just dangerously confident with a hot glue gun, you're invited.
+                        </p>
+
+                        <p class="indent-[5%]">
+                            Matinée and Soirée's cosplay contest welcomes all skill levels, all costumes, and all legal definitions of "horse."
+                        </p>
+                        <p class="indent-[5%]">
+                            Come on stage. Confuse us. Win prizes!
+                        </p>
+
+                        <center> <a href="https://cosplay.marefair.org/" target="_blank" rel="noopener noreferrer" class="xl:text-[1.5rem] leading-[125%] lg:text-[1.07rem] md:text-[0.8rem] reddit-sans font-bold "> COSPLAY.MAREFAIR.ORG </a></center>
+                    </div>
+                </div>
+            </div>
+
+            <div id="charity-auction" class="modal">
+                <div class="pointer-events-auto">
+                    <div class="brochure-page-width" style={`background-image: url(${auction.src}); background-position: -${0}%;`}></div>
+                </div>
+                <div class="modal-hide-md flex-col md:flex-row reddit-sans pointer-events-auto">
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${auction.src}); background-position: -${100}%;`}></div>
+                        <div class="absolute top-[1%] left-0 xl:p-5 lg:p-4 md:p-3 p-2 w-1/2 pointer-events-auto">
+                            <p class="dm-serif-display xl:text-[3.5rem] lg:text-[2.52rem] md:text-[2rem] leading-[75%]">
+                                Mare Stage
+                            </p>
+                            <p class="xl:text-[1.8rem] lg:text-[1.3rem] md:text-[1.04rem]">
+                                <strong> September 7th </strong>
+                            </p>
+                            <hr class="h-[3px] w-[80%] my-[2%] bg-gray-200 border-0 dark:bg-gray-700">
+                            <p class="xl:text-[1.5rem] leading-[125%] lg:text-[1.08rem] md:text-[0.8rem]">
+                                Join the Charity Auction on Sunday afternoon for your chance to bid on unique collectibles and one-of-a-kind pony-themed treasures to support a meaningful cause! Every item at the auction contributes directly to charity, making this event a highlight of each Mare Fair.
+                            </p>
+                            <p class="pt-[2%] xl:text-[1.5rem] leading-[125%] lg:text-[1.08rem] md:text-[0.8rem]">
+                                Come ready to bid generously and take home something truly special!
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${auction.src}); background-position: -${200}%;`}></div>
+                        <div class="absolute top-[40%] left-0 xl:p-5 lg:p-4 md:p-3 p-2 xl:text-[1.5rem] lg:text-[1.08rem] md:text-[0.8rem] ">
+                            <p>See items up for auction ↙ </p>
+                            {
+                                AUCTRIA_SITE == "https://auction.marefair.org/" ?
+                                (
+                                    <a href={AUCTRIA_SITE} target="_blank" rel="noopener noreferrer"> <strong>auction.marefair.org </strong> </a>
+                                ) :
+                                (
+                                    <p> <strong> TBD </strong></p>
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="brochure-mobile ">
+                    <div class="brochure-page !aspect-[600/1796]" style={`background-image: url(${auctionMobile.src});`}></div>
+                    <div class="absolute top-[0%] left-0 p-[6%] pointer-events-auto">
+                        <p class="dm-serif-display text-[10vw] leading-[75%]">
+                            Mare Stage
+                        </p>
+                        <p class="text-[5.2vw]">
+                            <strong> September 7th </strong>
+                        </p>
+                        <hr class="h-[3px] w-[80%] my-[2%] bg-gray-200 border-0 dark:bg-gray-700">
+                        <p class="leading-[125%] text-[4vw]">
+                            Join the Charity Auction on Sunday afternoon for your chance to bid on unique collectibles and one-of-a-kind pony-themed treasures to support a meaningful cause! Every item at the auction contributes directly to charity, making this event a highlight of each Mare Fair.
+                        </p>
+                        <p class="pt-[2%] text-[4vw]">
+                            Come ready to bid generously and take home something truly special!
+                        </p>
+                    </div>
+                    <div class="absolute top-[61%] left-0 p-[6%] text-[4.5vw]">
+                        <p>See items up for auction ↙ </p>
+                        {
+                            AUCTRIA_SITE == "https://auction.marefair.org/" ?
+                            (
+                                <a href={AUCTRIA_SITE}> <strong>auction.marefair.org </strong> </a>
+                            ) :
+                            (
+                                <p> <strong> TBD </strong></p>
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div id="cinemare-night" class="modal">
+                <div class="pointer-events-auto">
+                    <div class="brochure-page-width" style={`background-image: url(${movie.src}); background-position: -${0}%;`}></div>
+                </div>
+                <div class="modal-hide-md flex-col md:flex-row reddit-sans pointer-events-auto text-amber-300">
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${movie.src}); background-position: -${100}%;`}></div>
+                        <div class="absolute top-0 left-0 p-[3.5%] w-1/2 pointer-events-auto">
+                            <p class="xl:text-[1.8rem] lg:text-[1.3rem] md:text-[1.04rem] italic font-extrabold">
+                                <strong> Thursday, September 4th </strong>
+                            </p>
+                            <p class="xl:text-[3rem] lg:text-[2.16rem] md:text-[1.728rem] leading-[75%] italic font-extrabold">
+                                10:00 PM
+                            </p>
+
+                            <p class="xl:text-[1.5rem] leading-[100%] lg:text-[1.08rem] md:text-[0.8rem] font-extrabold pt-[2%]">
+                                Admission fee: $35 <br>
+                            </p>
+                            <p class="xl:text-[1.1rem] lg:text-[0.792rem] md:text-[0.6336rem] font-extrabold italic">
+                                (Transportation provided)
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="brochure-page-width" style={`background-image: url(${movie.src}); background-position: -${200}%;`}></div>
+                        <div class="absolute top-0 leading-[125%] left-0 p-[8%] xl:text-[1.4rem] lg:text-[1.0rem] md:text-[0.8rem]">
+                            <p>Kick off your Mare Fair experience with Cinemare Night, featuring an exclusive screening of My Little Pony: The Movie! </p>
+                            <p>Seats are limited, so secure your spot early and start your weekend right! </p>
+                            <p class="pt-[5%] text-center xl:text-[1.8rem] lg:text-[1.3rem] md:text-[1.04rem] italic"> BOOK NOW </p>
+                            <a href="https://cinemare.marefair.org" class="pt-[1%] text-center block xl:text-[1.8rem] lg:text-[1.3rem] md:text-[1.04rem] text-white italic font-extrabold" target="_blank" rel="noopener noreferrer" >
+                                cinemare.marefair.org
+                            </a>
+                            <p class="text-center pt-[5%] xl:text-[1.5rem] lg:text-[1.08rem] md:text-[0.8rem] italic">Epic Theatres at Lee Vista </br> 5901 Hazeltine National Dr. </br> Orlando, FL 32822, USA </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="brochure-mobile ">
+                    <div class="brochure-page !aspect-[600/1650]" style={`background-image: url(${movieMobile.src});`}></div>
+                    <div class="absolute top-[8%] left-0 p-[8%] pointer-events-auto reddit-sans text-amber-300">
+                        <p class="text-[5.75vw] italic font-extrabold">
+                            <strong> Thursday, September 4 </strong>
+                        </p>
+                        <p class="text-[7.2vw] leading-[75%] italic font-extrabold">
+                            10:00 PM
+                        </p>
+
+                        <p class="text-[4.2vw] font-extrabold pt-[2%]">
+                            Admission fee: $25 <br>
+                        </p>
+                        <p class="text-[3.1vw] leading-[80%] font-extrabold italic">
+                            (Transportation provided)
+                        </p>
+
+                        <div class="pt-[10%] text-[3.9vw] leading-[125%]">
+                            <p>Kick off your Mare Fair experience with Cinemare Night, featuring an exclusive screening of My Little Pony: The Movie! </p>
+                            <p>Seats are limited, so secure your spot early and start your weekend right! </p>
+                            <p class="pt-[5%] text-center text-[5vw] italic"> BOOK NOW </p>
+                            <a href="https://cinemare.marefair.org" class="pt-[1%] text-center block text-[5vw] text-white italic font-extrabold" target="_blank" rel="noopener noreferrer" >
+                                cinemare.marefair.org
+                            </a>
+                            <p class="text-center pt-[9%] text-[4.2vw] italic">Epic Theatres at Lee Vista </br> 5901 Hazeltine National Dr. </br> Orlando, FL 32822, USA </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hover-forward" tabindex="0" class="fixed md:bottom-0 bottom-28 w-64 h-20 bg-black rounded-full bg-opacity-20 left-1/2 -translate-x-1/2 z-10">
+            <div class="text-white md:hidden block flex w-full h-full items-center justify-center text-2xl pointer-events-none">
+                PRESS
+            </div>
+        </div>
+        <div id="brochure-interface-wrapper" class="fixed bottom-10 left-1/2 -translate-x-1/2 h-fit">
+            <div class="wrapper brochure-absolute -translate-x-[25%]" tabindex="0">
+                <label for="mare-gallery-toggle" class="brochure-hoverable"> </label>
+                <div class="brochure h-auto aspect-[1/2] bg-cover" aria-label="Mare Gallery" role="img" style={`background-image: url(${gallery.src})`}></div>
+            </div>
+            <div class="wrapper brochure-absolute -translate-x-[15%]" tabindex="0">
+                <label for="tendies-dinner-toggle" class="brochure-hoverable"> </label>
+                <div class="brochure h-auto aspect-[1/2] bg-cover" aria-label="Spaghetti and Tendie Dinner" role="img" style={`background-image: url(${tendies.src})`}></div>
+            </div>
+            <div class="wrapper relative brochure-relative -translate-x-[5%]" tabindex="0">
+                <label for="mare-day-toggle" class="brochure-hoverable"> </label>
+                <div class="brochure h-auto aspect-[1/2] bg-cover" aria-label="Mare Day Cruise" role="img" style={`background-image: url(${cruise.src})`}></div>
+            </div>
+            <div class="wrapper brochure-absolute brochure-relative translate-x-[5%]" tabindex="0">
+                <label for="cosplay-toggle" class="brochure-hoverable"> </label>
+                <div class="brochure h-auto aspect-[1/2] bg-cover" aria-label="Cosplay Contest" role="img" style={`background-image: url(${cosplay.src})`}></div>
+            </div>
+            <div class="wrapper brochure-absolute translate-x-[15%]" tabindex="0">
+                <label for="charity-auction-toggle" class="brochure-hoverable"> </label>
+                <div class="brochure h-auto aspect-[1/2] bg-cover" aria-label="Auction Charity" role="img" style={`background-image: url(${auction.src})`}></div>
+            </div>
+            <div class="wrapper brochure-absolute translate-x-[25%]" tabindex="0">
+                <label for="cinemare-night-toggle" class="brochure-hoverable"> </label>
+                <div class="brochure h-auto aspect-[1/2] bg-cover" aria-label="Cinemare Night" role="img" style={`background-image: url(${movie.src})`}></div>
+            </div>
+        </div>
+
+    </div>
+</Layout>
+
+<style>
+    /* modals */
+    .modal-hide-md{
+        @apply flex md:static absolute md:visible invisible;
+    }
+    .drop-shadow{
+        filter: drop-shadow(0px 0px 2rem rgba(0, 0, 0, 1));
+    }
+    .brochure-page-width{
+        @apply xl:w-[28rem] lg:w-[20rem] md:w-[16rem] w-full h-auto aspect-[1/2] bg-cover;
+    }
+    .modal {
+        @apply rotate3D absolute origin-bottom flex md:flex-row flex-col xl:w-[84rem] lg:w-[60rem] md:w-[48rem] w-[80%] pt-10 h-fit -translate-x-1/2 left-1/2 scale-[0.1] opacity-0 transition-all duration-300 pointer-events-none;
+    }
+    #mare-gallery-toggle:checked ~ #brochure-wrapper #mare-gallery,
+    #tendies-dinner-toggle:checked ~ #brochure-wrapper #tendies-dinner,
+    #mare-day-toggle:checked ~ #brochure-wrapper #mare-day,
+    #cosplay-toggle:checked ~ #brochure-wrapper #cosplay,
+    #charity-auction-toggle:checked ~ #brochure-wrapper #charity-auction,
+    #cinemare-night-toggle:checked ~ #brochure-wrapper #cinemare-night {
+        @apply scale-100 opacity-100 z-20;
+    }
+
+    #back-bg {
+        @apply transition-opacity duration-300 pointer-events-auto;
+    }
+
+    #default-toggle:checked ~ #back-bg {
+        @apply opacity-0 pointer-events-none;
+    }
+    .page-text{
+        @apply indent-8 hyphens-auto xl:text-2xl lg:text-base md:text-xs text-[4vw] xl:mt-4 lg:mt-3 md:mt-2 mt-1;
+    }
+
+    .page-pb {
+        @apply xl:pb-5 lg:pb-3 md:pb-2 pb-5
+    }
+
+    .page-comment{
+        @apply text-center xl:text-xl lg:text-sm md:text-xs text-[3.2vw] italic opacity-50;
+    }
+
+    .page-text-normal{
+        @apply xl:text-2xl lg:text-base md:text-sm text-[4vw] xl:mt-4 lg:mt-3 md:mt-2 mt-1;
+    }
+
+    .page-header {
+        @apply font-extrabold xl:text-5xl lg:text-4xl md:text-3xl text-5xl md:mb-[2%] mb-[5%] text-center;
+    }
+
+    .brochure-page{
+        @apply bg-white brochure-page-width pointer-events-auto;
+    }
+
+    .brochure-mobile{
+        @apply md:hidden block relative pointer-events-auto;
+    }
+
+    /* brochure interfaces */
+
+    .brochure-relative {
+        @apply z-[0] w-auto h-auto;
+    }
+
+    .brochure-absolute {
+        @apply absolute top-0 w-auto;
+    }
+
+    .wrapper {
+        @apply md:w-[10rem] w-[8rem] h-auto transition-all duration-300;
+    }
+
+    #brochure-interface-wrapper:hover .wrapper:nth-child(1) {
+        @apply -translate-x-[100%] translate-y-[5%] -rotate-[10deg];
+    }
+
+    #brochure-interface-wrapper:hover .wrapper:nth-child(2) {
+        @apply -translate-x-[60%] translate-y-[2%] -rotate-[5deg];
+    }
+
+    #brochure-interface-wrapper:hover .wrapper:nth-child(3) {
+        @apply -translate-x-[20%] translate-y-0 -rotate-[2deg]; /* Center stays in place */
+    }
+    #brochure-interface-wrapper:hover .wrapper:nth-child(4) {
+        @apply translate-x-[20%] translate-y-0 rotate-[2deg]; /* Center stays in place */
+    }
+
+    #brochure-interface-wrapper:hover .wrapper:nth-child(5) {
+        @apply translate-x-[60%] translate-y-[2%] rotate-[5deg];
+    }
+
+    #brochure-interface-wrapper:hover .wrapper:nth-child(6) {
+        @apply translate-x-[100%] translate-y-[5%] rotate-[10deg];
+    }
+
+    .brochure-hoverable:hover + .brochure {
+        transform: translateY(-30%);
+    }
+    #hover-forward {
+        @apply cursor-pointer;
+    }
+
+    #brochure-interface-wrapper:hover{
+        z-index: 10;
+    }
+
+    .brochure-hoverable{
+        @apply absolute bg-white w-full h-auto aspect-[1/2] opacity-0 cursor-pointer;
+    }
+
+    .brochure {
+        @apply transition-all duration-200 pointer-events-none;
+        filter: drop-shadow(0px 0px 1rem rgba(0, 0, 0, 0.5));
+    }
+
+    .rotate3D {
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease-in-out;
+        perspective: 1800px;
+    }
+
+    @media (max-width: 768px) {
+        #hover-forward:focus ~ #brochure-interface-wrapper {
+            z-index: 20;
+        }
+
+        #hover-forward:focus ~ #brochure-interface-wrapper .wrapper:nth-child(1) {
+            @apply -translate-x-[100%] translate-y-[5%] -rotate-[10deg];
+        }
+
+        #hover-forward:focus ~ #brochure-interface-wrapper .wrapper:nth-child(2) {
+            @apply -translate-x-[60%] translate-y-[2%] -rotate-[5deg];
+        }
+
+        #hover-forward:focus ~ #brochure-interface-wrapper .wrapper:nth-child(3) {
+            @apply -translate-x-[20%] translate-y-0 -rotate-[2deg]; /* Center stays in place */
+        }
+        #hover-forward:focus ~ #brochure-interface-wrapper .wrapper:nth-child(4) {
+            @apply translate-x-[20%] translate-y-0 rotate-[2deg]; /* Center stays in place */
+        }
+
+        #hover-forward:focus ~ #brochure-interface-wrapper .wrapper:nth-child(5) {
+            @apply translate-x-[60%] translate-y-[2%] rotate-[5deg];
+        }
+
+        #hover-forward:focus ~ #brochure-interface-wrapper .wrapper:nth-child(6) {
+            @apply translate-x-[100%] translate-y-[5%] rotate-[10deg];
+        }
+    }
+
+    @media (min-width: 768px) { /* Tailwind's medium */
+        #hover-forward:hover ~ #brochure-interface-wrapper
+        {
+            z-index: 20;
+        }
+        /* brochure rotation anims */
+        #brochure-wrapper .modal > *:nth-child(1),
+        #brochure-wrapper .modal > *:nth-child(2),
+        #brochure-wrapper .modal > *:nth-child(2) > *:nth-child(2) {
+            @apply transition-transform duration-[1000ms] delay-[200ms];
+        }
+
+        #brochure-wrapper .modal > *:nth-child(1){
+            @apply origin-right;
+            transform: rotateY(0deg);
+        }
+        #brochure-wrapper .modal > *:nth-child(2){
+            @apply origin-left ;
+            transform: rotateY(179deg);
+            transform-style: preserve-3d;
+            perspective: 1800px;
+        }
+        #brochure-wrapper .modal > *:nth-child(2) > *:nth-child(2) {
+            @apply origin-left;
+            transform:rotateY(-179deg);
+        }
+
+        #mare-gallery-toggle:checked ~ #brochure-wrapper #mare-gallery > *:nth-child(1),
+        #tendies-dinner-toggle:checked ~ #brochure-wrapper #tendies-dinner > *:nth-child(1),
+        #mare-day-toggle:checked ~ #brochure-wrapper #mare-day > *:nth-child(1),
+        #cosplay-toggle:checked ~ #brochure-wrapper #cosplay > *:nth-child(1),
+        #charity-auction-toggle:checked ~ #brochure-wrapper #charity-auction > *:nth-child(1),
+        #cinemare-night-toggle:checked ~ #brochure-wrapper #cinemare-night > *:nth-child(1) {
+            @apply -shading;
+            transform: rotateY(-10deg);
+        }
+
+        #mare-gallery-toggle:checked ~ #brochure-wrapper #mare-gallery > *:nth-child(2),
+        #tendies-dinner-toggle:checked ~ #brochure-wrapper #tendies-dinner > *:nth-child(2),
+        #mare-day-toggle:checked ~ #brochure-wrapper #mare-day > *:nth-child(2),
+        #cosplay-toggle:checked ~ #brochure-wrapper #cosplay > *:nth-child(2),
+        #charity-auction-toggle:checked ~ #brochure-wrapper #charity-auction > *:nth-child(2),
+        #cinemare-night-toggle:checked ~ #brochure-wrapper #cinemare-night > *:nth-child(2) {
+            transform: rotateY(10deg);
+        }
+
+        #mare-gallery-toggle:checked ~ #brochure-wrapper #mare-gallery > *:nth-child(2) > *:nth-child(1),
+        #tendies-dinner-toggle:checked ~ #brochure-wrapper #tendies-dinner > *:nth-child(2) > *:nth-child(1),
+        #mare-day-toggle:checked ~ #brochure-wrapper #mare-day > *:nth-child(2) > *:nth-child(1),
+        #cosplay-toggle:checked ~ #brochure-wrapper #cosplay > *:nth-child(2) > *:nth-child(1),
+        #charity-auction-toggle:checked ~ #brochure-wrapper #charity-auction > *:nth-child(2) > *:nth-child(1),
+        #cinemare-night-toggle:checked ~ #brochure-wrapper #cinemare-night > *:nth-child(2) > *:nth-child(1) {
+            @apply shading;
+        }
+
+        #mare-gallery-toggle:checked ~ #brochure-wrapper #mare-gallery > *:nth-child(2) > *:nth-child(2),
+        #tendies-dinner-toggle:checked ~ #brochure-wrapper #tendies-dinner > *:nth-child(2) > *:nth-child(2),
+        #mare-day-toggle:checked ~ #brochure-wrapper #mare-day > *:nth-child(2) > *:nth-child(2),
+        #cosplay-toggle:checked ~ #brochure-wrapper #cosplay > *:nth-child(2) > *:nth-child(2),
+        #charity-auction-toggle:checked ~ #brochure-wrapper #charity-auction > *:nth-child(2) > *:nth-child(2),
+        #cinemare-night-toggle:checked ~ #brochure-wrapper #cinemare-night > *:nth-child(2) > *:nth-child(2) {
+            @apply -shading;
+            transform: rotateY(-10deg);
+        }
+
+        .shading::after {
+            @apply aspect-[1/2] absolute top-0 left-0 w-auto h-full pointer-events-none;
+            content: '';
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
+        }
+        .-shading::after {
+            @apply aspect-[1/2] absolute top-0 left-0 w-auto h-full pointer-events-none;
+            content: '';
+            background: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+        }
+    }
+</style>
+
+<script>
+    // Allows radio selectors to be toggled. I can't find a way to do it with pure css
+    let lastChecked: HTMLInputElement | null = null;
+
+    document.querySelectorAll('input[name="modal-toggle"]').forEach(radio =>
+    {
+        radio.addEventListener('click', (e) =>
+        {
+            const target = e.target as HTMLInputElement;
+
+            // If clicking the already selected radio, reset to default
+            const defaultToggle = document.getElementById('default-toggle') as HTMLInputElement | null;
+            if (lastChecked === target)
+            {
+                if (defaultToggle)
+                    defaultToggle.checked = true;
+
+                lastChecked = null;
+            }
+            else
+                lastChecked = target;
+        });
+    });
+
+    // Keyboard accessibility - add ability to select the label as the tab-targeting is on its wrapper.
+    document.querySelectorAll('.wrapper').forEach(wrapper => {
+        wrapper.addEventListener('keydown', (e) => {
+            if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
+                e.preventDefault(); // Prevent page scroll on space
+                const label = wrapper.querySelector('label') as HTMLLabelElement;
+                if (label) {
+                    label.click();
+                }
+            }
+        });
+    });
+
+    // handle mouse clicks on the label. move screen to the top
+    document.querySelectorAll('.wrapper').forEach(wrapper => {
+
+        const label = wrapper.querySelector('label');
+        if (label) {
+            label.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    });
+</script>

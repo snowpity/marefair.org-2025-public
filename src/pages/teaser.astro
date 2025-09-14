@@ -1,0 +1,241 @@
+---
+import { Image } from "astro:assets";
+
+import Layout from '@layouts/Layout.astro';
+
+import titleLogo from "@assets/teaser/the_logo_transparent.webp";
+import titleLogoBlack from "@assets/teaser/the_logo_Black.webp";
+---
+
+<Layout>
+    <body class="bg-brick-texture overflow-hidden">
+        <div class="h-[100vh] flex items-center justify-center overflow-hidden">
+            <div class="w-fit h-fit relative -mt-[20vh]">
+
+                <div id="imageContainer" class="relative max-h-screen pointer-events-none z-10">
+                    <Image src={titleLogoBlack} alt="SignBlack" id="SignBlack" class="relative w-full h-full max-h-screen" ></Image>
+                    <Image src={titleLogo} alt="Sign" id="sign" class="flickering absolute top-0 left-0 w-full h-full " ></Image>
+                </div>
+
+                <div id="darknessContainer" class="opacity-95">
+                    <div class="absolute top-0 masked aspect-wh aspect-square bg-black z-0"
+                        style={`
+                        mask-image:
+                            linear-gradient(white, white),
+                            url(${titleLogo.src});
+                        mask-composite: subtract;
+                        ` }>
+                    </div>
+                    <div class="absolute top-0 left-0 bg-black w-screen h-screen translate-y-[-100%]"> </div>
+                    <div class="absolute top-0 left-0 bg-black w-screen h-screen translate-y-[-100%] translate-x-[-100%]"> </div>
+
+                    <div class="absolute bottom-0 bg-black w-screen h-screen translate-y-[100%]"> </div>
+
+                    <div class="absolute top-0 left-0 bg-black w-screen h-[200vh] translate-x-[-100%]"></div>
+                    <div class="absolute top-0 right-0 bg-black w-screen h-[200vh] translate-x-[100%]"> </div>
+
+
+                </div>
+
+                <div id="dirts" class="flickering masked absolute mix-blend-screen top-0 left-0 w-full h-full z-20 overflow-hidden user-select-none pointer-events-none" style={`mask-image: url(${titleLogo.src}); contain: layout paint;`}>
+                    <div class="dirt absolute top-0 left-0 w-full h-full opacity-30" id="dirt1"></div>
+                    <div class="dirt absolute top-0 left-0 w-full h-full opacity-20 animate-[moveDirt_300s_linear_infinite]" id="dirt2" style=`background-size: 300px 300px;`></div>
+                </div>
+
+                <div id="enter-button-wrapper" class="flex flex-col justify-center items-center absolute w-auto mx-auto z-40 inset-x-0 -mt-[10%]">
+                    <div class="Date z-40 text-white text-center relative w-full h-auto my-[1%]">
+                        <h3 class="reddit-sans" style="font-weight: 500;">
+                            SEPTEMBER 5<small>TH</small>-7<small>TH</small> <br>
+                        </h3>
+                        <h3 class="reddit-sans smallerDate" style="font-weight: 100;">
+                            Orlando, Florida
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="vignette" class="absolute top-0 left-0 w-full h-full z-10 shadow-[inset_0_0_120px_rgba(0,0,0)] pointer-events-none"> </div>
+        </div>
+    </body>
+</Layout>
+
+<style is:global>
+    #footer-space {
+        display: none;
+    }
+</style>
+
+<style>
+    .Date {
+        top:0;
+        font-size: 6vh;
+        line-height: 5vh;
+        animation: dateTransition 0.6s ease forwards;
+        animation-delay: 0.6s;
+    }
+    @keyframes buttonAppear {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    .flickering {
+        animation: flickering 10s linear infinite;
+    }
+
+    .masked {
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+
+    .dirt {
+        background-image: url('/teaser/dirt.webp');
+        background-size: 400px 400px;
+        background-repeat: repeat;
+        background-position: center;
+    }
+
+    #dirt1 {
+        animation: moveLeftRight 10s ease-in-out infinite, moveDirt 100s linear infinite;
+    }
+
+    @keyframes moveDirt {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: 0 1000px;
+        }
+    }
+
+    @keyframes moveLeftRight {
+        0% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(50px);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes flickering {
+        0% {
+            opacity: 1;
+        }
+        10% {
+            opacity: 0.8;
+        }
+        49% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+        51% {
+            opacity: 1;
+        }
+        52% {
+            opacity: 0.1;
+        }
+        53% {
+            opacity: 1;
+        }
+        70% {
+            opacity: 1;
+        }
+        80% {
+            opacity: 0.8;
+        }
+        100% {
+        }
+    }
+    /* Really cheeky way of making sure the banner always scale correctly */
+    /* Width is greater than height (landscape) */
+    @media (min-aspect-ratio: 1/1) {
+        .aspect-wh{
+            @apply h-full;
+        }
+        .sign {
+            top: -10vh;
+        }
+
+        .Date {
+            font-size: 6vh;
+            line-height: 5vh;
+        }
+
+        .masked {
+            mask-position: center;
+        }
+
+        .smallerDate {
+            font-size: 5vh;
+        }
+
+        .button {
+            width: 18vh;
+            height: 5vh;
+
+            margin: 0 2vh;
+
+            font-size: 3vh;
+        }
+
+        @media (max-height: 740px) {
+            .button {
+                width: 30vh;
+                height: 10vh;
+
+                margin: 2vh 5vh;
+
+                font-size: 6vh;
+            }
+        }
+    }
+
+    @media (max-aspect-ratio: 1/1) {
+        .aspect-wh{
+            @apply w-full;
+        }
+        .Date {
+            font-size: 6vw;
+            line-height: 5vw;
+        }
+        .button {
+            width: 18vw;
+            height: 5vw;
+
+            margin: 0 2vw;
+
+            font-size: 3vw;
+        }
+
+        @media (max-width: 740px) {
+            .button {
+                width: 30vw;
+                height: 10vw;
+
+                margin: 2vw 5vw;
+
+                font-size: 6vw;
+            }
+        }
+
+        .sign {
+            top: -10vw;
+        }
+
+        .masked {
+            mask-position: center;
+        }
+
+        .smallerDate {
+            font-size: 5vw;
+        }
+    }
+</style>

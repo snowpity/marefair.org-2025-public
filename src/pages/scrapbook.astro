@@ -1,0 +1,1302 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+// KNICK KNACKS
+import ffpin from "@assets/gallery/FairFlyerPin.png";
+import SStare from "@assets/gallery/SoireeStare.png";
+import cereal from "@assets/gallery/Mare_Fair_Cereal.webp";
+import mapin from "@assets/gallery/MatineePin.png";
+import maTakeThis from "@assets/gallery/MatineeTakeThis.png";
+import mopin from "@assets/gallery/MorningMimosaPin.png";
+import win from "@assets/gallery/NahIdWinMimosa.png";
+import sopin from "@assets/gallery/SoireePin.png";
+import dyx from "@assets/gallery/SquatDyxOnPaper.png";
+import nyx from "@assets/gallery/SquatNyxOnPaper.png";
+import mmSwirly from "@assets/gallery/Swirly_Mimosa.png";
+import addicted from "@assets/gallery/addicted_to_mares.png";
+import boardExtras from "@assets/gallery/board_extras.png";
+import ffPin from "@assets/gallery/fair_pinn.webp";
+import nameSticker from "@assets/gallery/hello_my_name_is-_sticker.png";
+import milkmare from "@assets/gallery/milkmare_note.png";
+import fillyBeam from "@assets/gallery/sunbeam_filly_anon.png";
+
+// SCRAPBOOK
+import scrapbook_header from "@assets/gallery/scrapbook.png";
+import Mascot_BG from "@assets/gallery/Mascot_BG.png";
+import BABS_banner from "@assets/gallery/BABSbanner.png";
+import Matinee_poster from "@assets/gallery/Matinee_poster.png";
+import Mimosa_poster from "@assets/gallery/Mimosa_poster.png";
+import Soiree_poster from "@assets/gallery/Soiree_poster.png";
+import FairFlyer_poster from "@assets/gallery/FairFlyer_poster.png";
+
+const MatineePoster = await getImage({ src: Matinee_poster, format:"avif", height: 300 });
+const MimosaPoster = await getImage({ src: Mimosa_poster, format:"avif", height: 300 });
+const SoireePoster = await getImage({ src: Soiree_poster, format:"avif", height: 300 });
+const FairFlyerPoster = await getImage({ src: FairFlyer_poster, format:"avif", height: 300 });
+
+// CONTACT
+import contact_phone from "@assets/contact/Mare_Fair_3_Contacts_phone.png";
+import contact_flyer_full from "@assets/contact/contact_full.png";
+import attendeePull from "@assets/contact/attendee_pull.png";
+import charityPull from "@assets/contact/charity_pull.png";
+import prPull from "@assets/contact/public_pull.png";
+import hpicPull from "@assets/contact/hpic_pull.png";
+import techPull from "@assets/contact/tech_pull.png";
+
+// REGISTER
+import registration from "@assets/corkboard/2025_Registration_Button.png";
+import badgHeader from "@assets/register/badgeHeader.png";
+import spiritBadgeHeader from "@assets/register/spiritBadgeHeader.png";
+import fairgoer from "@assets/gallery/Fairgoer.png";
+import lateCoomer from "@assets/gallery/Latecoomer.png";
+import Supporter from "@assets/gallery/Supporter.png";
+import Enjoyer from "@assets/gallery/Mare_enjoyer_resize.png";
+import Enthusiast from "@assets/gallery/Mare_enthusiast_resize.png";
+import Admirer from "@assets/gallery/Mare_admirer_resize.png";
+import Connoisseur from "@assets/gallery/Mare_connoisseur_resize.png";
+import Aficionado from "@assets/gallery/mare_afficionado.png";
+import Fanatic from "@assets/gallery/mare_fanatic.png";
+import Schizo from "@assets/gallery/mare-schizo-anim.gif";
+import SpiritFairgoer from "@assets/gallery/Spirit_Badge_Fairgoer.png";
+import SpiritLatecoomer from "@assets/gallery/Spirit_Badge_Latecoomer.png";
+import SpiritSupporter from "@assets/gallery/Spirit_Badge_Supporter.png";
+
+// APPLY
+import apply from "@assets/corkboard/apply_flyer.png"
+import apply_back from "@assets/gallery/flyer2ab.png"
+import apply_front_l from "@assets/apply/curtain_l.png"
+
+// NEWS
+//import headerString from "@assets/about/about_string.png";
+//import headerClip from "@assets/about/about_clips.png";
+import fairFlyer from "@assets/about/sunbeam.png";
+import newsRaw from  "@assets/about/newsButton.png";
+import newsHoverRaw from  "@assets/about/newsButtonHover.png";
+import about from "@assets/corkboard/About_us.png";
+
+import mimosa_suffering from "@assets/pages/news/mimosa_suffering.png"
+
+// COC
+//import paper from "@assets/coc/paper.png";
+import plaque from "@assets/coc/plaque.png";
+import bottle from "@assets/gallery/spray.png";
+import postit from "@assets/coc/postit.png"
+import maresTired from "@assets/coc/maresTired.png";
+import boredSoiree from "@assets/coc/SoireeBored.png";
+import boredMatinee from "@assets/coc/MatineeBored.png";
+import boredFairFlyer from "@assets/coc/FairFlyerBored.png";
+import boredMorningMimosa from "@assets/coc/MorningMimosaBored.png";
+
+// Privacy
+import plaquePrivacy from "@assets/privacypolicy/plaque.png";
+
+// HARMONYCON
+import FairFlyerACard from "@assets/gallery/fair_flyer_daki_card_side_A.png";
+import FairFlyerBCard from "@assets/gallery/fair_flyer_daki_card_side_B.png";
+import postcard25 from "@assets/gallery/postcard_2025_front.png";
+import postcardBack25 from "@assets/gallery/postcard_2025_back.png";
+import HCSign from "@assets/gallery/HCSignage.png";
+
+// NEWS
+import headerImage from "@assets/pages/news/header.png";
+import soireeImage from "@assets/pages/news/soiree.png";
+//import featuredNoteImage from "@assets/pages/news/featured_note.png";
+//import dividerImage from "@assets/pages/news/divider.png";
+//import backdropImage from "@assets/pages/news/backdrop.png";
+import article1 from "@assets/pages/news/article1.png";
+import article2 from "@assets/pages/news/article2.png";
+//import article3 from "@assets/pages/news/article3.png";
+//import article4 from "@assets/pages/news/article4.png";
+//import article5 from "@assets/pages/news/article5.png";
+//import article6 from "@assets/pages/news/article6.png";
+import news from "@assets/corkboard/News_Link.png";
+
+// VENUE
+import Pegasus1 from "@assets/venue/mf_fairflyer_cloud.png";
+import Pegasus2 from "@assets/venue/mf_matinee_cloud.png";
+import patternRaw from "@assets/venue/pattern.png";
+import paymentFull from "@assets/venue/PaymentPanel_full.png";
+import alert from "@assets/venue/fair_flyer_stop.png";
+import venue from "@assets/venue/venue_torn.png"
+import endingRaw from "@assets/venue/ending2.png"
+
+// MAIN
+import gigachadRaw from "@assets/sponsor/gigachad.png";
+import soon from "@assets/corkboard/coming_soon.png"
+
+// MASCOTS
+import header from "@assets/mascots/Header.png";
+
+/*
+import modalFF_mobile from "@assets/mascots/dialog_mobile_ff.png";
+import modalMA_mobile from "@assets/mascots/dialog_mobile_ma.png";
+import modalMM_mobile from "@assets/mascots/dialog_mobile_mm.png";
+import modalSO_mobile from "@assets/mascots/dialog_mobile_so.png";
+
+import modalFF from "@assets/mascots/dialog_ff.png";
+import modalMA from "@assets/mascots/dialog_ma.png";
+import modalMM from "@assets/mascots/dialog_mm.png";
+import modalSO from "@assets/mascots/dialog_so.png";
+*/
+
+import Bartender from "@assets/mascots/barkeep_idle.webp";
+
+// Events
+import tendies from "@assets/events/new/tendies.png";
+import auction from "@assets/events/new/auction_desktop.png";
+import cruise from "@assets/events/new/cruise_desktop.png";
+import maregallery from "@assets/events/new/maregallery_desktop.png";
+import cinema from "@assets/events/new/cinema_brochure.png";
+import cosplay from "@assets/events/cosplay_contest.png";
+
+import embedImage from "@assets/gallery/EmbedImage.png"
+import musicianApp from "@assets/gallery/MusicianApp.png"
+import MimosaMug from "@assets/gallery/MimosaMug.png"
+import RIPMLP1 from "@assets/gallery/RIPMLP1.png"
+import RIPMLP2 from "@assets/gallery/RIPMLP2.png"
+import Banner1 from "@assets/gallery/MareFairBanner1.png"
+import Banner2 from "@assets/gallery/MareFairBanner2.png"
+
+import Tendies from "@assets/gallery/spaghetti-and-tendie-dinner.png"
+
+// Vendors
+import vendor from "@assets/vendors/YardSard.png"
+
+// Musicians
+import music from "@assets/corkboard/1MusicianCassetteClosed.png"
+import music2 from "@assets/corkboard/4MusicianCassetteBottom.png"
+import music3 from "@assets/corkboard/5MusicianCassetteTop.png"
+import Cantersoft from "@assets/musicians/CantersoftClosed.png"
+import CantoAcrylic from "@assets/musicians/CantoAcrylicClosed.png"
+import CindyKate from "@assets/musicians/CindyKateClosed.png"
+import DJWeinerSchnitzel from "@assets/musicians/DJWeinerSchnitzelClosed.png"
+import ElectroKaplosion from "@assets/musicians/ElectroKaplosionClosed.png"
+import HorseHeresy from "@assets/musicians/HorseHeresyClosed.png"
+import MCMIAG from "@assets/musicians/MCMIAGClosed.png"
+import ManehattanJazzQuartet from "@assets/musicians/ManehattanJazzQuartet.png"
+import ShuffleFl0 from "@assets/musicians/ShuffleFl0Closed.png"
+import SoundBandit from "@assets/musicians/SoundBanditClosed.png"
+import Spinscissor from "@assets/musicians/SpinscissorClose.png"
+import Totalspark from "@assets/musicians/TotalsparkClosed.png"
+import TreyHusk from "@assets/musicians/TreyHuskClosed.png"
+import Trotmare from "@assets/musicians/trotmare.png"
+
+import map from "@assets/map-venue/map.png"
+import schedule from "@assets/schedules/schedule.png"
+
+import headerMusician from "@assets/musicians/header.png"
+import guitar from "@assets/musicians/guitar.png"
+import guitarSilhouette from "@assets/musicians/guitarSilhouette.png"
+
+import head from "@assets/musicians/MusiciansPage_Mimosa_Head.png"
+import hoof from "@assets/musicians/MusiciansPage_Mimosa_hoof.png"
+
+import tendieFrenzy from "@assets/misc/TendieFrenzy.png"
+
+import NewsPages from "@assets/misc/backgroundMF.png"
+
+// SCHEDULE
+import ratingExplicit from "@assets/schedules/RatingsVectorsExp.png";
+import ratingQuestionable from "@assets/schedules/RatingsVectorsQuestionable.png";
+import ratingSafe from "@assets/schedules/RatingsVectorsSafe.png";
+import ratingSuggestive from "@assets/schedules/RatingsVectorsSuggestive.png";
+import ratingUnrated from "@assets/schedules/RatingsVectorsUnrated.png";
+
+import conbook from "@assets/conbook/cover.png"
+
+// CREDITS
+import jumpscare from "@assets/credit/jumpscare.png"
+import wallpaper from "@assets/credit/mf_desktop.png"
+
+import comics from "@assets/comics/comics.png";
+const images = [
+    // HEADER MUST ALWAYS BE ON TOP
+    {
+        'name': 'Scrapbook Header',
+        'src': scrapbook_header,
+        'alt': 'Scrapbook header',
+        'description': 'Artist: Zajice',
+    },
+    {
+        'name': 'Mare Fair 2025 Finale Comic',
+        'src': comics,
+        'alt': 'Mare Fair 2025 Finale Comic',
+        'description': 'Artist: Seafood Dinner',
+    },
+    {
+        'name': 'Mimosa Teeth',
+        'src': jumpscare,
+        'alt': 'Mimosa Teeth',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Wallpaper',
+        'src': wallpaper,
+        'alt': 'Wallpaper',
+        'description': 'Artist: Sigil',
+    },
+    {
+        'name': 'Conbook',
+        'src': conbook,
+        'alt': 'Conbook',
+        'description': 'Artist: Quote, render by Hoover',
+    },
+
+    {
+        'name': 'Rating Explicit',
+        'src': ratingExplicit,
+        'alt': 'Rating Explicit',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Rating Safe',
+        'src': ratingSafe,
+        'alt': 'Rating Safe',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Rating Questionable',
+        'src': ratingQuestionable,
+        'alt': 'Rating Questionable',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Rating Suggestive',
+        'src': ratingSuggestive,
+        'alt': 'Rating Suggestive',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Rating Unrated',
+        'src': ratingUnrated,
+        'alt': 'Rating Unrated',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'News Page Background',
+        'src': NewsPages,
+        'alt': 'News Page Background',
+        'description': 'Artist: QuotePony + Sigil (vendor piece)',
+    },
+    {
+        'name': 'Tendie Frenzy Button',
+        'src': tendieFrenzy,
+        'alt': 'Tendie Frenzy Button',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'Schedule Icon',
+        'src': schedule,
+        'alt': 'Schedule Icon',
+        'description': 'Artist: TruthOrMare',
+    },
+    {
+        'name': 'Map Icon',
+        'src': map,
+        'alt': 'Map Icon',
+        'description': 'Artist: Spoonie',
+    },
+    {
+        'name': 'Vendor Icon',
+        'src': vendor,
+        'alt': 'Vendor Icon',
+        'description': 'Artist: HorsePen',
+    },
+
+    // MUSICIAN
+    {
+        'name': 'Mimosa\'s Guitar',
+        'src': guitar,
+        'alt': 'Mimosa\'s Guitar',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Mimosa\'s Guitar Silhouette',
+        'src': guitarSilhouette,
+        'alt': 'Mimosa\'s Guitar Silhouette',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Mimosa angry',
+        'src': head,
+        'alt': 'Mimosa angry',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Mimosa hoof',
+        'src': hoof,
+        'alt': 'Mimosa hoof',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Musician Header',
+        'src': headerMusician,
+        'alt': 'Musician Header',
+        'description': 'Artist: HorsePen',
+    },
+    {
+        'name': 'Musician Icon 1',
+        'src': music,
+        'alt': 'Musician Icon 1',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Musician Icon 2',
+        'src': music2,
+        'alt': 'Musician Icon 2',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Musician Icon 3',
+        'src': music3,
+        'alt': 'Musician Icon 3',
+        'description': 'Artist: JayArr',
+    },
+
+    // VENDOR
+    {
+        'name': 'Cantersoft Cassette',
+        'src': Cantersoft,
+        'alt': 'Cantersoft Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Canto Acrylic Cassette',
+        'src': CantoAcrylic,
+        'alt': 'Canto Acrylic Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Cindy Kate Cassette',
+        'src': CindyKate,
+        'alt': 'Cindy Kate Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'DJ Weiner Schnitzel Cassette',
+        'src': DJWeinerSchnitzel,
+        'alt': 'DJ Weiner Schnitzel Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'ElectroKaplosion Cassette',
+        'src': ElectroKaplosion,
+        'alt': 'ElectroKaplosion Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Horse Heresy Cassette',
+        'src': HorseHeresy,
+        'alt': 'Horse Heresy Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'My Cutiemark Is A Gun Cassette',
+        'src': MCMIAG,
+        'alt': 'My Cutiemark Is A Gun Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Manehattan Jazz Quartet Cassette',
+        'src': ManehattanJazzQuartet,
+        'alt': 'Manehattan Jazz Quartet Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Shuffle x Fl0 Cassette',
+        'src': ShuffleFl0,
+        'alt': 'Shuffle x Fl0 Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Sound Bandit Cassette',
+        'src': SoundBandit,
+        'alt': 'Sound Bandit Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Spinscissor Cassette',
+        'src': Spinscissor,
+        'alt': 'Spinscissor Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Totalspark Cassette',
+        'src': Totalspark,
+        'alt': 'Totalspark Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Trey Husk Cassette',
+        'src': TreyHusk,
+        'alt': 'Trey Husk Cassette',
+        'description': 'Artist: Darkdoomer',
+    },
+    {
+        'name': 'Trotmare Cassette Player',
+        'src': Trotmare,
+        'alt': 'Trotmare Cassette Player',
+        'description': 'Artist: Darkdoomer',
+    },
+
+    {
+        'name': 'Spaghetti and Tendies announcement',
+        'src': Tendies,
+        'alt': 'Spaghetti and Tendies announcement',
+        'description': 'Artist: Jargon Scott',
+    },
+
+    {
+        'name': 'Mare Fair Embed Image',
+        'src': embedImage,
+        'alt': 'Mare Fair Embed Image',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Mare Fair Generic Banner',
+        'src': Banner1,
+        'alt': 'Mare Fair Generic Banner',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Mare Fair Teaser Banner',
+        'src': Banner2,
+        'alt': 'Mare Fair Teaser Banner',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Musician Application PR',
+        'src': musicianApp,
+        'alt': 'Musician Application PR',
+        'description': 'Artist: HorsePen',
+    },
+    {
+        'name': 'Mimosa Mugshot',
+        'src': MimosaMug,
+        'alt': 'Mimosa Mugshot',
+        'description': 'Artist: Wafflekeks',
+    },
+    {
+        'name': 'RIP MLP',
+        'src': RIPMLP1,
+        'alt': 'RIP MLP',
+        'description': 'Artist: HorsePen',
+    },
+    {
+        'name': 'RIP MLP Alternative',
+        'src': RIPMLP2,
+        'alt': 'RIP MLP Alternative',
+        'description': 'Artist: HorsePen',
+    },
+
+    // EVENTS
+    {
+        'name': 'Cosplay Brochure',
+        'src': cosplay,
+        'alt': 'Cosplay Brochure',
+        'description': 'Artist: TruthOrMare',
+    },
+    {
+        'name': 'Tendies Brochure',
+        'src': tendies,
+        'alt': 'Tendies Brochure',
+        'description': 'Artist: Front: Jargon Scott, Page Composition: QuotePony',
+    },
+    {
+        'name': 'Auction Brochure',
+        'src': auction,
+        'alt': 'Auction Brochure',
+        'description': 'Artist: Front: Lockheart, Page Composition: QuotePony',
+    },
+    {
+        'name': 'Cruise Brochure',
+        'src': cruise,
+        'alt': 'Cruise Brochure',
+        'description': 'Artist: Front: Welost, Page Composition: QuotePony',
+    },
+    {
+        'name': 'Mare Gallery Brochure',
+        'src': maregallery,
+        'alt': 'Mare Gallery Brochure',
+        'description': 'Artist: Front: FloralShitpost, Page Composition: QuotePony',
+    },
+    {
+        'name': 'Cinemare Brochure',
+        'src': cinema,
+        'alt': 'Cinemare Brochure',
+        'description': 'Artist: Front: Welost, Page Art: Sigil, Page Composition: QuotePony, Movie Screen Art: QuotePony',
+    },
+
+    {
+        'name': 'BABScon banner',
+        'src': BABS_banner,
+        'alt': 'BABScon banner',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Fair Flyer Mascot',
+        'src' : "https://fair-filer.marefair.org/2025/scrapbook/FairFlyer_seamless.webm",
+        'poster' : FairFlyerPoster.src,
+        'alt' : 'Fair Flyer from Mascots page',
+        'description': 'Artist: TheBatFang',
+        'format': 'webm',
+        'width': 281,
+        'height': 500
+    },
+    {
+        'name': 'Matinee Mascot',
+        'src' : "https://fair-filer.marefair.org/2025/scrapbook/Matinee_seamless.webm",
+        'poster' : MatineePoster.src,
+        'alt' : 'Matinee Idle from Mascots page',
+        'description': 'Artist: TheBatFang',
+        'format': 'webm',
+        'width': 281,
+        'height': 500
+    },
+    {
+        'name': 'Morning Mimosa Mascot',
+        'src' : "https://fair-filer.marefair.org/2025/scrapbook/Mimosa_seamless.webm",
+        'poster' : MimosaPoster.src,
+        'alt' : 'Morning Mimosa Idle from Mascots page',
+        'description': 'Artist: TheBatFang',
+        'format': 'webm',
+        'width': 281,
+        'height': 500
+    },
+    {
+        'name': 'Soiree Mascot',
+        'src' : "https://fair-filer.marefair.org/2025/scrapbook/Soiree_seamless.webm",
+        'poster' : SoireePoster.src,
+        'alt' : 'Soiree Idle from Mascots page',
+        'description': 'Artist: TheBatFang',
+        'format': 'webm',
+        'width': 281,
+        'height': 500
+    },
+    {
+        'name': 'The Bartender Mare',
+        'src' : Bartender,
+        'alt' : 'The Bartender Mare',
+        'format': 'webp',
+        'description': 'Artist: TheBatFang'
+    },
+    {
+        'name': 'Mascot Bar',
+        'src' : Mascot_BG,
+        'alt' : 'The bar counter top',
+        'description': 'Artist: TheBatFang'
+    },
+    {
+        'name': 'Mascot Header',
+        'src' : header,
+        'alt' : 'The header for the mascot page',
+        'description': 'Artist: TheBatFang'
+    },
+
+    {
+        'name': 'Morning Mimosa Suffering',
+        'src' : mimosa_suffering,
+        'alt' : 'Morning Mimosa suffering from success',
+        'description': 'Artist: Zajice'
+    },
+    {
+        'name': 'Cinemare Night',
+        'src' : "https://fair-filer.marefair.org/2025/news/introducing-cinemare-night.jpg",
+        'alt' : 'Introducing Cinemare Night',
+        'description': 'Artist: Spoonie',
+    },
+    {
+        'name': 'HarmonyCon Signage',
+        'src': HCSign,
+        'alt': 'HarmonyCon Signage',
+        'description': 'Artist: Spoonie',
+    },
+    {
+        'name': 'Postcard 2025 Front',
+        'src': postcard25,
+        'alt': 'Postcard 2025 Front',
+        'description': 'Artist: AnonTheAnon',
+    },
+    {
+        'name': 'Postcard 2025 Back',
+        'src': postcardBack25,
+        'alt': 'Postcard 2025 Back',
+        'description': 'Artist: AnonTheAnon',
+    },
+    {
+        'name': 'Fair Flyer A Card',
+        'src': FairFlyerACard,
+        'alt': 'Fair Flyer A Card',
+        'description': 'Artist: Lockheart',
+    },
+    {
+        'name': 'Fair Flyer B Card',
+        'src': FairFlyerBCard,
+        'alt': 'Fair Flyer B Card',
+        'description': 'Artist: Lockheart',
+    },
+    {
+        'name': 'Gigachad',
+        'src': gigachadRaw,
+        'alt': 'Gigachad',
+        'description': 'Artist: QuotePony',
+    },
+    {
+        'name': 'Fair Flyer Soon',
+        'src': soon,
+        'alt': 'Fair Flyer Soon',
+        'description': 'Artist: QuotePony',
+    },
+
+    {
+        'name': 'Pegasus 1',
+        'src': Pegasus1,
+        'alt': 'Pegasus 1',
+        'description': 'Artist: Welost',
+    },
+    {
+        'name': 'Pegasus 2',
+        'src': Pegasus2,
+        'alt': 'Pegasus 2',
+        'description': 'Artist: Welost',
+    },
+    {
+        'name': 'Pattern',
+        'src': patternRaw,
+        'alt': 'Pattern',
+        'description': 'Artist: AnonTheAnon',
+    },
+    {
+        'name': 'Payment Full',
+        'src': paymentFull,
+        'alt': 'Payment Full',
+        'description': 'Artist: TheBatFang',
+    },
+    {
+        'name': 'Alert',
+        'src': alert,
+        'alt': 'Alert',
+        'description': 'Artist: Mkogwheel',
+    },
+    {
+        'name': 'Venue',
+        'src': venue,
+        'alt': 'Venue',
+        'description': 'Artist: Eel',
+    },
+    {
+        'name': 'Ending',
+        'src': endingRaw,
+        'alt': 'Ending',
+        'description': 'Artist: QuotePony',
+    },
+
+    {
+        'name': 'News',
+        'src': news,
+        'alt': 'News Image',
+        'description': 'Artist: QuotePony',
+    },
+    {
+        'name': 'News Header',
+        'src': headerImage,
+        'alt': 'Header Image',
+        'description': 'Artist: QuotePony',
+    },
+    {
+        'name': 'Soiree with megaphone',
+        'src': soireeImage,
+        'alt': 'Soiree megaphone',
+        'description': 'Artist: QuotePony',
+    },
+
+    {
+        'name': 'Article 1',
+        'src': article1,
+        'alt': 'Article 1',
+        'description': 'Artist: QuotePony',
+    },
+    {
+        'name': 'Article 2',
+        'src': article2,
+        'alt': 'Article 2',
+        'description': 'Artist: QuotePony',
+    },
+
+    {
+        'name': 'Bored Soiree',
+        'src': boredSoiree,
+        'alt': 'Bored Soiree',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Bored Matinee',
+        'src': boredMatinee,
+        'alt': 'Bored Matinee',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Bored Fair Flyer',
+        'src': boredFairFlyer,
+        'alt': 'Bored Fair Flyer',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Bored Morning Mimosa',
+        'src': boredMorningMimosa,
+        'alt': 'Bored Morning Mimosa',
+        'description': 'Artist: Wenni',
+    },
+    {
+        'name': 'Mares Tired',
+        'src': maresTired,
+        'alt': 'Mares Tired',
+        'description': 'Artist: Sigil',
+    },
+    {
+        'name': 'Plaque',
+        'src': plaque,
+        'alt': 'Plaque',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Plaque Privacy',
+        'src': plaquePrivacy,
+        'alt': 'Plaque Privacy',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Post-It',
+        'src': postit,
+        'alt': 'Post-It',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Bottle',
+        'src': bottle,
+        'alt': 'Bottle',
+        'description': 'Artist: Dattebayo',
+    },
+
+    {
+        'name': 'About Us',
+        'src': about,
+        'alt': 'About Us',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'News Button',
+        'src': newsRaw,
+        'alt': 'News Button',
+        'description': 'Artist: QuotePony',
+    },
+    {
+        'name': 'News Button Hover',
+        'src': newsHoverRaw,
+        'alt': 'News Button Hover',
+        'description': 'Artist: QuotePony',
+    },
+    {
+        'name': 'Fair Flyer',
+        'src': fairFlyer,
+        'alt': 'Fair Flyer',
+        'description': 'Artist: FloralShitpost',
+    },
+
+    {
+        'name': 'Apply Flyer',
+        'src': apply,
+        'alt': 'Apply Flyer',
+        'description': 'Artist: AnonTheAnon',
+    },
+    {
+        'name': 'Apply Flyer Back',
+        'src': apply_back,
+        'alt': 'Apply Flyer Back',
+        'description': 'Artist: AnonTheAnon',
+    },
+    {
+        'name': 'Apply Front Panel',
+        'src': apply_front_l,
+        'alt': 'Apply Front Panel',
+        'description': 'Artist: AnonTheAnon',
+    },
+
+    {
+        'name': 'Contact Phone',
+        'src': contact_phone,
+        'alt': 'Contact Phone',
+        'description': 'Artist: Mkogwheel',
+    },
+    {
+        'name': 'Contact Flyer Full',
+        'src': contact_flyer_full,
+        'alt': 'Contact Flyer Full',
+        'description': 'Artist: Mkogwheel + QuotePony',
+    },
+    {
+        'name': 'Attendee Pull Tab',
+        'src': attendeePull,
+        'alt': 'Attendee Pull Tab',
+        'description': 'Artist: QuotePony + Mkogwheel',
+    },
+    {
+        'name': 'Charity Pull Tab',
+        'src': charityPull,
+        'alt': 'Charity Pull Tab',
+        'description': 'Artist: QuotePony + Mkogwheel',
+    },
+    {
+        'name': 'PR Pull Tab',
+        'src': prPull,
+        'alt': 'PR Pull Tab',
+        'description': 'Artist: QuotePony + Mkogwheel',
+    },
+    {
+        'name': 'HPIC Pull Tab',
+        'src': hpicPull,
+        'alt': 'HPIC Pull Tab',
+        'description': 'Artist: QuotePony + Mkogwheel',
+    },
+    {
+        'name': 'Tech Pull Tab',
+        'src': techPull,
+        'alt': 'Tech Pull Tab',
+        'description': 'Artist: TheBatFang + Mkogwheel',
+    },
+
+    {
+        'name': 'Register',
+        'src': registration,
+        'alt': 'Register',
+        'description': 'Artist: Seafood Dinner',
+    },
+    {
+        'name': 'Register Badge Header',
+        'src': badgHeader,
+        'alt': 'Register Badge Header',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'Spirit Badge Header',
+        'src': spiritBadgeHeader,
+        'alt': 'Spirit Badge Header',
+        'description': 'Artist: Eel',
+    },
+    {
+        'name': 'Fairgoer',
+        'src': fairgoer,
+        'alt': 'Fairgoer',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Mare Latecomer',
+        'src': lateCoomer,
+        'alt': 'Latecomer',
+        'description': 'Artist: Welost',
+    },
+    {
+        'name': 'Mare Supporter',
+        'src': Supporter,
+        'alt': 'Supporter',
+        'description': 'Artist: JayArr',
+    },
+    {
+        'name': 'Mare Enjoyer',
+        'src': Enjoyer,
+        'alt': 'Enjoyer',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'Mare Enthusiast',
+        'src': Enthusiast,
+        'alt': 'Enthusiast',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'Mare Admirer',
+        'src': Admirer,
+        'alt': 'Admirer',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'Mare Connoisseur',
+        'src': Connoisseur,
+        'alt': 'Connoisseur',
+        'description': 'Artist: FloralShitpost',
+    },
+    {
+        'name': 'Mare Aficionado',
+        'src': Aficionado,
+        'alt': 'Aficionado',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Mare Fanatic',
+        'src': Fanatic,
+        'alt': 'Fanatic',
+        'description': 'Artist: Dattebayo',
+    },
+    {
+        'name': 'Mare Schizo',
+        'src': Schizo,
+        'alt': 'Schizo',
+        'description': 'Artist: Dattebayo',
+        'format': 'gif', // For animated images
+        'frames': 2,
+    },
+    {
+        'name': 'Spirit Fairgoer',
+        'src': SpiritFairgoer,
+        'alt': 'Spirit Fairgoer',
+        'description': 'Artist: Eel',
+    },
+    {
+        'name': 'Spirit Latecomer',
+        'src': SpiritLatecoomer,
+        'alt': 'Spirit Latecomer',
+        'description': 'Artist: Eel',
+    },
+    {
+        'name': 'Spirit Supporter',
+        'src': SpiritSupporter,
+        'alt': 'Spirit Supporter',
+        'description': 'Artist: Eel',
+    },
+
+    // Knick Knacks
+    {
+        name: 'Fair Flyer Pin',
+        src: ffpin,
+        alt: 'Fair flyer pin',
+        description: 'Artist: TheBatFang',
+    },
+    {
+        name: 'Soiree Stare',
+        src: SStare,
+        alt: 'Soiree stare',
+        description: 'Artist: Welost',
+    },
+    {
+        name: 'Mare Fair Cereal',
+        src: cereal,
+        alt: 'Mare Fair cereal box art',
+        description: 'Artist: Seafood Dinner',
+    },
+    {
+        name: 'Matinee Pin',
+        src: mapin,
+        alt: 'Matinee pin',
+        description: 'Artist: TheBatFang',
+    },
+    {
+        name: 'Matinee Take This',
+        src: maTakeThis,
+        alt: 'Matinee Take This art',
+        description: 'Artist: JayArr',
+    },
+    {
+        name: 'Morning Mimosa Pin',
+        src: mopin,
+        alt: 'Morning Mimosa pin',
+        description: 'Artist: TheBatFang',
+    },
+    {
+        name: 'Nah I’d Win Mimosa',
+        src: win,
+        alt: 'Nah I’d Win Mimosa artwork',
+        description: 'Artist: JayArr',
+    },
+    {
+        name: 'Soiree Pin',
+        src: sopin,
+        alt: 'Soiree pin',
+        description: 'Artist: TheBatFang',
+    },
+    {
+        name: 'Squat Dyx On Paper',
+        src: dyx,
+        alt: 'Squat Dyx on paper',
+        description: 'Artist: JayArr',
+    },
+    {
+        name: 'Squat Nyx On Paper',
+        src: nyx,
+        alt: 'Squat Nyx on paper',
+        description: 'Artist: JayArr',
+    },
+    {
+        name: 'Swirly Mimosa',
+        src: mmSwirly,
+        alt: 'Swirly Mimosa artwork',
+        description: 'Artist: MKogWheel',
+    },
+    {
+        name: 'Addicted to Mares',
+        src: addicted,
+        alt: 'Addicted to Mares art',
+        description: 'Artist: Sigil',
+    },
+    {
+        name: 'Board Extras',
+        src: boardExtras,
+        alt: 'Extras on the board',
+        description: 'Artist: QuotePony',
+    },
+    {
+        name: 'Fair Pinn',
+        src: ffPin,
+        alt: 'Fair Pinn image',
+        description: 'Artist: AnonTheAnon',
+    },
+    {
+        name: 'Hello My Name Is Sticker',
+        src: nameSticker,
+        alt: 'Hello my name is sticker',
+        description: 'Artist: Eel',
+    },
+    {
+        name: 'Milkmare Note',
+        src: milkmare,
+        alt: 'Milkmare note',
+        description: 'Artist: Eel',
+    },
+    {
+        name: 'Sunbeam Filly Anon',
+        src: fillyBeam,
+        alt: 'Sunbeam filly anon image',
+        description: 'Artist: Eel',
+    },
+];
+
+// CREDIT, WORK BASED ON: https://github.com/mchcino/lightbox
+
+const rotDegree = [
+    -3, 2, -1, 3, -2, 1
+]
+---
+
+<Layout title="Scrapbook | Mare Fair 2025">
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <Back />
+    <div class="container flex flex-col items-center justify-center w-full mx-auto">
+        <a href="#ScrapbookHeader">
+            <Image
+                src={scrapbook_header}
+                format="avif"
+                alt="Scrapbook header"
+                width={800}
+                class="w-auto max-w-screen thumbnail-header"
+                transition:name="scrapbook"
+            />
+        </a>
+
+        <div class="content w-[90%] bg-[rgb(0,0,0,0.5)] sm:px-8 px-0 p-8 rounded-lg shadow-lg">
+            <ul class="flex flex-wrap justify-evenly items-center">
+                {images.map((image, index) => (
+                    <li class={`flex justify-center items-center ${index == 0 ? "absolute" : "relative" }`}> {/* Absolute will take the first dummy div out of the hierarchy */}
+                        {index !== 0 && ( // Skips the first image thumbnail since it would be the header
+                        <a href={`#${image.name.replace(/\s+/g, '')}`} class="" style={{ transform: `rotate(${rotDegree[index % rotDegree.length]}deg)` }}>
+                            {typeof image.src !== 'string' ?
+                            (
+                                <Image
+                                    src={image.src}
+                                    format={image.format === "gif" ? "avif" : image.format || "avif"}
+                                    alt={image.alt}
+                                    class="thumbnail"
+                                    {...(image.src.height > image.src.width ? { height: 300 / (image.frames || 1) } : { width: 300 / (image.frames || 1) })}
+                                />
+                                ) : image.format === 'webm' ? (
+                                <div class="relative inline-block thumbnail">
+                                    <video
+                                        src={image.src}
+                                        class="max-w-[300px] max-h-[300px]"
+                                        poster={image.poster}
+                                        preload="metadata"
+                                        muted
+                                        width={(image.width ?? 1) / (image.height ?? 1) * 300}
+                                        height="300"
+                                    />
+                                    <span class="absolute top-1 right-1 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-md">
+                                        Animated
+                                    </span>
+                                </div>
+                                ) : (
+                                <img
+                                    src={image.src}
+                                    alt={image.alt}
+                                    class="thumbnail"
+                                />
+                            )}
+                        </a>
+                        )}
+
+                        <div id={image.name.replace(/\s+/g, '')} class="overlay fixed inset-0 flex justify-center items-center bg-black bg-opacity-0 transition-all duration-800 z-10">
+                        <a id="" href="#main" class="out absolute w-screen h-screen"/>
+                            <div class="wrapper-content transform scale-0 h-screen py-24 relative flex flex-col w-[60%]">
+                                <a id="" href="#main" class="out absolute w-full h-full"/> {/* Close overlay for inner image */}
+                                {index > 0 && (
+                                    <a href={`#${images[index - 1].name.replace(/\s+/g, '')}`} class="previous absolute left-[-20%] transform text-white opacity-0 transition-opacity duration-800 delay-300">
+                                        <span class="material-symbols-outlined !text-5xl hover:scale-150 transition-transform">
+                                            arrow_back
+                                        </span>
+                                    </a>
+                                )}
+                                {typeof image.src !== 'string' ? (
+                                    <Image
+                                        src={image.src}
+                                        format={image.format || "png"}
+                                        loading="lazy"
+                                        alt={image.alt}
+                                        class="relative w-auto max-h-full object-contain mx-auto full-size"
+                                    />
+                                    ) : image.format === 'webm' ? (
+                                    <video
+                                        src={image.src}
+                                        poster={image.poster}
+                                        loop
+                                        muted
+                                        controls
+                                        class="relative w-auto h-full max-h-full object-contain mx-auto"
+                                    />
+                                    ) : (
+                                    <img
+                                        src={image.src}
+                                        alt={image.alt}
+                                        class="relative w-auto max-h-full object-contain mx-auto"
+                                    />
+                                )}
+                                {index < images.length - 1 && (
+                                    <a href={`#${images[index + 1].name.replace(/\s+/g, '')}`} class="next absolute right-[-20%] transform text-white opacity-0 transition-opacity duration-800 delay-300">
+                                        <span class="material-symbols-outlined !text-5xl hover:scale-150 transition-transform">
+                                            arrow_forward
+                                        </span>
+                                    </a>
+                                )}
+
+                                <p class="absolute left-0 bottom-7 text-white text-sm font-light opacity-0 text-shadow transition-opacity duration-800 delay-300">
+                                    {image.description}
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .thumbnail {
+        @apply max-w-[300px] max-h-[300px] filter drop-shadow-lg m-4 bg-[rgb(256,256,256,0.2)] rounded-lg hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] hover:shadow-violet-900 transition-all duration-300 hover:rotate-0 hover:scale-110;
+    }
+    .thumbnail-header {
+        @apply filter drop-shadow-lg transition-all duration-300 hover:scale-105;
+    }
+    .full-size {
+        @apply border border-white border-opacity-0 transition-colors duration-300 hover:border-opacity-30;
+    }
+
+    body {
+        background: #333;
+        font-size: 1.125rem;
+    }
+
+    .container h1 {
+        text-shadow: 4px 4px 1px black;
+    }
+
+    .container .content ul li a:hover .thumbs-name {
+        opacity: 1;
+        transform: rotate(360deg) scale(1);
+    }
+
+    .overlay {
+        pointer-events: none;
+        display: none;
+    }
+
+    .container .content ul li .overlay:target {
+        background: rgba(0, 0, 0, 0.9);
+        width: auto;
+        height: auto;
+        pointer-events: auto;
+        display: flex;
+    }
+
+    .container .content ul li .overlay:target .wrapper-content {
+        transform: scale(1);
+        display: flex;
+        justify-content: center;
+    }
+
+    .container .content ul li .overlay:target .wrapper-content img {
+        animation: fadeInOut 0.4s ease;
+    }
+
+    .container .content ul li .overlay:target .wrapper-content .previous,
+    .container .content ul li .overlay:target .wrapper-content .next {
+        animation: fade 0.4s ease 0.1s forwards;
+    }
+
+    .container .content ul li .overlay:target .wrapper-content p {
+        animation: slideUpFade 0.4s ease forwards;
+    }
+
+
+    @keyframes fadeInOut {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUpFade {
+        0% {
+            opacity: 0;
+            bottom: -1%;
+        }
+
+        100% {
+            opacity: 1;
+            bottom: 7%;
+        }
+    }
+
+    @keyframes fade {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    // Stop and reset video on return
+    // Not a critical JavaScript functionality so I'll let it pass the no js test.
+    const closeLinks = document.querySelectorAll('a.out');
+
+    closeLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            // Find any playing videos within the current overlay
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+    });
+</script>

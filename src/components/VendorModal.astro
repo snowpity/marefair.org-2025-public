@@ -1,0 +1,180 @@
+---
+// VendorModal.astro
+import { Image } from 'astro:assets';
+import { Icon } from "astro-icon/components";
+import { string } from 'astro:schema';
+
+export interface Props {
+  vendors: Array<{
+    name: string;
+    description: string;
+    icon?: any; // Astro Image asset
+    'icon-src'?: string;
+    'x-link'?: string | string[];
+    'deviantart-link'?: string | string[];
+    'tumblr-link'?: string | string[];
+    'instagram-link'?: string | string[];
+    'other-link'?: string | string[];
+  }>;
+  iconDefault?: any; // Astro Image asset for default icon
+  prefix: string;
+  map_prefix:string;
+  isArtistAlley:boolean;
+}
+
+const { vendors, iconDefault, prefix, map_prefix, isArtistAlley = false } = Astro.props;
+---
+
+{vendors.map((vendor) => (
+  <fragment>
+    <input type="radio" name={`${prefix}${map_prefix}-toggle`} id={`${vendor.name.replace(/\s+/g, '')}${map_prefix}-toggle`} class="hidden" />
+
+    <div id={`${vendor.name.replace(/\s+/g, '-')}`} class="fixed w-screen h-screen z-30 opacity-0 pointer-events-none bg-black bg-opacity-60 reddit-sans transition-[opacity,backdrop-filter] duration-200">
+      <label for={`default-${prefix}${map_prefix}-toggle`} class="absolute inset-0 w-full h-full cursor-pointer"></label>
+      <div class="absolute-centered bg-white overflow-y-auto w-[40rem] max-w-[100vw] max-h-[80vh] min-h-[25rem] h-auto rounded-xl p-10 shadow-xl shadow-black/30 flex flex-col justify-between">
+        {
+          (isArtistAlley ?
+          <label id="BACKTOAA" class="absolute top-0 left-0 cursor-pointer w-6 h-6 m-5 z-50" for="Artist-Alley-toggle">
+            <Icon name="mdi:arrow-left-bold-circle" class="text-2xl"/>
+          </label>
+          :
+          ""
+          )
+        }
+
+        <div>
+          {vendor.icon ? (
+            <Image src={vendor.icon} format="avif" alt={`${vendor.name} icon`} width={100} class="float-right shadow-md shadow-black/30 ml-2 mb-2"/>
+          ) : (vendor['icon-src'] && vendor['icon-src'].length > 0 ? (
+            <img src={vendor['icon-src']} alt={`${vendor.name} icon`} width="100" class="float-right shadow-md shadow-black/30 ml-2 mb-2"/>
+          ) : (iconDefault ? (
+            <img src={iconDefault} alt={`${vendor.name} icon`} width={100} height={100} class="float-right shadow-md shadow-black/30 ml-2 mb-2 pixelated-img"/>
+          ) : (
+            <div class="float-right w-[100px] h-[100px] bg-gray-200 shadow-md shadow-black/30 ml-2 mb-2 rounded"></div>
+          )))}
+
+          <h2 class="text-2xl font-bold mb-4">{vendor.name}</h2>
+          {vendor.description.split(/(\n\n)/).map((part) =>
+            part === "\n\n"
+              ? <div class="h-6"></div> // Spacing
+              : part.split("\n").map((line) =>
+                  line.trim() && <p class="indent-8">{line}</p>
+                )
+          )}
+        </div>
+
+        <div class="flex mt-4">
+          {/* X (Twitter) links */}
+          {Array.isArray(vendor['x-link']) ? (
+            vendor['x-link'].map((link, linkIndex) =>
+              link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+                  <Icon name="X" class="text-2xl"/>
+                  <span class="tooltip">Visit X {linkIndex > 0 ? `(${linkIndex + 1})` : ''}</span>
+                </a>
+              ) : null
+            )
+          ) : (vendor['x-link'] ? (
+            <a href={vendor['x-link']} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+              <Icon name="X" class="text-2xl"/>
+              <span class="tooltip">Visit X</span>
+            </a>
+          ) : null)}
+
+          {/* DeviantArt links */}
+          {Array.isArray(vendor['deviantart-link']) ? (
+            vendor['deviantart-link'].map((link, linkIndex) =>
+              link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+                  <Icon name="mdi:deviantart" class="text-2xl"/>
+                  <span class="tooltip">Visit DeviantArt {linkIndex > 0 ? `(${linkIndex + 1})` : ''}</span>
+                </a>
+              ) : null
+            )
+          ) : (vendor['deviantart-link'] ? (
+            <a href={vendor['deviantart-link']} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+              <Icon name="mdi:deviantart" class="text-2xl"/>
+              <span class="tooltip">Visit DeviantArt</span>
+            </a>
+          ) : null)}
+
+          {/* Tumblr links */}
+          {Array.isArray(vendor['tumblr-link']) ? (
+            vendor['tumblr-link'].map((link, linkIndex) =>
+              link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+                  <Icon name="tumblr" class="text-2xl"/>
+                  <span class="tooltip">Visit Tumblr {linkIndex > 0 ? `(${linkIndex + 1})` : ''}</span>
+                </a>
+              ) : null
+            )
+          ) : (vendor['tumblr-link'] ? (
+            <a href={vendor['tumblr-link']} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+              <Icon name="tumblr" class="text-2xl"/>
+              <span class="tooltip">Visit Tumblr</span>
+            </a>
+          ) : null)}
+
+          {/* Instagram links */}
+          {Array.isArray(vendor['instagram-link']) ? (
+            vendor['instagram-link'].map((link, linkIndex) =>
+              link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+                  <Icon name="mdi:instagram" class="text-2xl"/>
+                  <span class="tooltip">Visit Instagram {linkIndex > 0 ? `(${linkIndex + 1})` : ''}</span>
+                </a>
+              ) : null
+            )
+          ) : (vendor['instagram-link'] ? (
+            <a href={vendor['instagram-link']} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+              <Icon name="mdi:instagram" class="text-2xl"/>
+              <span class="tooltip">Visit Instagram</span>
+            </a>
+          ) : null)}
+
+          {/* Other/Website links */}
+          {Array.isArray(vendor['other-link']) ? (
+            vendor['other-link'].map((link, linkIndex) =>
+              link ? (
+                <a href={link} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+                  <Icon name="mdi:web" class="text-2xl"/>
+                  <span class="tooltip">Visit website {linkIndex > 0 ? `(${linkIndex + 1})` : ''}</span>
+                </a>
+              ) : null
+            )
+          ) : (vendor['other-link'] ? (
+            <a href={vendor['other-link']} target="_blank" rel="noopener noreferrer" class="tooltip-trigger relative mr-2">
+              <Icon name="mdi:web" class="text-2xl"/>
+              <span class="tooltip">Visit website</span>
+            </a>
+          ) : null)}
+        </div>
+      </div>
+    </div>
+  </fragment>
+))}
+
+<style>
+  .absolute-centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .pixelated-img {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  .tooltip-trigger {
+    position: relative;
+  }
+
+  /* Modal visibility toggle */
+  input[type="radio"]:checked + div {
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+import OrderButton from "./OrderButton.astro";
+export interface Props {
+    title: string;
+    notes: string;
+    soldOut: boolean;
+    price: string;
+    perks: string[];
+    link: string;
+    index: number;
+    imagePecentage: number;
+}
+
+const { title, price, perks, link, index, notes, soldOut = false, imagePecentage} = Astro.props;
+import { getImage } from "astro:assets";
+import atlasRaw from "@assets/register/13by1.png";
+
+const atlas = await getImage({ src: atlasRaw, format: "avif" });
+---
+<div class="mx-full flex flex-row gap-8 w-4/5 my-10" >
+    <div class={`atlas corkboard-item lg:block hidden`} style={`background-image: url(${atlas.src}); background-position: -${index * 100}%; margin-bottom: -${imagePecentage}%;`}></div>
+    <div class="flex flex-col text-white corkboard-item w-[100%] lg:mr-6 lg:-ml-10">
+        <!-- Title and price line -->
+        <div class="flex items-center gap-4 font-bold text-4xl caveat">
+            <span class="">{title}</span>
+            <div class="h-[1px] bg-white flex-grow"></div>
+            <span>{price}</span>
+        </div>
+        <div id="text-wrap" class="clearfix">
+            <div class={`atlas float-right lg:hidden block`} style={`background-image: url(${atlas.src}); background-position: -${index * 100}%;`}></div>
+            <span class="text-sm text-gray-300 block mb-4">*{notes}</span>
+            <!-- Bullet points -->
+            <ul class="list-disc list-inside reddit-sans">
+                {perks.map((perk: string) => {
+                    const emailLinkMatch = perk.match(/\[(.*?)\]\((mailto:.*?)\)/);
+
+                    if (emailLinkMatch) {
+                        const parts = perk.split(/\[(.*?)\]\((mailto:.*?)\)/);
+                        // Process bold text in parts
+                        const processedParts = parts.map(part => {
+                            const boldMatch = part.match(/\*\*(.*?)\*\*/);
+                            if (boldMatch) {
+                                return part.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                            }
+                            return part;
+                        });
+
+                        return (
+                            <li>
+                                {processedParts[0]}
+                                <a href={emailLinkMatch[2]} class="text-cyan-400">{emailLinkMatch[1]}</a>
+                                {processedParts[3]}
+                            </li>
+                        );
+                    }
+
+                    // Handle bold text only
+                    const boldMatch = perk.match(/\*\*(.*?)\*\*/);
+                    if (boldMatch) {
+                        const processedText = perk.replace(/\*\*(.*?)\*\*/g, '<strong class="text-green-400">$1</strong>');
+                        return <li set:html={processedText} />;
+                    }
+
+                    return <li>{perk}</li>;
+                })}
+            </ul>
+        </div>
+        <OrderButton link={link} soldOut={soldOut} />
+
+    </div>
+</div>
+
+<style>
+    li {
+        @apply pt-2;
+    }
+    :root {
+        --image-size: 300px;
+        --atlas-count: 13;
+    }
+    .atlas {
+        @apply aspect-square lg:mx-0 -mx-[5%];
+        width: var(--image-size);
+        height: var(--image-size);
+        background-size: calc(var(--atlas-count) * 100%);
+    }
+
+    .corkboard-item {
+        @apply -translate-y-56 mix-blend-screen;
+    }
+    .corkboard-item-cheap {
+        @apply -translate-y-56;
+    }
+
+    @media (max-width: 1023px) { /* Tailwind's medium */
+        .atlas {
+            max-width: var(--image-size);
+            max-height: var(--image-size);
+            width:40%;
+            height:auto;
+        }
+    }
+</style>

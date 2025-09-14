@@ -1,0 +1,238 @@
+---
+import { getImage } from "astro:assets";
+
+import { ClientRouter } from 'astro:transitions';
+import Footer from '@components/Footer.astro';
+import type { SEO } from '@data/SEO';
+import Seo from '@components/Seo.astro';
+
+import stainRaw from "@assets/corkboard/JUICE.png";
+const stain = await getImage({ src: stainRaw, format:"avif", height:350});
+
+interface Props {
+  title?: string;
+  backgroundClass?: string; // Optional class for various backgrounds
+  seo?: SEO;
+}
+
+const { title = "Mare Fair 2025", backgroundClass = 'bg-graffiti-brick-texture', seo }: Props = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Seo seo={seo} />
+    <meta name="darkreader-lock">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ClientRouter fallback="swap"/>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:wght@200;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+  </head>
+  <body class={`bg-repeat background bg-fixed ${backgroundClass} bg-[#352216]`}>
+    <div class="pointer-events-none absolute bg-repeat-x h-[350px] w-full opacity-30 -z-[1] mix-blend-multiply" style={`background-image: url(${stain.src});`}> </div>
+    <slot />
+    <div id="footer-space" class="sm:h-0 h-32" ></div>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+/* Font style */
+:root {
+  --brick-size: 1000px;
+  --brick-size-sm: 400px;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.neon-glow {
+  animation: flickering 10s linear infinite;
+  filter: drop-shadow(0 0 0.75rem crimson) drop-shadow(0 0 1.5rem rgba(220, 20, 60, 0.5));
+}
+
+@keyframes flickering {
+        0% {
+            opacity: 1;
+        }
+        10% {
+            opacity: 0.8;
+        }
+        49% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+        51% {
+            opacity: 1;
+        }
+        52% {
+            opacity: 0.1;
+        }
+        53% {
+            opacity: 1;
+        }
+        70% {
+            opacity: 1;
+        }
+        80% {
+            opacity: 0.8;
+        }
+        100% {
+        }
+    }
+
+@font-face {
+    font-family: 'Minecraft';
+    src: url('/fonts/MinecraftRegular-Bmg3.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Notepen';
+    src: url('/fonts/Notepen.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+  font-family: 'DSEG Classic Mini';
+  src: url('/fonts/DSEG7ClassicMini-Regular.woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.minecraft {
+    font-family: 'Minecraft';
+    font-style: normal;
+}
+
+.notepen {
+    font-family: 'Notepen';
+    font-style: normal;
+}
+
+.dm-serif-display {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.DESG {
+  font-family: 'DSEG Classic Mini';
+  font-style: normal;
+}
+
+.reddit-sans {
+    font-family: "Reddit Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+}
+
+.caveat {
+  font-family: "Caveat", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.merriweather-regular {
+    font-family: "Merriweather", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.rubik-800 {
+  font-family: "Rubik", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.rubik-600 {
+  font-family: "Rubik", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+.background {
+  /* what the fuck is this for*/
+  background-size: cover, cover, var(--brick-size);
+  background-position: center;
+}
+
+.bg-plain-brick-texture {
+  background-size: cover, var(--brick-size), var(--brick-size);
+  background-repeat: repeat, repeat, repeat;
+  background-attachment: fixed, scroll, scroll;
+  background-position: top, left top, left top;
+}
+
+.bg-graffiti-brick-texture { /* this odd graffiti size contraption is only required for pages with spacing issues with the scrollbar */
+  --graffiti-size: 3184px;
+  background-size: cover, var(--brick-size), var(--graffiti-size), var(--brick-size);
+  background-repeat: repeat, repeat, repeat-y, repeat;
+  background-attachment: fixed, scroll, scroll, scroll;
+  background-position: top, left top, calc(50vw - var(--graffiti-size)/2) top, left top;
+}
+
+.bg-plain-brick-texture-sm {
+  background-size: cover, var(--brick-size-sm), var(--brick-size-sm);
+  background-repeat: repeat, repeat, repeat;
+  background-attachment: fixed, scroll, scroll;
+  background-position: top, left top, left top;
+}
+
+/* .bg-white-paint-texture {
+  --graffiti-size: 3184px;
+  background-size: cover, var(--brick-size), var(--graffiti-size), var(--brick-size);
+  background-repeat: repeat, repeat, repeat-y, repeat;
+  background-attachment: fixed, scroll, scroll, scroll;
+  background-position: top, left top, calc(50vw - var(--graffiti-size)/2) top, left top;
+} */
+
+body {
+  position: relative; margin-right: calc(-1 * (100vw - 100%));
+}
+
+.bg-news-brick-texture {
+  background-size: cover, 1920px, var(--brick-size), var(--brick-size);
+  background-repeat: repeat, repeat-y, repeat, repeat;
+  background-attachment: fixed, scroll, scroll, scroll;
+  background-position: top, top, left top, left top;
+}
+</style>
+
+<script>
+  document.addEventListener("astro:after-swap", () =>
+    document
+      .querySelectorAll("video")
+      .forEach(
+        (v) =>
+          v.closest("[data-astro-transition-persist]") || (v.src = v.src)
+      )
+  );
+</script>

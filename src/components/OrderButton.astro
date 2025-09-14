@@ -1,0 +1,33 @@
+---
+
+export interface Props {
+  link: string;
+  soldOut: boolean;
+}
+
+// Use the props in the component
+const {
+  link,
+  soldOut= false,
+} = Astro.props;
+
+const isDisabled = soldOut === true || link === ''
+
+---
+
+<a href={!isDisabled ? link : '#'} class:list={['buyButton', {'buyButton-disabled': isDisabled }]}>
+  { soldOut
+   ? <b class="text-red-400">Sold out !</b>
+   : <span>ORDER</span>
+  }
+</a>
+
+
+<style>
+  .buyButton{
+    @apply lg:absolute relative lg:top-11 lg:right-0 mx-auto transition-all hover:bg-green-600 lg:px-3 px-5 lg:py-2 py-3 lg:mt-0 mt-5 rounded-md border-2;
+  }
+  .buyButton-disabled{
+    @apply pointer-events-none opacity-50;
+  }
+</style>

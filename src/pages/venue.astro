@@ -1,0 +1,398 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from '@layouts/Layout.astro';
+import Back from "@components/Back.astro";
+import VenueFold from "@components/VenueFold.astro";
+import Calculator from "@components/Calculator.astro";
+
+import RosenRaw from "@assets/venue/venue_photo.png";
+import Pegasus1 from "@assets/venue/mf_fairflyer_cloud.png";
+import Pegasus2 from "@assets/venue/mf_matinee_cloud.png";
+import patternRaw from "@assets/venue/pattern.png";
+import paymentFull from "@assets/venue/PaymentPanel_full.png";
+import paymentSquare from "@assets/venue/PaymentPanel_right.png";
+import alert from "@assets/venue/fair_flyer_stop.png";
+import alertDesktop from "@assets/venue/fair_flyer stop_desktop.png";
+import venue from "@assets/venue/venue_torn.png"
+import endingRaw from "@assets/venue/ending2.png"
+
+const Rosen = await getImage({ src: RosenRaw, format:"avif"});
+const pattern = await getImage({ src: patternRaw, format:"avif", width: 500});
+const Ending = await getImage({ src: endingRaw, format:"avif", width: 1200});
+
+const ReserveLink = "https://be.synxis.com/?adult=1&arrive=2025-09-04&chain=10237&child=0&currency=USD&depart=2025-09-08&group=GRP_MareFair_2025&hotel=69869&level=hotel&locale=en-US&productcurrency=USD&rooms=1&start=availresults";
+---
+<Layout title="Venue | Mare Fair 2025">
+    <Back />
+    <div id="venue-wrapper" class="relative w-[76rem] max-w-[100vw] h-auto mx-auto py-10 reddit-sans" style="filter: drop-shadow(0px 0px 0.5rem);" >
+        <div id="rosen-wrapper" class="relative w-full h-[32rem] bg-white bg-center bg-no-repeat bg-cover flex items-center reddit-sans" style={`background-image:url(${Rosen.src});`}>
+            <Image src={venue} transition:name="venue" format="avif" width="300" alt="Venue" class="absolute top-0 right-0 h-auto -m-10 rotate-[-3deg] lg:block hidden" />
+            <div class="text-left absolute top-0 left-0 p-10 text-white w-2/3 lg:block hidden">
+                <h3 class="text-5xl rubik-800"> ROSEN CENTRE HOTEL </h3>
+                <h2> 9840 International Dr <br> Orlando, FL 32819 </h2>
+                <div class="w-1/2 text-md"> We're very happy to announce our venue for Mare Fair 2025 will be Rosen Centre Hotel. <span style="font-weight: 800;">Please read the following information before continuing to book your reservation!</span></div>
+            </div>
+        </div>
+
+        <div id="rosen-wrapper-overflow" class="relative w-full h-[32rem] flex justify-center items-center bg-white lg:hidden block">
+            <VenueFold/>
+            <div class="top-0 left-0 p-10 text-black text-center mx-auto">
+            <h3 class="text-5xl rubik-800 gradient-text from-amber-700 to-red-900"> ROSEN CENTRE HOTEL </h3>
+            <h2> 9840 International Dr <br> Orlando, FL 32819 </h2>
+            <div class="text-md mx-auto"> We're very happy to announce our venue for Mare Fair 2025 will be Rosen Centre Hotel. Please read the following information before continuing to book your reservation! </div>
+            </div>
+        </div>
+
+        <div id="room-wrapper-overflow" class="relative w-full h-[32rem] bg-[length:400px] flex md:flex-row flex-col justify-center lg:items-start item-center bg-white lg:hidden block ">
+            <VenueFold/>
+            <div class="relative left-0 h-full w-[30%] md:block hidden" style={`clip-path: polygon(0% 0%, calc(100% - 5rem) 0%, 100% 100%, 0% 100%); background-image: url(${pattern.src}), linear-gradient(#38619f, #678e7b); background-blend-mode: multiply;`}/>
+            <div class="py-10 px-10 md:w-[70%] flex md:flex-row flex-col relative">
+                <div class="dialogue-box">
+                    <h1 class="gradient-text from-cyan-700 to-blue-900"> GUEST ROOMS </h1>
+                    <span> Guest room rates are <span style="font-weight:800;">$129 per night</span> for run of house (room with single king or double queen beds).</span>
+                    <ul class="pt-3">
+                        <li>
+                            Single king rooms can hold up to 3 people.
+                        </li>
+                        <li>
+                            Double queen rooms can hold up to 4 people.
+                        </li>
+                        <li>
+                            If there's three (3) occupants, there will be an additional $10 charge per night.
+                        </li>
+                        <li>
+                            If there's four (4) occupants, there will be an additional $20 charge per night.
+                        </li>
+                        <li>
+                            <span style="font-weight:800;">You are not guaranteed a room type</span> if you put in less than 4 guests, but you can specify a type under Special Requests and the hotel will do their best to get you the room type you want.
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="room-wrapper" class="relative w-full md:h-[32rem] h-[64rem] bg-[length:400px] flex md:flex-row flex-col justify-center lg:items-start item-center bg-white">
+            <VenueFold/>
+            <div class="absolute right-0 h-full w-80 md:block hidden" style={`clip-path: polygon(calc(5rem) 0%, 100% 0%, 100% 100%, 0% 100%); background-image: url(${pattern.src}), linear-gradient(#38619f, #678e7b); background-blend-mode: multiply;`}/>
+            <div class="absolute bottom-0 h-[30rem] w-full md:hidden block " style={`background-image: url(${pattern.src}), linear-gradient(#38619f, #678e7b); background-blend-mode: multiply;`}/>
+
+            <div class="w-auto py-10 px-10 flex md:flex-row flex-col relative">
+                <div class="dialogue-box lg:block hidden">
+                    <h1 class="gradient-text from-cyan-700 to-blue-900"> GUEST ROOMS </h1>
+                    <span> Guest room rates are <span style="font-weight:800;">$129 per night</span> for run of house (room with single king or double queen beds).</span>
+                    <ul class="pt-3">
+                        <li>
+                            Single king rooms can hold up to 3 people.
+                        </li>
+                        <li>
+                            Double queen rooms can hold up to 4 people.
+                        </li>
+                        <li>
+                            If there's three (3) occupants, there will be an additional $10 charge per night.
+                        </li>
+                        <li>
+                            If there's four (4) occupants, there will be an additional $20 charge per night.
+                        </li>
+                        <li>
+                            <span style="font-weight:800;">You are not guaranteed a room type</span> if you put in less than 4 guests, but you can specify a type under Special Requests and the hotel will do their best to get you the room type you want.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="dialogue-box lg:ml-6">
+                    <h1 class="gradient-text from-cyan-700 to-blue-900"> TAX RATE </h1>
+                    <span> A tax rate of 13.5% will also be added to your bill. This tax consists of the following components:</span>
+                    <ul class="pt-3">
+                        <li>
+                            Florida sales tax of 6%
+                        </li>
+                        <li>
+                            Orange County discretionary sales surtax of 0.5%
+                        </li>
+                        <li>
+                            Orange County Transient rental tax of 6%
+                        </li>
+                        <li>
+                            Orange County Convention Center Disrict fund of 1%
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="calculator" class="py-10 md:mx-6 mx-auto transition-all duration-200 lg:rotate-[5deg] hover:rotate-0 hover:drop-shadow-[0px_0px_1rem_rgba(0,0,0,0.5)] relative">
+                <Calculator/>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE MAP -->
+        <div id="mapdiv" class="relative w-full h-[32rem] bg-white group">
+            <div id="pegasi-wrapper" class="w-full h-full absolute overflow-hidden">
+                <Image src={Pegasus1} format="avif" alt="" class="pegasi top-0 left-0 h-[90%]" width={500}/>
+                <Image src={Pegasus2} format="avif" alt="" class="pegasi bottom-0 right-0 h-[75%]" width={500}/>
+            </div>
+            <VenueFold/>
+        </div>
+
+        <div id="payment-wrapper1" class="relative w-full h-[32rem] flex lg:flex-row flex-col lg:justify-start justify-center bg-white">
+            <VenueFold/>
+            <div class="h-full aspect-[34/44] lg:block hidden" style={`background-image: url(${pattern.src}), linear-gradient(#739d82, #879d6e); background-blend-mode: multiply; clip-path: polygon(0% 0%, 100% 0%, calc(100% - 12rem) 100%, 0% 100%);`}/>
+            <div class="h-[20%] w-full lg:hidden block" style={`background-image: url(${pattern.src}), linear-gradient(#739d82, #879d6e); background-blend-mode: multiply;`}/>
+
+            <div class="lg:pl-[4.5rem] lg:w-1/2 lg:mb-0 p-10">
+                <h1 class="text-[#3a5643]"> EXTRA FEES </h1>
+                <div>
+                    <ul>
+                        <li>You will <strong>not</strong> be charged a resort fee. </li>
+                        <li>Parking is $14 per day for hotel guests booked in our room block. </li>
+                        <li>Usage of the fitness center will cost $10 extra per day. Inquire at the front desk about lower upfront fees for fitness center access during your entire stay
+                            when you check in. </li>
+                    </ul>
+                </div>
+                <h1 class="text-[#3a5643] pt-6"> CHECK-IN </h1>
+                <div>
+                    <ul>
+                        <li>Check-in after 3pm, check-out by 11am. </li>
+                        <li>All guests arriving before 3pm will be accommodated as rooms become available. </li>
+                        <li>The Bell Captain's desk can arrange to check your baggage if you arrive early when rooms are unavailable or if you wish to attend functions on your departure day. </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="payment-wrapper2" class="relative w-full lg:h-[32rem] h-[64rem] flex lg:flex-row flex-col justify-center items-center bg-white">
+            <VenueFold/>
+            <Image src={paymentFull} format="avif" alt="" class="w-full h-auto object-contain lg:hidden block mt-auto" width={700} />
+            <div class="w-auto py-10 p-10 h-full">
+                <h1 class="text-[#567543]"> PAYMENT </h1>
+                <div>
+                    <span>The hotel requires that all reservations be <span style="font-weight:800;">secured with a guaranteed payment method.</span></span>
+                    <ul class="pt-3 pb-2">
+                        <li>Credit cards, debit cards, checks, and money orders are acceptable forms of guarantee and/or deposit. </li>
+                        <li>Five days prior to your arrival, a charge equal to one night plus tax will be processed on your credit/debit card if there is no deposit. </li>
+                        <li>Please be aware that an authorization on a debit card will reduce the funds available in your bank account at that time. </li>
+                    </ul>
+                    The hotel has a five-day individual guest room cancellation policy.
+                    <ul class="pt-3">
+                        <li>If you cancel less than five days prior to arrival, a charge equal to one night plus tax will be processed on your credit/debit card. </li>
+                        <li>If a deposit was provided to guarantee the reservation, it will be refunded only if the room is cancelled more than five days before arrival. </li>
+                    </ul>
+                </div>
+            </div>
+
+            <Image src={paymentSquare} format="avif" alt="" class="h-full lg:max-w-[60%] object-contain lg:block hidden " width={700} style="clip-path: polygon(calc(12rem) 0%, 100% 0%, 100% 100%, 0% 100%);"/>
+        </div>
+        <div id="housing-wrapper" class="relative w-full lg:h-[32rem] h-auto flex lg:flex-row flex-col justify-start bg-white">
+            <Image src={alert} format="avif" alt="" class="h-auto w-full aspect-video object-cover lg:hidden block" width={700}/>
+            <Image src={alertDesktop} format="avif" alt="" class="lg:h-full h-auto w-auto lg:max-w-[50%] object-contain lg:block hidden" width={700}/>
+            <div class="lg:w-1/2 lg:pl-4 p-10">
+                <h1 class="gradient-text from-pink-700 to-rose-900"> UNAUTHORIZED HOUSING </h1>
+                <div>Rosen Hotels & Resorts is aware of a number of organizations that target convention attendees and attempt to persuade them to book outside the official housing block.</div>
+                <div class="pt-3">While some of these are legitimate volume buying travel agents, <strong>the majority are unauthorized third parties.</strong></div>
+                <div>
+                    <p class="mb-2 pt-3"> Please be aware of the following warning signs: </p>
+                    <ul>
+                        <li><em>Solicitation calls</em>&mdash;Neither Rosen Hotels & Resorts, Snowpity, Inc., nor Mare Fair will ever call an attendee to solicit a reservation. </li>
+                        <li><em>Rates are too good to be true</em>&mdash;Anyone offering a room rate below the published event rate should be suspect. </li>
+                        <li><em>Scare tactics</em>&mdash;Unauthorized housing agents will often indicate that the venue is <q>almost sold out</q> and pressure you to <q>Book Now.</q></li>
+                        <li><em>Vendor target</em>&mdash;Many times, the targets of these organizations are vendors at the convention. </li>
+                    </ul>
+                </div>
+            </div>
+            <VenueFold/>
+        </div>
+
+        <div id="book-wrapper1" class="relative w-full h-[32rem] flex justify-center items-center bg-white bg-cover" style={`background-image: url(${Ending.src});`}>
+            <VenueFold/>
+        </div>
+
+        <div id="book-wrapper2" class="relative w-full h-[32rem] flex justify-center items-center bg-white">
+            <VenueFold/>
+            <div class="text-black text-center reddit-sans flex flex-col items-center">
+                <div class="text-[2.9rem] font-bold rubik-800 text-[#6e385f] bg-clip-text -mt-4 mb-2"> BOOK YOUR RESERVATION </div>
+                <p class="lg:text-xl lg:mb-20 mb-10 mx-14 sm:w-4/5 lg:w-[30rem] text-center">You can make a reservation by using the link below,
+                    or by calling the toll-free number <strong> 800-204-7234 </strong> or <strong> 407-996-9842 </strong> and mentioning you are with <br/> <strong>Snowpity, Inc., Mare Fair 2025. </strong>
+                </p>
+                <div class="rounded-lg py-4 px-12 text-3xl w-fit h-fit mx-auto bg-gradient-to-b from-[#6e385f] to-[#8c517b] transition-all duration-300 hover:scale-105 hover:drop-shadow-[0px_0px_1rem_rgba(88,28,135,0.5)]">
+                    <a class="text-white rubik-600" target="_blank" href={ReserveLink}>BOOK NOW</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</Layout>
+
+<style>
+    * {
+        line-height: 1.25;
+    }
+    .gradient-text {
+        @apply bg-gradient-to-b text-transparent bg-clip-text;
+    }
+    .pegasi{
+        @apply pointer-events-none absolute drop-shadow-lg w-auto group-hover:opacity-30 transition-opacity duration-300 z-50 lg:block hidden;
+    }
+    h1 {
+        @apply text-4xl font-bold mb-2;
+        font-family: 'Rubik', sans-serif;
+        font-weight: 800;
+    }
+    h2 {
+        @apply text-xl font-bold my-2;
+    }
+    ul {
+        @apply list-outside list-disc list-inside ml-5;
+    }
+    li {
+        @apply mb-2 ;
+    }
+    span {
+        @apply mb-2;
+    }
+    .dialogue-box{
+        @apply h-auto lg:w-[50%] w-full;
+    }
+</style>
+
+
+<script>
+    import 'ol/ol.css';
+    import Map from 'ol/Map';
+    import View from 'ol/View';
+    import TileLayer from 'ol/layer/Tile';
+    import OSM from 'ol/source/OSM';
+    import VectorLayer from 'ol/layer/Vector';
+    import VectorSource from 'ol/source/Vector';
+    import Feature from 'ol/Feature';
+    import Point from 'ol/geom/Point';
+    import { Icon, Style } from 'ol/style';
+    import Overlay from 'ol/Overlay';
+    import { fromLonLat } from 'ol/proj';
+
+    // Run the map initialization only after DOM content is loaded
+    document.addEventListener('astro:page-load', () => {
+        const map = new Map({
+            target: 'mapdiv',
+            layers: [
+                new TileLayer({ source: new OSM() })
+            ],
+            view: new View({
+                center: fromLonLat([-81.464213, 28.423665]), // Use EPSG:3857 coordinates for the map's center
+                zoom: 13, //17, // Initial zoom level
+            }),
+        });
+
+        /********* Marker shits below *********/
+
+        const MareFairMarker = "/map-markers/mf.png";
+        const AirportMarker = "/map-markers/airport.png";
+        const CinemaMarker = "/map-markers/cinema.png";
+        const WyndhamMarker = "/map-markers/mf-gray.png";
+        const UnknownMarker = "/map-markers/unknown.png";
+
+
+        const coordinates = [
+            /*
+            { name: 'Wawa1', coords: [-81.46667905607474, 28.449377014539657], marker: WawaMarker  },
+            { name: 'Wawa2', coords: [-81.48959312998564, 28.398952536241893], marker: WawaMarker  },
+            { name: 'Wawa3', coords: [-81.40403473775085, 28.440559503482145], marker: WawaMarker  },
+            { name: 'Wawa4', coords: [-81.50565758142397, 28.389127482024588], marker: WawaMarker  },
+            { name: 'Wawa5', coords: [-81.45740662053987, 28.405822957959643], marker: WawaMarker  },
+            { name: 'Wawa6', coords: [-81.4229010918283, 28.410916055346966], marker: WawaMarker  },
+            { name: 'Wawa7', coords: [-81.40369190957774, 28.390289714640115], marker: WawaMarker  },
+            { name: 'Wawa8', coords: [-81.39802106546831, 28.463719994322112], marker: WawaMarker  },
+            { name: 'Wawa9', coords: [-81.41863497308013, 28.49368192816505], marker: WawaMarker  },
+            */
+
+
+            { name: 'Wyndham', coords: [-81.467845, 28.448110], marker: WyndhamMarker },
+            { name: 'Orlando International Airport', coords: [-81.31479, 28.41405], marker: AirportMarker  },
+            { name: 'Sanford International Airport', coords: [-81.23596, 28.77552], marker: AirportMarker  },
+            { name: 'Orlando Executive Airport', coords: [-81.33284, 28.54617], marker: AirportMarker  },
+            { name: 'Epic Theatre', coords: [-81.3049543, 28.4638764], marker: CinemaMarker  },
+            { name: 'Equestria', coords: [28.3431793, -25.7594954], marker: UnknownMarker  },
+            { name: 'Brony', coords: [19.41388432104162, 52.13569114509416], marker: UnknownMarker  },
+            { name: 'Marefair, UK', coords: [-0.902667635636463, 52.23683818114854], marker: UnknownMarker  },
+            { name: 'Marefair Lane, SC', coords: [-82.30024303170644, 34.70498889246434], marker: UnknownMarker  },
+            { name: 'Mare Island', coords: [167.98698484298214, -21.51571900295062], marker: UnknownMarker },
+            { name: 'Rosen Centre', coords: [-81.464213, 28.423665], marker: MareFairMarker }, // Mare Fair should be last to renders on top of everything else
+
+            // Add more markers here
+        ];
+
+        const markers = coordinates.map(({ name, coords, marker }) => {
+            const feature = new Feature({
+            geometry: new Point(fromLonLat(coords)),
+            name: name,
+            });
+            feature.setStyle(
+            new Style({
+            image: new Icon({
+            anchor: [0.5, 1],
+            src: marker,
+            }),
+            })
+            );
+            return feature;
+        });
+
+        // Create a vector source and add the markers to it
+        const vectorSource = new VectorSource({
+            features: markers,
+        });
+
+        // Create a vector layer for the markers and add it to the map
+        const markerLayer = new VectorLayer({
+            source: vectorSource,
+        });
+
+        map.addLayer(markerLayer);
+
+        // Create an overlay for the popup
+        const popup = document.createElement('div');
+        popup.className = 'popup';
+        document.body.appendChild(popup);
+
+        const overlay = new Overlay({
+            element: popup,
+            positioning: 'bottom-center',
+            stopEvent: false,
+            offset: [0, -50],
+        });
+
+        popup.style.backgroundColor = 'white';
+        popup.style.border = '1px solid black';
+        popup.style.padding = '10px';
+        popup.style.borderRadius = '5px';
+        popup.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+
+
+        map.addOverlay(overlay);
+
+        // Add a click handler to hide the popup when clicking away
+        map.on('click', function (event) {
+            const feature = map.forEachFeatureAtPixel(event.pixel, function (feature) {
+            return feature;
+            });
+
+            // Either click off or click on the marker to disable the popup
+            if (feature && popup.innerHTML != feature.get('name'))
+            {
+                const geometry = feature.getGeometry();
+                if (geometry && 'getCoordinates' in geometry) {
+                    const coordinates = (geometry as Point).getCoordinates();
+                    overlay.setPosition(coordinates);
+                    popup.innerHTML = feature.get('name');
+                    popup.style.display = 'block';
+                }
+            }
+            else
+            {
+                popup.style.display = 'none';
+                popup.innerHTML = '';
+            }
+        });
+        });
+</script>

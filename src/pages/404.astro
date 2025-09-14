@@ -1,0 +1,499 @@
+---
+import { Image } from "astro:assets";
+import Layout from '@layouts/Layout.astro';
+import Back from '@components/Back.astro';
+
+import img404 from "@assets/404/Add_Mare_Fair_to_Orlando.png"
+---
+<Layout title="404 | Mare Fair 2025">
+    <Back />
+    <main id="noJS-404" class="w-screen h-screen display items-center justify-center" style="display: flex;">
+        <Image src={img404} format="avif" alt="404" width={img404.width}/>
+    </main>
+    <main id='JS-404' class="w-screen h-screen items-center justify-center" style="display: none;">
+        <div id="404-container" class="w-4/5 h-4/5 bg-gradient-to-b from-cyan-100 to-cyan-600 rounded-3xl overflow-hidden" style=`filter: drop-shadow(5px 5px 0.75rem);`>
+            <canvas id="gameCanvas" class="w-full h-full chromatic"></canvas>
+            <div id="scanline" class="pointer-events-none absolute h-full w-full top-0 ease-linear">
+                <div class="h-10" style="background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%)"> </div>
+            </div>
+            <div id="overlay"  class="pointer-events-none absolute inset-0" style="background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%;"></div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    #scanline {
+        animation: scanLine 3s infinite;
+    }
+    @keyframes scanLine {
+        0% {
+            transform:translateY(0);
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.02;
+        }
+        100% {
+            transform:translateY(100%);
+            opacity: 0;
+        }
+    }
+    .chromatic {
+        filter: url(#chromatic);
+    }
+</style>
+
+<svg width="0" height="0">
+    <filter id="chromatic">
+        <!-- Red channel offset -->
+        <feColorMatrix type="matrix"
+            result="red_"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 1 0"/>
+        <feOffset in="red_" dx="1.0" dy="0" result="red">
+            <animate attributeName="dx" values="1.0; 0; 1.0" dur="1s" repeatCount="indefinite" />
+        </feOffset>
+
+        <!-- Blue channel offset -->
+        <feColorMatrix type="matrix"
+            in="SourceGraphic"
+            result="blue_"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 1 0"/>
+        <feOffset in="blue_" dx="-2" dy="0" result="blue">
+            <animate attributeName="dx" values="-2; 0; -2" dur="0.5s" repeatCount="indefinite" />
+        </feOffset>
+
+        <!-- Blend the channels -->
+        <feBlend mode="screen" in="red" in2="blue" />
+    </filter>
+</svg>
+
+
+
+<script>
+    // Javascript vanguard
+    const gameDiv = document.getElementById("JS-404") as HTMLElement;
+    const noJSDiv = document.getElementById("noJS-404") as HTMLElement;
+
+    gameDiv.style.display = "flex";
+    noJSDiv.style.display = "none";
+
+
+    let lastFrameTime = 0;
+    const targetFrameRate = 60; // frame capped on all devices
+    const frameDuration = 1000 / targetFrameRate;
+
+    const birdImg = new Image();
+    birdImg.src = '/404/FairFlyer.png';
+
+    const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
+
+
+    // Use ResizeObserver for efficient canvas resizing
+    const resizeObserver = new ResizeObserver(entries => {
+        for (const entry of entries) {
+            const { width, height } = entry.contentRect;
+            canvas.width = width;
+            canvas.height = height;
+            // Update bird starting position
+            bird.x = (canvas.width / 2) - bird.width / 2;
+            bird.y = canvas.height / 2;
+            bird.starting_x = 50;
+        }
+    });
+
+    resizeObserver.observe(canvas);
+
+    // Game variables
+
+    const bird = {
+        width: 100,
+        height: 100,
+        x: (canvas.width / 2) - 100 / 2,
+        y: canvas.height / 2,
+        starting_x: 50,
+        gravity: 0.6,
+        lift: -10,
+        velocity: 0,
+        transitionSpeed: 15
+    };
+
+    // Optimized pipe pool system
+    const pipePool: any[] = [];
+    const activePipes: any[] = [];
+    const maxActivePipes = 20;
+    const maxPoolSize = 24;
+
+    const pipeWidth = 50;
+    const pipeGap = 350;
+    let frame = 0;
+    let score = 0;
+    let gameOver = false;
+    let gameStarted = false;
+    let isTransitioning = false;
+
+    let speedMultiplier = 1;
+
+    // Cache font settings to avoid repeated string concatenation
+    const FONT_SMALL = "30px 'Minecraft'";
+    const FONT_LARGE = "60px 'Minecraft'";
+
+    function drawBird() {
+        ctx.imageSmoothingEnabled = false;
+
+        // Calculate rotation based on velocity
+        const maxRotation = Math.PI / 6; // 30 degrees max
+        const rotationSpeed = 0.05;
+        let rotation = bird.velocity * rotationSpeed;
+
+        // Clamp rotation to max values
+        rotation = Math.max(-maxRotation, Math.min(maxRotation, rotation));
+
+        // Save the current transformation matrix
+        ctx.save();
+
+        // Move to bird center, rotate, then draw
+        const centerX = bird.x + bird.width / 2;
+        const centerY = bird.y + bird.height / 2;
+
+        ctx.translate(centerX, centerY);
+        if(!isTransitioning) // She looks kinda weird rotating in the same spot at the start. Let's not have that
+            ctx.rotate(rotation);
+        ctx.drawImage(birdImg, -bird.width / 2, -bird.height / 2, bird.width, bird.height);
+
+        // Restore the original transformation matrix
+        ctx.restore();
+    }
+
+    function updateTransition() {
+        if (bird.x > bird.starting_x) {
+            bird.x -= bird.transitionSpeed;
+            if (bird.x <= bird.starting_x) {
+                bird.x = bird.starting_x;
+                isTransitioning = false;
+                gameStarted = true;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    function createPipe(x: number, topHeight: number) {
+        return {
+            x: x,
+            top: topHeight,
+            bottom: canvas.height - topHeight - pipeGap,
+            scored: false
+        };
+    }
+
+    function spawnPipe() {
+        if (activePipes.length >= maxActivePipes) return;
+
+        const topHeight = Math.random() * (canvas.height - pipeGap - 100) + 50;
+
+        let pipe;
+        if (pipePool.length > 0) {
+            pipe = pipePool.pop();
+            pipe.x = canvas.width;
+            pipe.top = topHeight;
+            pipe.bottom = canvas.height - topHeight - pipeGap;
+            pipe.scored = false;
+        } else {
+            pipe = createPipe(canvas.width, topHeight);
+        }
+
+        activePipes.push(pipe);
+    }
+
+
+    function checkCollision() {
+        // Reduce hitbox by adding padding to bird boundaries
+        const hitboxPadding = 20; // Adjust this value to make hitbox smaller/larger
+        const birdLeft = bird.x + hitboxPadding;
+        const birdRight = bird.x + bird.width - hitboxPadding;
+        const birdTop = bird.y + hitboxPadding;
+        const birdBottom = bird.y + bird.height - hitboxPadding;
+
+        // Use for loop instead of for...of for better performance
+        for (let i = 0; i < activePipes.length; i++) {
+            const pipe = activePipes[i];
+            if (
+                birdLeft < pipe.x + pipeWidth &&
+                birdRight > pipe.x &&
+                (birdTop < pipe.top || birdBottom > canvas.height - pipe.bottom)
+            ) {
+                return true; // Collision detected
+            }
+        }
+        return false; // No collision
+    }
+
+    function drawPipes() {
+        ctx.fillStyle = "green";
+        // Use traditional for loop for better performance
+        for (let i = 0; i < activePipes.length; i++) {
+            const pipe = activePipes[i];
+            // Top pipe
+            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
+            // Bottom pipe
+            ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipeWidth, pipe.bottom);
+        }
+    }
+
+    function updateBird() {
+        bird.velocity += bird.gravity //* speedMultiplier; // Gravity increases with speedMultiplier
+        bird.y += bird.velocity;
+
+        if (bird.y + bird.height > canvas.height || bird.y < 0) {
+            endGame();
+        }
+    }
+
+    let bobAmount = 20; // Maximum pixels to bob up and down
+    let bobSpeed = 0.003; // Speed of the bobbing motion
+
+    function bobbingBird() {
+        const offset = Math.sin(Date.now() * bobSpeed) * bobAmount;
+
+        // Apply the offset to the bird's center position
+        bird.y = (canvas.height / 2) + offset;
+    }
+
+    function updatePipes() {
+        const pipeSpeed = 2 * speedMultiplier;
+
+        // Update pipes in reverse order to safely remove them
+        for (let i = activePipes.length - 1; i >= 0; i--) {
+            const pipe = activePipes[i];
+            pipe.x -= pipeSpeed;
+
+            // Score check
+            if (!pipe.scored && pipe.x + pipeWidth < bird.x) {
+                score++;
+                pipe.scored = true;
+            }
+
+            // Remove pipes that are off-screen
+            if (pipe.x + pipeWidth <= 0) {
+                // Remove from active pipes
+                activePipes.splice(i, 1);
+
+                // Return to pool if pool isn't full
+                if (pipePool.length < maxPoolSize) {
+                    pipePool.push(pipe);
+                }
+            }
+        }
+    }
+
+    // Cache text metrics to avoid repeated calculations
+    let cachedScoreText = "";
+    let cachedScoreWidth = 0;
+
+    function drawScore() {
+        ctx.fillStyle = "black";
+        ctx.font = FONT_SMALL;
+
+        const scoreText = `Score: ${score}`;
+        if (scoreText !== cachedScoreText) {
+            cachedScoreText = scoreText;
+            cachedScoreWidth = ctx.measureText(scoreText).width;
+        }
+
+        ctx.fillText(scoreText, 10, 40);
+    }
+
+    function endGame() {
+        gameOver = true;
+        ctx.fillStyle = "red";
+        ctx.font = FONT_LARGE;
+
+        const gameOverText = "Game Over";
+        const textWidth = ctx.measureText(gameOverText).width;
+        const x = (canvas.width - textWidth) / 2;
+        const y = canvas.height / 2;
+
+        ctx.fillText(gameOverText, x, y);
+
+        // Add restart instruction
+        ctx.fillStyle = "white";
+        ctx.font = canvas.width < 400 ? "20px 'Minecraft'" : "30px 'Minecraft'";
+        const restartText = "Click or Press Any Key to Restart";
+        const restartWidth = ctx.measureText(restartText).width;
+        const restartX = (canvas.width - restartWidth) / 2;
+        ctx.fillText(restartText, restartX, y + 80);
+    }
+
+    function restartGame() {
+        // Reset all game variables
+        gameOver = false;
+        gameStarted = true;
+        isTransitioning = true;
+        frame = 0;
+        score = 0;
+        speedMultiplier = 1;
+
+        // Reset bird
+        bird.x = (canvas.width / 2) - bird.width / 2;
+        bird.y = canvas.height / 2;
+        bird.velocity = 0;
+
+        // Clear all pipes
+        activePipes.length = 0;
+        pipePool.length = 0;
+
+        // Clear cached text
+        cachedScoreText = "";
+        cached404Metrics.font = "";
+
+        // Restart game loop
+        gameLoop();
+    }
+
+    // Cache text measurements for 404 text
+    let cached404Metrics = {
+        width: 0,
+        font: "",
+        fairFlyerWidth: 0,
+        aimlessWidth: 0,
+        text404Width: 0
+    };
+
+    function text404() {
+        ctx.fillStyle = "red";
+        const font = canvas.width < 400 ? FONT_SMALL : FONT_LARGE;
+
+        // Only recalculate if font changed
+        if (cached404Metrics.font !== font) {
+            ctx.font = font;
+            cached404Metrics.font = font;
+            cached404Metrics.fairFlyerWidth = ctx.measureText("Fair Flyer").width;
+            cached404Metrics.aimlessWidth = ctx.measureText("Wanders Aimlessly").width;
+            cached404Metrics.text404Width = ctx.measureText("404").width;
+        } else {
+            ctx.font = font;
+        }
+
+        const xFlyer = (canvas.width - cached404Metrics.fairFlyerWidth) / 2;
+        const xAimless = (canvas.width - cached404Metrics.aimlessWidth) / 2;
+        const x404 = (canvas.width - cached404Metrics.text404Width) / 2;
+
+        // Calculate the x and y position to center the text
+        const y = canvas.height / 4;
+
+        ctx.fillText("Fair Flyer", xFlyer, y - 30);
+        ctx.fillText("Wanders Aimlessly", xAimless, y + 30);
+        ctx.fillText("404", x404, y * 3 + 100);
+    }
+
+
+    function updateDifficulty() {
+        if (frame % 60 === 0) { // Every 60 frames (~1 seconds)
+            speedMultiplier += 0.1; // Gradually increase the difficulty
+        }
+    }
+
+    function gameLoop() {
+        if (gameOver) return;
+
+        const timeElapsed = Date.now() - lastFrameTime;
+
+        // Only update game logic if enough time has passed
+        if (timeElapsed >= frameDuration) {
+            lastFrameTime = Date.now();
+
+            if (!gameStarted) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBird();
+                text404();
+                bobbingBird();
+            } else if (isTransitioning) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBird();
+                updateTransition();
+            }
+
+            if (gameStarted && !isTransitioning) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Now the pipe comes out faster every 1 seconds
+                const pipeSpawnTimeDecrease = speedMultiplier - 1;
+                if (frame % (240 - Math.floor(pipeSpawnTimeDecrease * 10)) === 0) spawnPipe();
+
+                drawBird();
+                drawPipes();
+                drawScore();
+                updateBird();
+                updatePipes();
+                updateDifficulty();
+
+                if (checkCollision()) endGame();
+            }
+
+            ++frame;
+        }
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Start game on click
+    function isClickOnBird(clickX: number, clickY: number) {
+        return (
+            clickX >= bird.x &&
+            clickX <= bird.x + bird.width &&
+            clickY >= bird.y &&
+            clickY <= bird.y + bird.height
+        );
+    }
+
+    canvas.addEventListener("click", (event: MouseEvent) => {
+        if (gameOver) {
+            restartGame();
+            return;
+        }
+
+        // Get click coordinates relative to canvas
+        const rect = canvas.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const clickY = event.clientY - rect.top;
+
+        // Scale coordinates if canvas is sized differently from its drawing dimensions
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const scaledX = clickX * scaleX;
+        const scaledY = clickY * scaleY;
+
+        if (!gameStarted && !isTransitioning)
+        {
+            if (isClickOnBird(scaledX, scaledY)) {
+                isTransitioning = true;
+                gameStarted = true;
+            }
+        } // Otherwise reuse for game input
+        else if (gameStarted)
+            bird.velocity = bird.lift;
+    });
+
+    // Handle user input
+    window.addEventListener("keydown", () => {
+        if (gameOver) {
+            restartGame();
+            return;
+        }
+        if (!gameStarted)
+            return;
+        bird.velocity = bird.lift;
+    });
+
+    // Start the game
+    gameLoop();
+</script>

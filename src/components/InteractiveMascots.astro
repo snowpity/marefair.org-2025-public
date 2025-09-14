@@ -1,0 +1,95 @@
+---
+interface Mascot {
+  name: string;
+  image: string;
+  description: string;
+  position: { top: string; left: string };
+}
+
+interface Props {
+  mascots: Mascot[];
+}
+
+const { mascots } = Astro.props;
+
+---
+
+<div class="relative min-h-screen">
+  <!-- Background Image -->
+  <img
+    src="@assets/backgrounds/bar-seats.jpg"
+    alt="Bar Seats"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
+
+  <!-- Mascot Images -->
+  {mascots.map((mascot, index) => (
+    <a
+      href={`#mascot-${index}`}
+      class="mascot-image absolute cursor-pointer transform transition-transform duration-200 hover:scale-105"
+      style={`top: ${mascot.position.top}; left: ${mascot.position.left};`}
+    >
+      <img
+        src={mascot.image}
+        alt={mascot.name}
+        class="w-32 h-auto"
+      />
+    </a>
+  ))}
+
+  <!-- Mascot Modals -->
+  {mascots.map((mascot, index) => (
+    <div id={`mascot-${index}`} class="modal">
+      <div class="modal-content">
+        <a href="#" class="modal-close">&times;</a>
+        <img src={mascot.image} alt={mascot.name} class="w-full h-auto rounded-md mb-4" />
+        <h2 class="text-2xl font-bold mb-2">{mascot.name}</h2>
+        <p class="text-gray-700">{mascot.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  /* Modal styling */
+  .modal {
+    display: none;
+  }
+
+  .modal:target {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 1rem;
+    position: relative;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: #aaa;
+    text-decoration: none;
+  }
+
+  .modal-close:hover {
+    color: #000;
+  }
+</style>

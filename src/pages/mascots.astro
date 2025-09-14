@@ -1,0 +1,795 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+import drinks from "@assets/mascots/Background_drinks.png";
+import bar from "@assets/mascots/Background_bar.png";
+import header from "@assets/mascots/Header.png";
+
+import modalFF_mobile from "@assets/mascots/dialog_mobile_ff.png";
+import modalMA_mobile from "@assets/mascots/dialog_mobile_ma.png";
+import modalMM_mobile from "@assets/mascots/dialog_mobile_mm.png";
+import modalSO_mobile from "@assets/mascots/dialog_mobile_so.png";
+import modalFR_mobile from "@assets/mascots/dialog_mobile_fr.png";
+
+import modalFF from "@assets/mascots/dialog_ff.png";
+import modalMA from "@assets/mascots/dialog_ma.png";
+import modalMM from "@assets/mascots/dialog_mm.png";
+import modalSO from "@assets/mascots/dialog_so.png";
+import modalFR from "@assets/mascots/dialog_fr.png";
+
+import Bartender from "@assets/mascots/barkeep_idle.webp";
+
+import { Icon } from "astro-icon/components";
+
+// IMPORTANT: SWITCH THIS WHEN IT'S TIME TO REVEAL THE MASCOT
+const isMascotRevealed = true;
+
+const modal = [
+    {
+        id: "vid1",
+        name: "Soirée",
+        description:
+            ` Soirée might always look like she'd rather be elsewhere, but there's much more to the earth pony than meets the eye. Far more reserved compared to Matinée, her twin sister, she tends to adopt a sardonic and somewhat angsty perspective on things. Her way of speaking her mind is as blunt as a hammer, and it doesn't quite match the grace her name suggests. Yet, beneath her seemingly intimidating exterior lies a mare brimming with passion. She'll try to hide it, but at the heart of it all, she adores performing. In time, you'll notice her as the one singing with the most vigor or dancing with the greatest joy at any party.
+              Her cosplay isn't a bid for attention—it's a form of genuine self-expression. When she accompanies Fair Flyer to events, that's when her true brilliance shines through.
+            `,
+        src: "https://fair-filer.marefair.org/2025/mascot/Soiree_Idle.webm",
+        srcSelected: "https://fair-filer.marefair.org/2025/mascot/Soiree_IdleSelected.webm",
+        modalDesktop: modalSO,
+        modalMobile: modalSO_mobile,
+    },
+    {
+        id: "vid2",
+        name: "Fair Flyer",
+        description:
+            ` Fair Flyer is nothing short of a maestro in her field, constantly seeking opportunities to put on spectacular conventions for scores of ponies to enjoy. Her special talent shines in getting events off the ground, transforming mere gatherings into memorable experiences that resonate deeply with everypony within a ten nautical mile radius. Soaring with boundless passion and backed by a hoof-picked team of con-loving ponies, she's committed to organizing an unforgettable get-together that'll certainly be the talk of the town!
+              The sight of ponies thoroughly reveling in the moment, radiating genuine happiness, is what sets her world alight, fueling her eagerness to bring Mare Fair back this year. With her unwavering determination, she's returning to Orlando to craft enduring memories that will linger long in the hearts of all who attend!
+            `,
+        src: "https://fair-filer.marefair.org/2025/mascot/FairFlyer_Idle.webm",
+        srcSelected: "https://fair-filer.marefair.org/2025/mascot/FairFlyer_IdleSelected.webm",
+        modalDesktop: modalFF,
+        modalMobile: modalFF_mobile,
+    },
+    {
+        id: "vid3",
+        name: "Morning Mimosa",
+        description:
+            ` Hailing from the sunny state of Florida, Morning Mimosa is set to help host another unforgettable extravaganza right in her own backyard—a third Mare Fair! A charming blend of nerdy and eccentric, this earth pony can be a real hoof-ful. Don't be fooled by her unassuming appearance, though! Beneath her seemingly reserved exterior is a true wild card, ever ready to dive into unforeseen adventures (which she'll undoubtably ramble on about for months on end). To put it briefly, if somepony offered her 20 bucks to wrestle a gator...
+              She's getting that 20 bucks.
+              Around others, she's unmistakably the nerd that everypony's already familiar with. But once the lights dim and the festivities commence, prepare to be captivated by an entirely different mare...
+            `,
+        src: "https://fair-filer.marefair.org/2025/mascot/Mimosa_Idle.webm",
+        srcSelected: "https://fair-filer.marefair.org/2025/mascot/Mimosa_IdleSelected.webm",
+        modalDesktop: modalMM,
+        modalMobile: modalMM_mobile,
+    },
+    {
+        id: "vid4",
+        name: "Matinée",
+        description:
+            ` Matinée is a bubbly pegasus with a passion for cosplay! She loves putting on a show and spreading joy with her creative outfits. Ever the excitable mare, she savors the fun and cherishes the moments when she succeeds in getting somepony to break out of their shell. Occasionally, she can go a bit overboard, impulsively putting anypony into the limelight, but her intentions are always pure and kind-hearted.
+              Alongside her twin sister, Soirée, she's always there to assist her good friend, Fair Flyer, with various events. These occasions are perfect for her to bring happy smiles and show off her array of dazzling costumes!
+            `,
+        src: "https://fair-filer.marefair.org/2025/mascot/Matinee_Idle.webm",
+        srcSelected: "https://fair-filer.marefair.org/2025/mascot/Matinee_IdleSelected.webm",
+        modalDesktop: modalMA,
+        modalMobile: modalMA_mobile,
+    },
+    {
+        id: "vid5",
+        name: "Fun Raiser",
+        description:
+            ` Fun Raiser only recently joined our menagerie of mascots, but she’s come swinging out the gate with helping hooves and optimism to spare!
+              Specializing in connecting ponies who need things with others who can provide them, she’s quickly shown how talented she is and become a core part of the group. Ever eager to satisfy, while also showing off just how skilled she is, Fun Raiser can pull together strings like no other.
+              When the ruckus revives for late night parties, she unknowingly turns out to be quite the bartender! Albeit she doesn’t have any real experience throwing together drinks, she can mix up a cocktail like a seasoned mixologist—even if she simply giggles at her nickname “Bar Mare”
+            `,
+        src: "https://fair-filer.marefair.org/2025/mascot/Fun_Raiser_Idle.webm",
+        srcSelected: "https://fair-filer.marefair.org/2025/mascot/Fun_Raiser_IdleSelected.webm",
+        modalDesktop: modalFR,
+        modalMobile: modalFR_mobile,
+    },
+]
+---
+<Layout title="Meet our Mascots | Mare Fair 2025" backgroundClass="bg-plain-brick-texture-sm">
+    <Back />
+    <div id="content-wrapper" class="min-h-screen flex items-center sm:justify-center sm:overflow-x-hidden overflow-y-hidden overscroll-none sm:snap-none snap-x snap-mandatory">
+        <input type="checkbox" name="leaderboard" id="leaderboard-toggle" class="hidden"/>
+
+        <div class="relative h-fit sm:mx-0 mx-64">
+            <div class="max-h-[1200px] w-full mobile-scale mx-auto pointer-events-none">
+                <Image src={header} format="avif" width="1000" alt="Bar Header" class="w-full pointer-events-none" />
+                <Image src={drinks} format="avif" width="1000" alt="Bar Drinks" class="w-full pointer-events-none" />
+            </div>
+
+            <div class="w-full absolute bottom-[4.8%] flex w-full mx-auto pointer-events-none">
+                {/* First two mascots */}
+                {modal.slice(0,2).map((item, index) => (
+                    <a class="video-container relative flex sm:snap-none snap-center pointer-events-none z-[2]" aria-label={item.name} role="button">
+                        <video id={`vid${index + 1}A`} class="video-element" src={item.src} autoplay loop muted playsinline  />
+                        <video id={`vid${index + 1}B`} class="video-element absolute" src={item.src} autoplay loop muted playsinline style="opacity: 0;" />
+                        <div class="characterSelector">
+                            <label for={`modal-toggle-${index + 1}`} class="noJS w-full h-full absolute cursor-pointer" aria-label={item.name} role="button"> </label>
+                        </div>
+                    </a>
+                ))}
+
+                {/* Middle mascot (Fun Raiser) with correct ID patterns */}
+                {isMascotRevealed ? (
+                    <a class="video-container relative flex sm:snap-none snap-center pointer-events-none -mx-[12.5%] -translate-y-[10%]"} aria-label={modal[4].name} role="button">
+                        <video id="vid5A" class="video-element" src={modal[4].src} autoplay loop muted playsinline />
+                        <video id="vid5B" class="video-element absolute" src={modal[4].src} autoplay loop muted playsinline style="opacity: 0;" />
+                        <div class="characterSelector">
+                            <label for="modal-toggle-5" class="noJS w-full h-full absolute cursor-pointer" aria-label={modal[4].name} role="button"> </label>
+                        </div>
+                    </a>
+                ) : (
+                    <div id="Mare-Bartender" class="video-container relative flex sm:snap-none pointer-events-auto -mx-[12.5%] -translate-y-[20%]">
+                        <Image id="MareBartender" src={Bartender} width="500" alt="The Mare Bartender" class="video-element" />
+                    </div>
+
+                )}
+                <Image src={bar} format="avif" width="1000" alt="Bar counter" class="w-full absolute -bottom-[7.5%] pointer-events-none" />
+
+                {/* Last two mascots */}
+                {modal.slice(2,4).map((item, index) => (
+                    <a class="video-container relative flex sm:snap-none snap-center pointer-events-none" aria-label={item.name} role="button">
+                        <video id={`vid${index + 3}A`} class="video-element" src={item.src} autoplay loop muted playsinline />
+                        <video id={`vid${index + 3}B`} class="video-element absolute" src={item.src} autoplay loop muted playsinline style="opacity: 0;" />
+                        <div class="characterSelector">
+                            <label for={`modal-toggle-${index + 3}`} class="noJS w-full h-full absolute cursor-pointer" aria-label={item.name} role="button"> </label>
+                        </div>
+                    </a>
+                ))}
+
+                <div id="vignette-wrapper" class="z-[2] pointer-events-none">
+                    <div id="gradient-vignette" class="absolute-centered bottom-0 h-[50%] w-[calc(100%+32rem)] sm:w-screen bg-gradient-to-b from-transparent to-black"> </div>
+                    <div id="gradient-vignette2" class="absolute-centered bottom-0 h-screen w-[calc(100%+32rem)] sm:w-screen translate-y-[99vh] bg-black"></div>
+                </div>
+
+                <div id="modals" class="absolute h-full w-full pointer-events-none z-[3]">
+                    <input type="radio" name="modal-toggle" id="default-toggle" class="hidden" checked />
+                    {/* RADIO INPUTS MUST BE DECLARED BEFORE THE TARGETS */}
+                    {modal.slice(0, 4).map((item, index) => (
+                        <input type="radio" name="modal-toggle" id={`modal-toggle-${index + 1}`} class="hidden" />
+                    ))}
+                    {isMascotRevealed && (
+                        <input type="radio" name="modal-toggle" id="modal-toggle-5" class="hidden" />
+                    )}
+
+                    <div id="back" class="back-hide fixed top-0 left-0 bg-black w-screen h-screen cursor-pointer">
+                        <label for="default-toggle" class="noJS w-full h-full absolute cursor-pointer"> </label>
+                    </div>
+                    {modal.slice(0, 4).map((item, index) => (
+                        <div id={`modal${index + 1}`} class="modal opacity-0">
+                            <Image src={item.modalDesktop} format="avif" width="1400" alt="Modal" class="absolute bottom-0 right-0" alt={item.name}/>
+                            <video id={`nonJS-vid-${index + 1}`} class="noJS absolute right-[5%] bottom-[25%] w-[24.5%]" src={item.srcSelected} autoplay loop muted playsinline />
+                            <div class="desktop-modal-font relative w-[67%] p-[3%] -mt-[8%] text-justify reddit-sans">
+                                {item.description
+                                    .split('\n')
+                                    .map(line => line.trim())
+                                    .filter(line => line.length > 0)
+                                    .map(line => (
+                                        <div class="mt-4">{line}</div>
+                                    ))
+                                }
+                            </div>
+                            <div class="back-button absolute bottom-0 m-10">
+                                <Icon name="mdi:arrow-left"  class="text-black text-3xl pointer-events-none" />
+                                <label for="default-toggle" class="noJS w-full h-full absolute bottom-0 left-0 pointer-events-auto cursor-pointer"> </label>
+                            </div>
+                        </div>
+                    ))}
+                    {isMascotRevealed && (
+                        <div id="modal5" class="modal">
+                            <Image src={modal[4].modalDesktop} format="avif" width="1400" alt="Modal" class="absolute bottom-0 right-0" alt={modal[4].name}/>
+                            <video id="nonJS-vid-5" class="noJS absolute right-[5%] bottom-[25%] w-[24.5%]" src={modal[4].srcSelected} autoplay loop muted playsinline />
+                            <div class="desktop-modal-font relative w-[67%] p-[3%] -mt-[8%] text-justify reddit-sans">
+                                {modal[4].description
+                                    .split('\n')
+                                    .map(line => line.trim())
+                                    .filter(line => line.length > 0)
+                                    .map(line => (
+                                        <div class="mt-4">{line}</div>
+                                    ))
+                                }
+                            </div>
+                            <div class="back-button absolute bottom-0 m-10">
+                                <Icon name="mdi:arrow-left"  class="text-black text-3xl pointer-events-none" />
+                                <label for="default-toggle" class="noJS w-full h-full absolute bottom-0 left-0 pointer-events-auto cursor-pointer"> </label>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+            </div>
+
+            <div class="w-full h-[120%] absolute bottom-0 flex mx-auto pointer-events-none">
+                {modal.slice(0,2).map((item, index) => (
+                    <div id={`modal-mobile${index + 1}`} class="modal-mobile opacity-0 relative w-1/4 h-[54.2%] pointer-events-auto z-20 shadow-lg self-end">
+                        <Image src={item.modalMobile} format="avif" width="640" alt="Modal" class="absolute-centered w-screen max-w-none h-full" alt={item.name}/>
+                        <div class="absolute-centered relative w-screen p-[9%] pt-[35%] text-justify reddit-sans leading-[130%]">
+                            {/*<Icon name="mdi:arrow-left" class="back-button absolute top-0 text-black text-3xl cursor-pointer ml-2 mt-6"/> */}
+                            {item.description
+                                .split('\n')
+                                .map(line => line.trim())
+                                .filter(line => line.length > 0)
+                                .map(line => (
+                                    <div class="mt-4">{line}</div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                ))}
+                {isMascotRevealed ?
+                (
+                <div id={`modal-mobile${5}`} class="modal-mobile opacity-0  relative w-1/4 h-[54.2%] pointer-events-auto z-20 -mx-[12.5%] shadow-lg self-end">
+                    <Image src={modal[4].modalMobile} format="avif" width="640" alt="Modal" class="absolute-centered w-screen max-w-none h-full" alt={modal[4].name}/>
+                    <div class="absolute-centered relative w-screen p-[9%] pt-[35%] text-justify reddit-sans leading-[130%]">
+                        {/*<Icon name="mdi:arrow-left" class="back-button absolute top-0 text-black text-3xl cursor-pointer ml-2 mt-6"/> */}
+                        {modal[4].description
+                            .split('\n')
+                            .map(line => line.trim())
+                            .filter(line => line.length > 0)
+                            .map(line => (
+                                <div class="mt-4">{line}</div>
+                            ))
+                        }
+                    </div>
+                </div>
+                ) :
+                ("")
+                }
+
+                {modal.slice(2,4).map((item, index) => (
+                    <div id={`modal-mobile${index + 3}`} class="modal-mobile opacity-0  relative w-1/4 h-[54.2%] pointer-events-auto z-20 shadow-lg self-end">
+                        <Image src={item.modalMobile} format="avif" width="640" alt="Modal" class="absolute-centered w-screen max-w-none h-full" alt={item.name}/>
+                        <div class="absolute-centered relative w-screen p-[9%] pt-[35%] text-justify reddit-sans leading-[130%]">
+                            {/*<Icon name="mdi:arrow-left" class="back-button absolute top-0 text-black text-3xl cursor-pointer ml-2 mt-6"/> */}
+                            {item.description
+                                .split('\n')
+                                .map(line => line.trim())
+                                .filter(line => line.length > 0)
+                                .map(line => (
+                                    <div class="mt-4">{line}</div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+
+        </div>
+
+        <div id="leaderboard-overlay" class="backdrop-blur-lg bg-black/50 opacity-0 w-screen h-screen fixed top-0 left-0 z-10 transition-all pointer-events-none">
+            <label for="leaderboard-toggle" id="leaderboard-back" class="absolute hidden w-full h-full" aria-label="Back"/>
+
+            <div class="absolute-centered-2 w-full h-[90%] max-w-[40rem] bg-slate-800 rounded-3xl shadow-[0_0_120px_rgba(0,0,0)] p-5 flex flex-col">
+
+                <div class="flex items-end justify-center gap-2 flex-1 min-h-0 reddit-sans shadow-[inset_0_0_120px_rgba(0,0,0)] rounded-2xl p-10" id="chartContainer">
+                    <!-- Bars will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <label for="leaderboard-toggle" id="leaderboard-toggle-button" class="jsOnly fixed top-1/2 right-0 bg-black bg-opacity-20 w-14 h-14 rounded-md z-50 transition-all cursor-pointer flex items-center justify-center" aria-label="See the Leaderboard">
+            <Icon name="mdi:chart-bar" class="relative text-white text-3xl" />
+        </label>
+    </div>
+</Layout>
+
+<style is:global>
+    #footer-space {
+        display: none;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .hide-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    html::-webkit-scrollbar {
+        display: none;
+    }
+    html{
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .bar-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        max-width: 120px;
+        height: 100%;
+    }
+
+    .bar-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+    .bar {
+        width: clamp(40px, 8vw, 64px);
+        border-radius: 8px 8px 0 0;
+        transition: all 1s ease-out;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        padding-bottom: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .bar-base {
+        width: clamp(40px, 8vw, 64px);
+        height: 12px;
+        background: #4a5568;
+        border-radius: 0 0 6px 6px;
+    }
+
+    .bar-gold {
+        background: linear-gradient(to top, #fbbf24, #fcd34d);
+    }
+
+    .bar-silver {
+        background: linear-gradient(to top, #d1d5db, #e5e7eb);
+    }
+
+    .bar-bronze {
+        background: linear-gradient(to top, #d97706, #f59e0b);
+    }
+
+    .bar-blue {
+        background: linear-gradient(to top, #3b82f6, #60a5fa);
+    }
+    .bar-orange {
+        background: linear-gradient(to top, #f63b3b, #ff4d17);
+    }
+
+    .bar-icon {
+        height: 64px;
+    }
+</style>
+
+<style>
+    .jsOnly {
+        @apply hidden;
+    }
+    #leaderboard-toggle:checked ~ #leaderboard-overlay {
+        @apply opacity-100 pointer-events-auto;
+    }
+    #leaderboard-toggle:checked ~ #leaderboard-overlay #leaderboard-back {
+        @apply block;
+    }
+
+    #modal-toggle-1:checked ~ #modal1,
+    #modal-toggle-2:checked ~ #modal2,
+    #modal-toggle-3:checked ~ #modal3,
+    #modal-toggle-4:checked ~ #modal4,
+    #modal-toggle-5:checked ~ #modal5 {
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    #modal-toggle-1:checked ~ #back,
+    #modal-toggle-2:checked ~ #back,
+    #modal-toggle-3:checked ~ #back,
+    #modal-toggle-4:checked ~ #back,
+    #modal-toggle-5:checked ~ #back {
+        opacity: 0.7;
+        pointer-events: auto;
+    }
+
+    .stop-scrolling {
+        overflow: hidden;
+    }
+    .center {
+        @apply min-h-screen flex items-center justify-center;
+    }
+
+    .video-element{
+        @apply aspect-auto;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+    }
+    .video-container {
+        position: relative;
+        width: var(--VideoWidth);
+        filter: saturate(50%) brightness(50%);
+        transition:
+            filter 0.2s ease-in-out,
+            transform 0.5s ease-out;
+
+    }
+    .highlighted{
+        filter: saturate(100%) brightness(100%);
+    }
+    /* The hover effect - applies when characterSelector inside video-container is hovered */
+    .characterSelector {
+        @apply sm:w-3/5 w-2/5 absolute-centered h-[95%] bottom-0 pointer-events-auto cursor-pointer;
+    }
+    .video-container:has(.characterSelector:hover) {
+        @apply highlighted;
+    }
+    .back-hide{
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .back-show{
+        opacity: 0.7;
+        pointer-events: auto;
+    }
+
+    .absolute-centered{
+        @apply absolute left-1/2 transform -translate-x-1/2;
+    }
+    .absolute-centered-2{
+        @apply absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2;
+    }
+    .fixed-centered{
+        @apply fixed left-1/2 transform -translate-x-1/2;
+    }
+    :root {
+        --VideoWidth: 25%;
+        --VideoHeight: 80vh;
+    }
+
+    .mainWrapper {
+        width: calc(var(--VideoWidth) * 4);
+    }
+
+    .superWrapper {
+        position: relative;
+    }
+
+    .modal {
+        @apply absolute w-full h-full left-1/2 transform -translate-x-1/2;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .modal-mobile {
+        transform: translate(0, 50%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out, transform 0.5s ease-in-out;
+    }
+
+    .modal-mobile-show {
+        transform: translate(0, 0);
+    }
+
+    .modal-show {
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .mobile-scale {
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    @media (max-width: 639px) {
+        .mobile-scale {
+            min-width: 1024px;
+            max-width: none;
+        }
+    }
+
+    .desktop-modal-font{
+        @apply text-xl;
+    }
+
+
+    @media (max-width: 1199px) {
+        .desktop-modal-font{
+            font-size: 1.67vw;
+            line-height: 2.35vw;
+        }
+    }
+</style>
+
+<script>
+    let maxLeaderboardItems: number = 5;
+
+    import { setupMascot, CONTENT_API } from "@components/MascotScript";
+    await setupMascot(maxLeaderboardItems);
+
+    // SVG Icons as strings
+    const icons =
+    {
+        SO: `<img src="/icons/Soiree CM Vector.svg" class="bar-icon">`,
+        FF: `<img src="/icons/Fair Flyer CM Vector.svg" class="bar-icon">`,
+        MM: `<img src="/icons/Morning Mimosa CM Vector.svg" class="bar-icon">`,
+        MA: `<img src="/icons/Matinee CM Vector.svg" class="bar-icon">`,
+        FR: `<img src="/icons/Fun Raiser CM Vector.svg" class="bar-icon">`,  // FUN RAISER
+    };
+
+    interface MareData
+    {
+        mareId: number;
+        totalBoops: number;
+    }
+
+    /*
+    const CONTENT_API = import.meta.env.PUBLIC_API_BASE_URL + "/Boop/BoopStats";
+    let response = await fetch(CONTENT_API);
+    let data = await response.json();
+    */
+
+    function createLeaderboard(apiData: MareData[])
+    {
+        // Sort by mareId ascending
+        const sortedData = [...apiData].sort((a, b) => a.mareId - b.mareId);
+
+        // Only show the first N items
+        const displayData = sortedData.slice(0, maxLeaderboardItems);
+
+        // Find min and max for normalization
+        const maxBoops = Math.max(...displayData.map(d => d.totalBoops));
+        const minBoops = Math.min(...displayData.map(d => d.totalBoops));
+
+        // Normalize to 10-100% range
+        const normalizeValue = (value: number) =>
+        {
+            const range = maxBoops - minBoops;
+            const normalized = range === 0 ? 100 : ((value - minBoops) / range) * 90 + 10;
+            return normalized;
+        };
+
+        // Get icon and color based on rank
+        const getBarData = (index: number) =>
+        {
+            switch(index)
+            {
+                case 0: return { icon: icons.FF, class: 'bar-gold' };
+                case 1: return { icon: icons.MM, class: 'bar-silver' };
+                case 2: return { icon: icons.MA, class: 'bar-bronze' };
+                case 3: return { icon: icons.SO, class: 'bar-blue' };
+                case 4: return { icon: icons.FR, class: 'bar-orange' }; // FUN RAISER
+                default: return { icon: icons.MA, class: 'bar-blue' };
+            }
+        };
+
+        const chartContainer = document.getElementById('chartContainer');
+
+        if (chartContainer == null)
+            return;
+
+        chartContainer.innerHTML = '';
+
+        displayData.forEach((mare, index) => {
+            const height = normalizeValue(mare.totalBoops);
+            const barData = getBarData(index);
+
+            const barItem = document.createElement('div');
+            barItem.className = 'bar-item';
+
+            barItem.innerHTML = `
+                <div class="bar-wrapper">
+                    <div class="bar ${barData.class}" style="height: ${height}%;">
+
+                    </div>
+                    <div class="bar-base"></div>
+                </div>
+                ${barData.icon}
+                <div class="bar-labels">
+                    <div class="text-white">${mare.totalBoops}</div>
+                </div>
+            `;
+
+            chartContainer.appendChild(barItem);
+        });
+    }
+
+    let apiData: MareData[] = [];
+    let ws: WebSocket | null = null;
+
+    /*
+    const websocket = import.meta.env.PUBLIC_API_BASE_SOCKET
+
+    function connectWebSocket()
+    {
+        ws = new WebSocket(`${websocket}/boops`);
+
+        ws.onopen = () => {
+
+        };
+
+        ws.onmessage = (event) => {
+            const newData = JSON.parse(event.data);
+            //console.log('Received WebSocket data:', newData);
+
+            // Check if data has changed before updating
+            if (JSON.stringify(newData) !== JSON.stringify(apiData)) {
+                apiData = newData;
+                createLeaderboard(apiData);
+            }
+        };
+
+        ws.onclose = (event) => {
+            //console.log('WebSocket connection closed:', event.code, event.reason);
+
+            // Attempt to reconnect after 3 seconds unless it was a clean close
+            if (event.code !== 1000) {
+                setTimeout(() => {
+                    connectWebSocket();
+                }, 3000);
+            }
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+    }
+    */
+
+    let eventSource: EventSource | null = null;
+    const baseUrl = CONTENT_API.slice(0, -4); // my dumb ass put /api in it, so I have to live in my hubris and remove it
+
+    /*
+    function connectSSE() {
+        // Replace WebSocket URL with SSE endpoint
+        eventSource = new EventSource(`${baseUrl}/sse/boops`);
+
+        eventSource.onopen = () => {
+            //console.log('SSE connection opened');
+        };
+
+        eventSource.onmessage = (event) => {
+            const newData = JSON.parse(event.data);
+            if (JSON.stringify(newData) !== JSON.stringify(apiData)) {
+                apiData = newData;
+                createLeaderboard(apiData);
+            }
+        };
+
+        eventSource.onerror = (error) => {
+            console.error('SSE error:', error);
+
+            // EventSource automatically reconnects, but you can handle specific cases
+            if (eventSource?.readyState === EventSource.CLOSED) {
+                setTimeout(() => {
+                    connectSSE();
+                }, 3000);
+            }
+        };
+
+        // Optional: Handle custom event types
+        eventSource.addEventListener('boopUpdate', (event) => {
+            const newData = JSON.parse(event.data);
+            if (JSON.stringify(newData) !== JSON.stringify(apiData)) {
+                apiData = newData;
+                createLeaderboard(apiData);
+            }
+        });
+    }
+
+
+    function disconnectSSE() {
+        if (eventSource) {
+            eventSource.close();
+            eventSource = null;
+        }
+    }
+    */
+
+    // Fetch API data and update leaderboard
+    async function fetchLeaderboardData() {
+        //const response = await fetch(`${CONTENT_API}/Boop/BoopStats`);
+        const response = await fetch("/data/BoopStats.json")
+        if (!response.ok) throw new Error("API error");
+        const newData = await response.json();
+
+        // Check if data has changed before updating
+        if (JSON.stringify(newData) !== JSON.stringify(apiData)) {
+            apiData = newData;
+            createLeaderboard(apiData);
+            //console.log("Leaderboard updated with new data:", apiData);
+        }
+    }
+
+    //////////// DEPRECATED /////////// USED FOR POLLING THE LEADERBOARD, WE USE WEBSOCKET NOW
+    /*
+    let pollInterval: NodeJS.Timeout;
+
+    function startPolling() {
+        fetchLeaderboardData(); // Initial fetch
+        pollInterval = setInterval(fetchLeaderboardData, 5 * 1000); // 5 secs
+    }
+
+    function stopPolling() {
+        if (pollInterval) {
+            clearInterval(pollInterval);
+        }
+    }
+    */
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+    function disconnectWebSocket() {
+        if (ws) {
+            ws.close(1000, 'Page unloading'); // Clean close
+            ws = null;
+        }
+    }
+
+    // Function to check if leaderboard is toggled on
+    function isLeaderboardToggled(): boolean {
+        const toggleCheckbox = document.getElementById('leaderboard-toggle') as HTMLInputElement;
+        if (!toggleCheckbox) return false;
+
+        return toggleCheckbox.checked;
+    }
+
+    // Function to handle toggle state changes
+    function handleToggleChange() {
+        if (isLeaderboardToggled()) {
+            //console.log('Leaderboard toggled ON - starting SSE connection');
+            //connectSSE();
+            fetchLeaderboardData();
+        } else {
+            //console.log('Leaderboard toggled OFF - stopping SSE connection');
+            //disconnectSSE();
+        }
+    }
+
+    document.addEventListener('astro:page-load', () => {
+        // Initialize the leaderboard
+        createLeaderboard(apiData);
+        fetchLeaderboardData(); // Initial load of the API
+
+        let toggleButton = document.getElementById('leaderboard-toggle-button') as HTMLElement;
+        toggleButton.classList.toggle("jsOnly");
+
+        // Set up checkbox event listener
+        const toggleCheckbox = document.getElementById('leaderboard-toggle') as HTMLInputElement;
+        if (toggleCheckbox) {
+            toggleCheckbox.addEventListener('change', handleToggleChange);
+
+            // Check initial checkbox state and start SSE if needed
+            if (toggleCheckbox.checked) {
+                //connectSSE();
+            }
+        }
+    });
+
+    // Clean up when page changes
+    document.addEventListener('astro:before-swap', () => {
+        //disconnectSSE();
+        //disconnectWebSocket();
+        //stopPolling();
+    });
+
+    // Also clean up on window unload
+    window.addEventListener('beforeunload', () => {
+        //disconnectSSE();
+        //disconnectWebSocket();
+        //stopPolling();
+    });
+
+
+    // Function to update with new data (call this when you get new API data)
+    declare global {
+        interface Window {
+            updateLeaderboard: (newData: MareData[]) => void;
+        }
+    }
+    window.updateLeaderboard = function(newData) {
+        createLeaderboard(newData);
+    };
+</script>

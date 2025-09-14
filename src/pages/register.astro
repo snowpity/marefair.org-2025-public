@@ -1,0 +1,79 @@
+---
+import { Image, getImage } from "astro:assets";
+
+import Layout from '@layouts/Layout.astro';
+import Back from '@components/Back.astro';
+import Badge from "@components/Badge.astro";
+
+import blackBoard from "@assets/register/blackboard1.png";
+import frameTop from "@assets/register/frametop_register.png";
+import frameSidesRaw from "@assets/corkboard/framesides.avif";
+import frameBottom from "@assets/corkboard/framebottom.png";
+
+import registration from "@assets/corkboard/2025_Registration_Button.png";
+import badgHeader from "@assets/register/badgeHeader.png";
+import spiritBadgeHeader from "@assets/register/spiritBadgeHeader.png";
+
+const frameSides = await getImage({ src: frameSidesRaw, format:"avif" });
+const dirt = await getImage({ src: blackBoard, format:"avif", width:1700 });
+
+import { badges } from "@components/BadgeData.astro";
+
+---
+<Layout title="Order your badges | Mare Fair 2025">
+    <Back />
+    <main class="">
+
+        <div class="relative overflow-hidden">
+            <div id="corkboard" class="absolute max-w-full mx-auto bg-center inset-0 mt-28 bg-cover" style={`background-image: url(${dirt.src}); width:calc(${frameSidesRaw.width}px - 150px); height: calc(100% - 18rem);`}>
+                <Image src={registration} transition:name="register" alt="Register" format="avif" width=400 class="absolute -top-24 lg:-right-20 right-0 rotate-[15deg] z-50" ></Image>
+            </div>
+            <div id="top" class="relative flex flex-wrap justify-center pointer-events-none">
+                <Image src={frameTop} alt="" format="avif" width={frameTop.width} height={frameTop.height} class=`block mx-auto` style=`min-width: ${frameTop.width}px`/>
+            </div>
+            {/* change height to Auto if using height affecting divs i.e. texts or relative images*/}
+            <div id="cen" class="relative max-w-full mx-auto bg-top flex flex-col items-center justify-center px-0 h-auto " style={`background-image: url(${frameSides.src});width: ${frameSidesRaw.width}px;`}>
+                <Image src={badgHeader} alt="Mare Fair badge menu for adults only, opens on February 8th, 2025" format="avif" width={frameTop.width} class="lg:w-4/5 w-full sm:mt-0 mt-20 corkboard-item"/>
+
+                {badges.slice(0, 10).map((badge, index) => (
+                    <Badge {...badge} index={index}/>
+                ))}
+
+                <Image src={spiritBadgeHeader} alt="Spirits for home con spirit lifting" format="avif" width={1024} class="w-3/4 corkboard-item-cheap"/>
+                {badges.slice(10, 13).map((badge, index) => (
+                    <Badge {...badge} index={index+10}/>
+                ))}
+                {/* put a  -mb-44 at the bottom div to cancel out the bottom height */}
+            </div>
+            <div id="bot" class="relative flex flex-wrap justify-center pointer-events-none z-[0] -mb-[15rem] bottom-72 w-full">
+                <Image src={frameBottom} alt="" format="avif" width={frameBottom.width} height={frameBottom.height} class=`block mx-auto` style=`min-width: ${frameBottom.width}px`/>
+            </div>
+        </div>
+
+        <div id="introContainer" class="hidden bg-black flex justify-center items-center w-full h-full fixed top-0 z-50">
+            <video id="introVideo" class="pointer-events-none top-1/2 left-1/2 control-none">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    #corkboard{
+        background-size: 100%;
+        box-shadow: inset 0 0 300px #000000;
+    }
+
+    .corkboard-item {
+        @apply -translate-y-64 mix-blend-screen;
+    }
+
+    .corkboard-item-cheap {
+        @apply -translate-y-56;
+    }
+</style>
+
+<script>
+    import { setupCutscene } from "@components/register-animation";
+    await setupCutscene();
+</script>

@@ -1,0 +1,83 @@
+---
+import type { EventDetails } from "@components/ScheduleTable.astro";
+
+interface Props {
+    time: string;
+    rowBg: string;
+    eventData: {
+        rooms: string[];
+        skipMap: Record<string, Record<string, boolean>>;
+        rowSpanMap: Record<string, Record<string, number>>;
+    };
+    events: Record<string, Record<string, EventDetails>>;
+    ratings: string[];
+}
+
+const { time, rowBg, eventData, events, ratings } = Astro.props;
+
+// Convert 24-hour time to 12-hour format with AM/PM
+function formatTo12Hour(time: string) {
+    const [hours, minutes] = time.split(':').map(part => parseInt(part, 10));
+
+    if (isNaN(hours) || isNaN(minutes)) {
+        return time; // Return original if not properly formatted
+    }
+
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+
+    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+}
+
+// Define room blocks with their configurations
+const roomBlocks = [
+    { rooms: eventData.rooms.slice(0, 3), class: 'first-block' },
+    { rooms: eventData.rooms.slice(3, 6), class: 'second-block hidden md:table-cell' }
+];
+
+// Helper function to get background rating class
+function getBgRating(rating: string) {
+    return ratings.includes(rating) ? {
+        [ratings[0]]: "bg-white hover:bg-neutral-200",
+        [ratings[1]]: "bg-green-300 hover:bg-green-400",
+        [ratings[2]]: "bg-cyan-300 hover:bg-cyan-400",
+        [ratings[3]]: "bg-amber-300 hover:bg-amber-400",
+        [ratings[4]]: "bg-red-300 hover:bg-red-400",
+    }[rating] : "bg-white hover:bg-neutral-200";
+}
+
+const time12h = formatTo12Hour(time);
+---
+
+<tr class=`${rowBg} tableCell`>
+    <td class="time-cell border p-2 font-medium">
+        <div class="fullHR block"> {time} </div>
+        <div class="halfHR"> {time12h} </div>
+    </td>
+
+    {roomBlocks.map(block =>
+        block.rooms.map((room) => {
+            if (eventData.skipMap[room][time]) return null;
+
+            const rowspan = eventData.rowSpanMap[room][time];
+            const event = events[time]?.[room];
+            const content = event?.name || "";
+            const rating = Array.isArray(event?.rating) ? event?.rating[0] : event?.rating;
+            const bg_rating = getBgRating(rating);
+
+            return (
+                <td class={`tableCell ${block.class} border relative transition-[background-color]`} rowspan={rowspan || 1}>
+                    {content && (
+                        <label
+                            for={`${content.replace(/\s+/g, '-')}-${event?.startTime.toString().replace(/\s+/g, '-')}-toggle`}
+                            class={`w-full h-full cursor-pointer text-center flex items-center justify-center absolute inset-0 ${!content ? "empty-cell" : bg_rating} rounded-md border-gray-900`}
+                        />
+                        <p class={`${content.length > (25 * (rowspan || 1)) ? 'lg:text-base text-sm' : ''}`}>
+                            {content}
+                        </p>
+                    )}
+                </td>
+            );
+        })
+    )}
+</tr>

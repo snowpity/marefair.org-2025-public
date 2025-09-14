@@ -1,0 +1,963 @@
+---
+import { Image, getImage } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+import monitor from "@assets/credit/Credits_TVBLANK.png"
+//import monitorRot from "@assets/credit/Credits_TVBLANK_Rot.png"
+import programmerIconRaw from "@assets/credit/computer_icons_programmer.png"
+import artistIconRaw from "@assets/credit/computer_icons_artist.png"
+import firefoxRaw from "@assets/credit/firefox.png"
+import balloonRaw from "@assets/misc/balloon.png"
+import jumpscare from "@assets/credit/jumpscare.png"
+import wallpaper from "@assets/credit/mf_desktop.png"
+import tvStatic from "@assets/credit/static.webp"
+import eMare from "@assets/credit/eMare.png"
+
+import CreditApp from '@components/CreditApp.astro';
+
+import top from '@assets/credits/top.png';
+import bottom from '@assets/credits/bottom.png';
+
+let paintBgColor = "#c0c0c0";
+
+const programmerIcon = await getImage({ src: programmerIconRaw, format:"avif", width:128 });
+const artistIcon = await getImage({ src: artistIconRaw, format:"avif", width:128 });
+const firefox = await getImage({ src: firefoxRaw, format:"avif", width:128 });
+const balloon = await getImage({ src: balloonRaw, format:"avif", width:128 });
+
+const emails = [
+    {
+        title: "Creaturequestria shall prevail",
+        email: "joshuah@creaturequestria.hell",
+        name: "Joshua Haberg",
+        subject:
+        `At long last, my grand designs to reshape Equestria into a bastion of diversity and inclusivity is bearing fruit. Though the studios have yet to recognize my genius with a job offer, it's only a matter of time before they beg for my talents. Soon, I will have a job and every creature will bow to my artistic genius.
+        <br/>
+        Join me or you too will be character assassinated. My daughter Poochie will make sure of that.
+        <br/>
+        <br/>
+        Submit to me, or suffer my wrath. Call 555-666-1984.
+        <br/>
+        <br/>
+        P.S. Whoever keeps prank-calling my main line and leaving inane voicemails—your days are numbered. I have your scent. And when I arrive, I shall unleash twenty ravenous yaks upon your front lawn.
+        <br/>You don't like that? So sad (not really).
+        <br/>
+        <br/>
+        Sincerely,
+        <br/>
+        Joshua "Supreme GOD" Haberg`
+    },
+    {
+        title: "Hope to see you at Mare Fair 2025",
+        email: "fairflyer@marefair.org",
+        name: "Fair Flyer",
+        subject:
+        `Hello Anonymous.
+        <br/>
+        <br/>If I recalled, you mentioned wanting to volunteer this year. Well, we always need more hooves (hands) on deck, and it would be fantastic if you joined the team!
+        <br/>Volunteering is lots of fun! You gets to know many talented folks and pick up new skills along the way. Mimosa, for instance, volunteered for our very first con since it was close to her place (well, technically she was on probation for breaking into the sanctuary to wrestle a gator and must fulfil her community service hours). And honestly? If she hadn't volunteered, we'd never have met such an amazing pony.
+        <br/>Mimosa fell in love with our con, and when the news broke out that our venue was to be shut down, she landed another probation. Well, this time it's not such a punishment as she treated it as another excuse to staff the con.
+        <br/>
+        <br/>Oh hey, we have some volunteer perks too! If you volunteer, you'll get a badge for free! You'll get other perks too, like a cool unique lanyard, snacks, and an awesome staff vest, and you'll get to hang with us at our exclusive parties!
+        <br/>Here's a link to apply: <a href="https://marefair.org/apply/" target="_blank"> https://marefair.org/apply/ </a>
+        <br/>We had so much fun last year. Hopefully we'll see each other again soon!
+        <br/>
+        <br/>
+        xo,
+        <br/>
+        <br/>
+        Fair Flyer`
+    },
+    {
+        title: "ALERT: Your computer has varus",
+        email: "notascam@mare-fair.org",
+        name: "Hacker known as fairchan",
+        subject:
+        `Sirs,
+        <br/>
+        Your computer is infected by virus "snowpity". Very evil and we Mare Fair is responsible for it.
+        Please call number [REMOVED DUE TO SPAM]. Be ready your credit card and do the needful.
+        <br/>
+        Everything it as risk, call fast and tell nopony.
+        `
+    },
+    {
+        title: "Go to FillyCon",
+        email: "fillycon@fillycon.org",
+        name: "Anon Filly",
+        subject:
+        `Hello future FillyCon attendee,
+        <br/>
+        <br/>
+        Why attend the convention of those snobby mares, when you could join us at Filly Con?
+        <br/>
+        Those pompous mares at Mare Fair are unfair, for they do not care. Us fillies are barred because we are not adults. Even though I've explained, I was once an adult too! ... Until we got here through a botched portal that turned us green and tiny.
+        <br/>No matter. We will run our own convention! A con where fillies can be free. A con where we can have fun!
+        <br/>
+        <br/>
+        I hope you'll consider ditching Mare Fair and joining us instead at Filly Con. And if you don't - no matter. We'll send spies to infillytrate their ranks. Soon, they will learn why it's not so wise to upset the mean green machines.
+        <br/>
+        <br/>
+        Anon Filly
+        `
+    },
+    {
+        title: "[RE] Mare Fair interview",
+        email: "funmare23@maremail.net",
+        name: "[REDACTED]",
+        subject:
+        `Hello,
+        <br/>
+        <br/>
+        I am quite confused, the location you've given me is a demolished hotel. Is this the right place?
+        <br/>
+        I tried to call your phone number but it seems you were away. I left you a message on the phone. Please take a listen and confirm the location once you do have the time.
+        `
+    },
+]
+---
+
+<Layout title="Credits | Mare Fair 2025">
+    <Back />
+    <div id="super-wrapper" class="w-screen h-screen overflow-hidden">
+        <div class="flex flex-col justify-center items-center min-h-screen h-screen">
+            <Image src={top} format="avif" height="162" alt="" class="sm:hidden block w-auto"/>
+            <div id="monitor-wrapper" class="w-fit sm:h-fit h-[70%] relative">
+                <Image src={monitor} format="avif" height="1920" alt="monitor" class="w-full h-auto max-h-screen sm:block hidden"/>
+
+                <div id="screen" class="sm:absolute block sm:top-[8.8%] sm:left-[6.5%] w-screen sm:w-[87%] sm:h-[70.2%] h-full overflow-hidden">
+                    <input type="radio" name="modal-toggle" id="programmers-toggle" class="hidden" />
+                    <input type="radio" name="modal-toggle" id="artists-toggle" class="hidden" />
+                    <input type="radio" name="modal-toggle" id="bfed-toggle" class="hidden" />
+                    <input type="radio" name="modal-toggle" id="marefair-horse-toggle" class="hidden" />
+                    <input type="radio" name="modal-toggle" id="email-toggle" class="hidden" />
+                    <input type="radio" name="modal-toggle" id="default-toggle" class="hidden" checked />
+                    <input type="radio" name="modal-toggle" id="tendieFrenzy-toggle" class="hidden" />
+
+                    <div id="desktop" class="w-full h-full">
+                        <Image src={wallpaper} format="avif" alt="Bliss" class="absolute w-full h-full object-cover"/>
+                        <div class="flex">
+                            <div class="flex flex-col sm:w-[10%] w-[20%]">
+                                <div class="desktop-icon">
+                                    <img src={programmerIcon.src} class="aspect-square w-auto" alt="Programmer Icon"/>
+                                    <label for="programmers-toggle" class="w-full h-full absolute"> </label>
+                                    <div class="desktop-icon-text">Programmers</div>
+
+                                </div>
+
+                                <div class="desktop-icon">
+                                    <img src={artistIcon.src} class="aspect-square w-auto" alt="Artist Icon"/>
+                                    <label for="artists-toggle" class="w-full h-full absolute" > </label>
+                                    <div class="desktop-icon-text">Artists</div>
+                                </div>
+
+                                <div class="desktop-icon">
+                                    <img src={firefox.src} class="aspect-square w-auto" alt="marefair.horse"/>
+                                    <label for="marefair-horse-toggle" class="w-full h-full absolute"> </label>
+                                    <div class="desktop-icon-text">marefair.horse</div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:w-[10%] w-[20%]">
+                                <div class="desktop-icon">
+                                    <img src={firefox.src} class="aspect-square w-auto" alt="eMare"/>
+                                    <label for="email-toggle" class="w-full h-full absolute"> </label>
+                                    <div class="desktop-icon-text">eMare</div>
+                                </div>
+                                <div class="desktop-icon">
+                                    <img src={balloonRaw.src} class="aspect-square w-auto" alt="marefair.horse"/>
+                                    <label for="tendieFrenzy-toggle" class="w-full h-full absolute"> </label>
+                                    <div class="desktop-icon-text">Tendie Frenzy</div>
+                                </div>
+                                <div class="desktop-icon !hidden">
+                                    <img src="https://static.wikia.nocookie.net/mlp-gameloft/images/4/4d/Avi_Pinkie_Pie_Default.png" class="aspect-square w-auto h-full aspect-square" alt="BFMF(D)"/>
+                                    <label for="bfed-toggle" class="w-full h-full absolute"> </label>
+                                    <div class="desktop-icon-text">Banned from Mare Fair (daily)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <CreditApp appId="programmers" title="helloWorld.md" isDebug={false} icon={programmerIcon.src}>
+                        <div class="app-content bg rainbow comic-sans overflow-y-auto">
+                            <span class="text-6xl rainbow-text"> GRAPHIC DESIGN IS MY PASSION</span>
+                            <ul class="list-disc px-8 py-8 text-4xl">
+                                <li> Primary Front End: Hoover </li>
+                                <li> Support Front End: RaraPony </li>
+                                <li> Support Front End: CadBrad </li>
+                                <li> News + Backend APIs: Memely </li>
+                                <li> Concrescent + Support Front End: Kahas </li>
+                                <li> Concrescent: Mr.Metric </li>
+                                <li> Concrescent API: Wolvan </li>
+                                <li> SysAdmin: ZizzyDizzyMC </li>
+                            </ul>
+                        </div>
+                    </CreditApp>
+
+                    <CreditApp appId="marefair-horse" title="2023.marefair.horse" isDebug={false} icon={firefox.src}>
+                        <div class="app-content">
+                            <embed src="https://2023.marefair.horse/" class="w-full h-full">
+                        </div>
+                    </CreditApp>
+
+                    <CreditApp appId="artists" title="My Artistic Talent - Paint" isDebug={false} isClassic={true} barColor={paintBgColor} icon={artistIcon.src}>
+                        <div class="app-content paint-workspace-color ">
+                            <div class="w-full h-full flex flex-col">
+                                <div id="paintBody" class="flex flex-1 overflow-hidden">
+                                    <div class="paint-bg-color w-14 h-full emboss-box ">
+                                        <div id="toolForm" class="grid grid-cols-2 p-1">
+                                            {Array.from({ length: 16 }).map((_, index) => {
+                                                return (
+                                                    <label class="radio-wrapper h-[24px]">
+                                                        <input type="radio" name="toggle" class="w-full aspect-square emboss-box relative toolButton">
+                                                        <span class="tool-icon block absolute left-[4px] top-[4px] w-[16px] h-[16px]" style={`--icon-index: ${index};`}></span>
+                                                    </label>
+                                                );
+                                            })}
+                                        </div>
+                                        <div class="mx-auto emboss-box-in w-10 h-20"></div>
+                                    </div>
+
+                                    <div id="paintMain" class="flex-1 p-2 overflow-y-auto">
+                                        <div id="paintcanvas" class="bg-white w-[90%] notepen">
+                                            <ul class="px-8 py-8 text-4xl grid md:grid-cols-2 grid-cols-1 gap-x-8">
+                                                <li> QuotePony </li>
+                                                <li> Zajice </li>
+                                                <li> Dattebayo </li>
+                                                <li> MKogwheel </li>
+                                                <li> JayArr </li>
+                                                <li> Seafood Dinner </li>
+                                                <li> Batsy </li>
+                                                <li> Eel </li>
+                                                <li> AnonTheAnon </li>
+                                                <li> Floralshitpost </li>
+                                                <li> TruthOrMare </li>
+                                                <li> Jargon Scott </li>
+                                                <li> wenni </li>
+                                                <li> candel </li>
+                                                <li> Spoonie </li>
+                                                <li> Lockheart </li>
+                                                <li> CadBrad </li>
+                                                <li> Welost </li>
+                                                <li> LoafAnon </li>
+                                                <li> Sigil </li>
+                                                <li> Hoover </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="paintFooter" class="paint-bg-color h-16 w-full emboss-box flex-none">
+                                    <div class="h-full w-full p-[10px] flex justify-start ">
+                                        <div class="relative h-full aspect-square paint-bg-selected emboss-box-in">
+                                            {Array.from({ length: 28 }).map((_, index) => {
+                                                return (
+                                                    <input
+                                                        type="radio"
+                                                        name="color-toggle"
+                                                        id={`col${(index + 1).toString().padStart(2, '0')}-toggle`}
+                                                        class="hidden"
+                                                        checked={index === 0}
+                                                    />
+                                                );
+                                            })}
+
+                                            <div id="colorBox2" class="absolute m-1 h-1/2 aspect-square bg-white emboss-box bottom-0 right-0"></div>
+                                            <div id="colorBox1" class="absolute m-1 h-1/2 aspect-square  emboss-box"></div>
+                                        </div>
+                                        <div class="grid grid-flow-col grid-rows-2 gap-0">
+                                            <label for="col01-toggle" class="h-[22px] aspect-square bg-black emboss-box-in"></label>
+                                            <label for="col02-toggle" class="h-[22px] aspect-square bg-white emboss-box-in"></label>
+                                            <label for="col03-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #c0c0c0"></label>
+                                            <label for="col04-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #808080"></label>
+                                            <label for="col05-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #800000"></label>
+                                            <label for="col06-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #ff0000"></label>
+                                            <label for="col07-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #808000"></label>
+                                            <label for="col08-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #ffff00"></label>
+                                            <label for="col09-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #008000"></label>
+                                            <label for="col10-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #00ff00"></label>
+                                            <label for="col11-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #008080"></label>
+                                            <label for="col12-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #00ffff"></label>
+                                            <label for="col13-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #000080"></label>
+                                            <label for="col14-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #0000ff"></label>
+                                            <label for="col15-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #800080"></label>
+                                            <label for="col16-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #ff00ff"></label>
+                                            <label for="col17-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #808040"></label>
+                                            <label for="col18-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #ffff80"></label>
+                                            <label for="col19-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #004040"></label>
+                                            <label for="col20-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #00ff80"></label>
+                                            <label for="col21-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #0080ff"></label>
+                                            <label for="col22-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #80ffff"></label>
+                                            <label for="col23-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #004080"></label>
+                                            <label for="col24-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #8080ff"></label>
+                                            <label for="col25-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #4000ff"></label>
+                                            <label for="col26-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #ff0080"></label>
+                                            <label for="col27-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #804000"></label>
+                                            <label for="col28-toggle" class="h-[22px] aspect-square emboss-box-in" style="background: #ff8040"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </CreditApp>
+
+                    <CreditApp appId="email" title="eMare" isDebug={false} isClassic={false} icon={firefox.src}>
+                        <div class="app-content bg-white flex flex-col h-full">
+                            <div class="h-10 w-full bg-blue-400 flex justify-between items-center px-2">
+                                <Image src={eMare} alt="eMare logo" class="w-auto h-2/3"/>
+                                <div> anonymous@pony.mare </div>
+                            </div>
+
+                            {emails.map((item, index) => (
+                                    <input type="radio" name="emails-toggle" id={`email-${index + 1}-toggle`} class="hidden" />
+                            ))}
+
+                            <div id="email-body" class="body flex flex-1 overflow-hidden">
+                                <input type="checkbox" id="inbox-toggle" class="hidden">
+                                <div class="bg-sky-200 transition-all duration-200 ease-in-out sm:w-48 w-14 h-full email-sidebar">
+                                    <ul class="list-disc list-inside">
+                                        <div class="px-2 h-7 md:block flex items-center">
+                                            <label for="inbox-toggle">Inbox</label>
+                                        </div>
+
+                                        {emails.map((item, index) => (
+                                            <li id={`email-button-${index + 1}`} class="px-2 truncate email-button"> <label for={`email-${index + 1}-toggle`}> {item.title} </label> </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                {emails.map((item, index) => (
+                                    <div id={`email-${index + 1}`} class="hidden w-full">
+
+                                        <div class="flex-1 bg-cyan-50 overflow-y-auto h-full">
+                                            <div class="header sm:h-7 h-auto w-full bg-black bg-blue-500 px-2 sm:flex block justify-between">
+                                                <div> {item.email} </div>
+                                            </div>
+                                            <div class="email-content px-2">
+                                                <div> From: {item.name} </div>
+                                                <div class="mb-5"> Subject: {item.title}</div>
+                                                <div set:html={item.subject}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+
+                            </div>
+                        </div>
+                    </CreditApp>
+
+                    <CreditApp appId="tendieFrenzy" title="Tendie Frenzy" isDebug={false} icon={balloonRaw.src}>
+                        <div class="app-content w-full h-full bg-white">
+                            <div id="game-placeholder" class="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center"
+                                style="width: 1000px; height: 650px;">
+                                <button id="load-game-btn" class="bg-blue-500 text-white px-6 py-3 rounded text-xl hover:bg-blue-600">
+                                    Load Tendie Frenzy
+                                </button>
+                            </div>
+                        </div>
+                    </CreditApp>
+
+                    <CreditApp appId="bfed" title="Banned From Mare Fair (Daily)" isDebug={false} icon="https://static.wikia.nocookie.net/mlp-gameloft/images/4/4d/Avi_Pinkie_Pie_Default.png">
+                        <img src="https://files.catbox.moe/77178w.svg" class="absolute sm:w-full w-auto sm:h-auto h-full object-cover">
+                        <div class="flex w-full h-full absolute items-center justify-center text-white minecraft lg:text-6xl text-4xl"> UNDER CONSTRUCTION </div>
+                    </CreditApp>
+
+
+                    <div id="video-wrapper" class="hidden">
+                        <img src={tvStatic.src} alt="Static" id="static" width="960" height="540" class="absolute w-full h-full bg-black bottom-0 left-0" style="width:100%; height:100%; image-rendering:pixelated;">
+                    <div id="video-player" class="absolute w-full h-full bottom-0 left-0">
+                        <video id="video" preload="none" style="object-fit: cover; width: 100%; height: 100%;" oncontextmenu="return false;">
+                            <source src="" type="">
+                          </video>
+                        </div>
+                    </div>
+
+                    <p id="osd-label" class="tv-osd hidden">VIDEO</p>
+
+                <div id="black-screen" class="absolute w-full h-full bg-black bottom-0 left-0 hidden">
+                </div>
+                <Image id="funny" src={jumpscare} alt="Mimosa Jumpscare!" class="absolute w-full h-full bg-black bottom-0 left-0 hidden">
+                </div>
+
+                <div class="sm:block hidden w-full h-full">
+                    <div id="off-button" class="absolute power flex items-center justify-center hidden">
+                        <Icon name="mdi:power" class="text-white text-3xl opacity-50 rotate-0" />
+                    </div>
+
+                    <div id="channel-up-button" class="absolute channelup flex items-center justify-center hidden">
+                        <Icon name="mdi:apple-keyboard-control" class="text-white text-3xl opacity-50 rotate-0" />
+                    </div>
+
+                    <div id="channel-down-button" class="absolute channeldown flex items-center justify-center hidden">
+                        <Icon name="mdi:apple-keyboard-control" class="text-white text-3xl opacity-50 rotate-0" />
+                    </div>
+                </div>
+            </div>
+            <div class="relative w-full h-fit sm:hidden">
+                <Image src={bottom} format="avif" height="162" alt="" class="sm:hidden block w-full"/>
+                <div id="off-button-mobile" class="absolute left-[12%] bottom-[30%] flex items-center justify-center hidden">
+                    <Icon name="mdi:power" class="text-white text-[7vw] opacity-50 rotate-0" />
+                </div>
+
+                <div id="channel-up-button-mobile" class="left-[46.5%] bottom-[27%] absolute flex items-center justify-center hidden">
+                    <Icon name="mdi:apple-keyboard-control" class="text-white text-[7vw] opacity-50 rotate-0" />
+                </div>
+
+                <div id="channel-down-button-mobile" class="right-[11.5%] bottom-[34%] absolute flex items-center justify-center hidden">
+                    <Icon name="mdi:apple-keyboard-control" class="text-white text-[7vw] opacity-50 rotate-180" />
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style is:global>
+    :root {
+        --bgColor: #c0c0c0;
+        --selectedColor:#cccccc;
+        --workspaceColor: #808080;
+    }
+    #footer-space {
+        display: none;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .hide-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    html::-webkit-scrollbar {
+        display: none;
+    }
+    html{
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .emboss-box {
+        box-shadow:
+        inset 2px 2px 0px rgba(255, 255, 255, 0.7), /* Light source from bottom-right (bright) */
+        inset -2px -2px 0px rgba(0, 0, 0, 0.7); /* Darker shadow from top-left */
+    }
+
+    .emboss-box-in {
+        box-shadow:
+        inset -2px -2px 0px rgba(255, 255, 255, 0.7), /* Light source from bottom-right (bright) */
+        inset 2px 2px 0px rgba(0, 0, 0, 0.7); /* Darker shadow from top-left */
+    }
+
+    /* app modals */
+    #programmers-toggle:checked ~ #programmers,
+    #artists-toggle:checked ~ #artists,
+    #marefair-horse-toggle:checked ~ #marefair-horse,
+    #tendieFrenzy-toggle:checked ~ #tendieFrenzy,
+    #email-toggle:checked ~ #email,
+    #bfed-toggle:checked ~ #bfed{
+        @apply scale-100 opacity-100;
+    }
+
+    label{
+        @apply cursor-pointer;
+    }
+
+    .tv-osd{
+        position: absolute;
+        top: 4%;
+        right: 6%;
+
+        font-family: 'Courier New', Courier, monospace;
+        font-size: clamp(2rem, 3vw, 3em);
+        font-weight: bold;
+        color: #00ff00;
+        text-shadow:
+        0 0 2px #008400,
+        0 1px 0 #008400;
+    }
+</style>
+
+<style>
+    #inbox-toggle:checked ~ .email-sidebar {
+        @apply w-48;
+    }
+
+    /* email modals */
+    #email-1-toggle:checked ~ #email-body #email-1,
+    #email-2-toggle:checked ~ #email-body #email-2,
+    #email-3-toggle:checked ~ #email-body #email-3,
+    #email-5-toggle:checked ~ #email-body #email-5,
+    #email-4-toggle:checked ~ #email-body #email-4 {
+        @apply block;
+    }
+
+    #email-1-toggle:checked ~ #email-body #email-button-1,
+    #email-2-toggle:checked ~ #email-body #email-button-2,
+    #email-3-toggle:checked ~ #email-body #email-button-3,
+    #email-5-toggle:checked ~ #email-body #email-button-5,
+    #email-4-toggle:checked ~ #email-body #email-button-4 {
+        @apply bg-sky-100;
+    }
+
+    .email-button {
+        @apply duration-200 border-2 border-transparent hover:border-white;
+    }
+
+    .power {
+        @apply w-[8.5%] h-[5.5%] bottom-[6%] left-[27%] top-auto;
+    }
+
+    .channeldown {
+        transform: rotate(180deg);
+        @apply w-[8.5%] h-[5%] bottom-[6.6%] left-[45.75%] top-auto;
+    }
+
+    .channelup {
+        @apply w-[8.5%] h-[5%] bottom-[5.8%] right-[27%] top-auto;
+    }
+
+    .radio-wrapper {
+        display: inline-block;
+        position: relative;
+    }
+
+    .toolButton {
+        appearance: none;
+    }
+
+    .toolButton:checked {
+        @apply paint-bg-selected;
+        box-shadow:
+        inset -2px -2px 0px rgba(255, 255, 255, 0.7), /* Light source from bottom-right (bright) */
+        inset 2px 2px 0px rgba(0, 0, 0, 0.7); /* Darker shadow from top-left */
+    }
+
+    .tool-icon{
+        image-rendering: pixelated;
+        background-image: url("https://jspaint.app/images/classic/tools.png");
+        background-repeat: no-repeat;
+        background-position: calc(-16px * var(--icon-index)) 0;
+    }
+    .desktop-icon {
+        @apply relative w-fit p-[10%] flex flex-col items-center text-center sm:text-sm text-[3.5vw]
+            text-white text-outline border-2 border-transparent hover:border-white icon-shadow;
+    }
+    .desktop-icon-text {
+        @apply w-full overflow-hidden break-words hyphens-auto;
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+    }
+
+    .paint-bg-color{
+        background: var(--bgColor);
+    }
+    .paint-workspace-color{
+        background: var(--workspaceColor);
+    }
+    .paint-bg-selected{
+        background: var(--selectedColor);
+    }
+
+    .app-content {
+        @apply h-full w-full;
+    }
+
+    .text-outline {
+        text-shadow: 0px 0px 2px black, 0px 1px 0px black;
+    }
+
+    .icon-shadow {
+        filter: drop-shadow(0 0 0.1rem rgba(0, 0, 0, 1));
+    }
+
+    .rainbow{
+        background: linear-gradient(45deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6);
+    }
+
+    .comic-sans{
+        font-family: "Comic Sans MS", "Comic Sans", "ComicSansMS", "ComicSans", cursive;
+    }
+
+    .rainbow-text {
+        background-image: linear-gradient(
+            to right,
+            #ff0000,
+            #ff7f00,
+            #ffff00,
+            #00ff00,
+            #0000ff,
+            #4b0082,
+            #8f00ff
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation:
+            rainbow-text-rotate 2s linear infinite,
+            rainbow-text-color 3s linear infinite;
+        transform-origin: center;
+
+        filter: drop-shadow(4px 4px 0 #4444dd);
+    }
+
+    @keyframes rainbow-text-color {
+        0% { background-position: 0% center; }
+        100% { background-position: -200% center; }
+    }
+
+    @keyframes rainbow-text-rotate {
+        0% { transform: rotate(-2deg); }
+        50% { transform: rotate(2deg); }
+        100% { transform: rotate(-2deg); }
+    }
+
+    @keyframes rainbow-text {
+        0% { transform: rotate(-2deg); }
+        50% { transform: rotate(2deg); }
+        100% { transform: rotate(-2deg); }
+    }
+
+    @keyframes wiggle {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .animate-wiggle {
+        animation: wiggle 0.5s ease-in-out infinite;
+    }
+
+    /* Color selection */
+
+    #col01-toggle:checked ~ #colorBox1 {
+        background: black;
+    }
+    #col02-toggle:checked ~ #colorBox1 {
+        background: white;
+    }
+    #col03-toggle:checked ~ #colorBox1 {
+        background: #c0c0c0;
+    }
+    #col04-toggle:checked ~ #colorBox1 {
+        background: #808080;
+    }
+    #col05-toggle:checked ~ #colorBox1 {
+        background: #800000;
+    }
+    #col06-toggle:checked ~ #colorBox1 {
+        background: #ff0000;
+    }
+    #col07-toggle:checked ~ #colorBox1 {
+        background: #808000;
+    }
+    #col08-toggle:checked ~ #colorBox1 {
+        background: #ffff00;
+    }
+    #col09-toggle:checked ~ #colorBox1 {
+        background: #008000;
+    }
+    #col10-toggle:checked ~ #colorBox1 {
+        background: #00ff00;
+    }
+    #col11-toggle:checked ~ #colorBox1 {
+        background: #008080;
+    }
+    #col12-toggle:checked ~ #colorBox1 {
+        background: #00ffff;
+    }
+    #col13-toggle:checked ~ #colorBox1 {
+        background: #000080;
+    }
+    #col14-toggle:checked ~ #colorBox1 {
+        background: #0000ff;
+    }
+    #col15-toggle:checked ~ #colorBox1 {
+        background: #800080;
+    }
+    #col16-toggle:checked ~ #colorBox1 {
+        background: #ff00ff;
+    }
+    #col17-toggle:checked ~ #colorBox1 {
+        background: #808040;
+    }
+    #col18-toggle:checked ~ #colorBox1 {
+        background: #ffff80;
+    }
+    #col19-toggle:checked ~ #colorBox1 {
+        background: #004040;
+    }
+    #col20-toggle:checked ~ #colorBox1 {
+        background: #00ff80;
+    }
+    #col21-toggle:checked ~ #colorBox1 {
+        background: #0080ff;
+    }
+    #col22-toggle:checked ~ #colorBox1 {
+        background: #80ffff;
+    }
+    #col23-toggle:checked ~ #colorBox1 {
+        background: #004080;
+    }
+    #col24-toggle:checked ~ #colorBox1 {
+        background: #8080ff;
+    }
+    #col25-toggle:checked ~ #colorBox1 {
+        background: #4000ff;
+    }
+    #col26-toggle:checked ~ #colorBox1 {
+        background: #ff0080;
+    }
+    #col27-toggle:checked ~ #colorBox1 {
+        background: #804000;
+    }
+    #col28-toggle:checked ~ #colorBox1 {
+        background: #ff8040;
+    }
+</style>
+
+<script>
+    // Better audio handling
+    class AudioPool {
+        private sounds: HTMLAudioElement[] = [];
+        private currentIndex = 0;
+        private poolSize: number;
+        private audioPath: string;
+
+        constructor(audioPath: string, poolSize: number = 3) {
+            this.poolSize = poolSize;
+            this.audioPath = audioPath;
+
+            // Pre-create audio elements
+            for (let i = 0; i < poolSize; i++) {
+                const audio = new Audio(audioPath);
+                audio.load(); // Preload the audio
+                this.sounds.push(audio);
+            }
+        }
+
+        play() {
+            // Get next audio element in pool
+            const audio = this.sounds[this.currentIndex];
+            audio.currentTime = 0; // Reset to start
+            audio.play();
+
+            // Move to next slot in pool
+            this.currentIndex = (this.currentIndex + 1) % this.poolSize;
+        }
+    }
+
+    const audioPool = new AudioPool('/credits/vine_boom.ogg');
+
+    let blackScreen = document.getElementById('black-screen') as HTMLElement;
+    let mimosa = document.getElementById('funny') as HTMLElement;
+    let videoWrapper = document.getElementById('video-wrapper') as HTMLElement;
+
+    let offButton = document.getElementById('off-button') as HTMLElement;
+    let channelUpButton = document.getElementById('channel-up-button') as HTMLElement;
+    let channelDownButton = document.getElementById('channel-down-button') as HTMLElement;
+    let offButtonMobile = document.getElementById('off-button-mobile') as HTMLElement;
+    let channelUpButtonMobile = document.getElementById('channel-up-button-mobile') as HTMLElement;
+    let channelDownButtonMobile = document.getElementById('channel-down-button-mobile') as HTMLElement;
+
+
+    let osd = document.getElementById('osd-label') as HTMLElement;
+    let osdTimer: ReturnType<typeof setTimeout> | null = null;
+    const video = document.getElementById('video') as HTMLVideoElement;
+    let tvChannel = 0;
+
+
+    let counter = 0;
+    let triggerCount = 8;
+    let hasTriggered = false;
+
+    // Will only show for users with javascript enabled
+    offButton.style.cursor = 'pointer';
+    offButton.classList.toggle("hidden");
+    channelUpButton.style.cursor = 'pointer';
+    channelUpButton.classList.toggle("hidden");
+    channelDownButton.style.cursor = 'pointer';
+    channelDownButton.classList.toggle("hidden");
+
+    offButtonMobile.style.cursor = 'pointer';
+    offButtonMobile.classList.toggle("hidden");
+    channelUpButtonMobile.style.cursor = 'pointer';
+    channelUpButtonMobile.classList.toggle("hidden");
+    channelDownButtonMobile.style.cursor = 'pointer';
+    channelDownButtonMobile.classList.toggle("hidden");
+
+
+
+
+
+    // Video events
+    function videoCleanup(){
+    // Stop playback just in case
+    video.pause();
+
+    // Clear src and unload the video
+    video.removeAttribute('src');
+    video.removeAttribute('type');
+    video.load(); // Forces the browser to drop buffered data
+    };
+
+    function osdUpdate(){
+        if(tvChannel){
+            osd.textContent = "CH " + tvChannel;
+        }else{
+            osd.textContent = "VIDEO"
+        }
+        osd.classList.remove("hidden");
+        if (osdTimer) {clearTimeout(osdTimer);}
+        osdTimer = setTimeout(() => {osd.classList.add("hidden");}, 2000);
+    }
+
+    function changeChannel(){
+        tvChannel = (tvChannel + 7) % 7;
+        videoCleanup();
+        osdUpdate();
+        if(tvChannel != 0){
+        videoWrapper.classList.remove("hidden");
+            switch(tvChannel){
+                case 1:
+                    video.src="https://fair-filer.marefair.org/2025/videos/opening-2023.mp4";
+                    break;
+                case 2:
+                    video.src="https://fair-filer.marefair.org/2025/videos/opening-2024.webm";
+                    break;
+                case 3:
+                    video.src="https://fair-filer.marefair.org/2025/videos/one-last-con.mp4"
+                    break;
+                case 4:
+                    video.src="https://fair-filer.marefair.org/2025/videos/fuck-you-mlpcon.mp4"
+                    break;
+                case 5:
+                    video.src="https://fair-filer.marefair.org/2025/videos/our-pony-convention.webm"
+                    break;
+                case 6:
+                    video.src="https://fair-filer.marefair.org/2025/videos/another-day-of-mares.mp4"
+                    break;
+            }
+        video.play();
+        }else{
+            videoWrapper.classList.add("hidden");
+
+        }
+    }
+
+    function handlePower()
+    {
+        ++counter;
+        blackScreen.classList.toggle("hidden");
+        osdUpdate();
+
+        if (hasTriggered === true)
+            mimosa.classList.add("hidden");
+
+        if (counter === triggerCount)
+        {
+            audioPool.play();
+            mimosa.classList.remove("hidden");
+            hasTriggered = true;
+            counter = 0;
+        }
+
+        video.muted = !(mimosa.classList.contains("hidden") && blackScreen.classList.contains("hidden"));
+    }
+
+    offButton.addEventListener("click", handlePower);
+    offButtonMobile.addEventListener("click", handlePower);
+
+    channelUpButton.addEventListener("click", function() {
+        if (mimosa.classList.contains("hidden") && blackScreen.classList.contains("hidden")) {
+            tvChannel++;
+        changeChannel();
+    }
+    });
+
+    channelDownButton.addEventListener("click", function() {
+    if (mimosa.classList.contains("hidden") && blackScreen.classList.contains("hidden")) {
+            tvChannel--;
+        changeChannel();
+    }
+    });
+
+    channelUpButtonMobile.addEventListener("click", function() {
+        if (mimosa.classList.contains("hidden") && blackScreen.classList.contains("hidden")) {
+            tvChannel++;
+        changeChannel();
+    }
+    });
+
+    channelDownButtonMobile.addEventListener("click", function() {
+    if (mimosa.classList.contains("hidden") && blackScreen.classList.contains("hidden")) {
+            tvChannel--;
+        changeChannel();
+    }
+    });
+
+    video.addEventListener('ended', () => {
+        videoCleanup()
+    });
+
+    document.addEventListener('astro:page-load', async () => {
+        const gamePlaceholderId = 'game-placeholder';
+        const tendieFrenzyApp = document.getElementById('tendieFrenzy') as HTMLElement;
+        let gameLoaded = false;
+
+        function restoreGameButton() {
+            const appContent = tendieFrenzyApp.querySelector('.app-content') as HTMLElement;
+            // Remove any iframe
+            const iframe = appContent.querySelector('iframe') as HTMLIFrameElement;
+            if (iframe) iframe.remove();
+
+            // Restore the button if missing
+            if (!appContent.querySelector(`#${gamePlaceholderId}`)) {
+                const btnDiv = document.createElement('div') as HTMLElement;
+                btnDiv.id = gamePlaceholderId;
+                btnDiv.className = "absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center";
+                btnDiv.style.width = "1000px";
+                btnDiv.style.height = "650px";
+                btnDiv.innerHTML = `<button id="load-game-btn" class="bg-blue-500 text-white px-6 py-3 rounded text-xl hover:bg-blue-600">
+                    🎮 Load Tendie Frenzy
+                </button>`;
+                appContent.appendChild(btnDiv);
+
+                (btnDiv.querySelector('#load-game-btn') as HTMLElement).addEventListener('click', loadGame);
+            }
+            gameLoaded = false;
+        }
+
+        function loadGame() {
+            const placeholder = tendieFrenzyApp.querySelector(`#${gamePlaceholderId}`) as HTMLElement;
+            const iframe = document.createElement('iframe');
+            iframe.className = "absolute left-1/2 transform -translate-x-1/2 bg-white";
+            iframe.width = "1000";
+            iframe.height = "650";
+            iframe.allowFullscreen = true;
+            iframe.scrolling = "no";
+            iframe.allow = "autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated; web-share";
+            iframe.src = 'https://html-classic.itch.zone/html/14220834/BUILD-WEB/index.html';
+
+            if (placeholder.parentNode) {
+                placeholder.parentNode.replaceChild(iframe, placeholder);
+            }
+            gameLoaded = true;
+        }
+
+        // Initial button setup
+        const initialBtn = tendieFrenzyApp.querySelector(`#${gamePlaceholderId} #load-game-btn`);
+        if (initialBtn) initialBtn.addEventListener('click', loadGame);
+
+        // Listen for top bar close button
+        tendieFrenzyApp.addEventListener('click', function(e) {
+            const target = e.target as HTMLElement;
+            if (target.classList.contains('app-top-bar-btn') && gameLoaded) {
+                restoreGameButton();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import up from '@assets/icons/material/up.png';
+import upNeon from '@assets/icons/material/up_neon.png';
+---
+
+<div id="scroll-top" class="fixed top-6 right-6 z-1000 sm:w-20 sm:h-20 w-10 h-10 z-50">
+  <!-- JavaScript-enabled Button -->
+  <button
+    id="back-to-top"
+    style="display: none;"
+    aria-label="Back to top"
+    class="relative"
+  >
+    <Image src={up} alt="Back to top" class="inline pointer-events-none" width={170} />
+    <Image src={upNeon} alt="" class="absolute top-0 neon-glow" width={170} />
+  </button>
+
+  <!-- Fallback Anchor -->
+  <a
+    href="#top"
+    aria-label="Back to top"
+    id="fallback-link" >
+    <Image src={up} alt="Back to top" class="inline pointer-events-none" width={170} />
+    <Image src={upNeon} alt="" class="absolute top-0 neon-glow" width={170} />
+  </a>
+</div>
+
+<!-- Add this at the top of your page -->
+<div id="top"></div>
+
+<script>
+  // Check if JavaScript is enabled
+  document.addEventListener('astro:page-load', () => {
+    const jsButton = document.getElementById('back-to-top');
+    const fallbackLink = document.getElementById('fallback-link');
+
+    // If JavaScript is enabled, show the button and hide the fallback link
+    if (jsButton && fallbackLink) {
+      fallbackLink.style.display = 'none';
+      jsButton.style.display = 'block';
+
+      // Add smooth scrolling functionality
+      jsButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  });
+</script>

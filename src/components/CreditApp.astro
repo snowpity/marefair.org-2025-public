@@ -1,0 +1,43 @@
+---
+interface Props {
+  appId?: string;
+  title?: string;
+  icon?: string;
+  isDebug?: boolean;
+  barColor?: string;
+  isClassic?: boolean;
+}
+const { appId, title, icon, isDebug, barColor, isClassic} = Astro.props;
+const debugClass = isDebug ? 'debug-active' : ''; // debug will keep the modal active for debugging
+---
+<div id={`${appId}`} class={`app ${debugClass}`}>
+    <div class={`app-top-bar ${isClassic? 'emboss-box' : ''} ${barColor ? '' : "bg-gray-800"}`} style={`${barColor ? `background: ${barColor};` : ''}`}>
+        <div class="w-fit h-[80%] flex items-center">
+            <img src={`${icon}`} class="h-full w-auto"/>
+            <span class={`${isClassic? 'text-black' : 'text-white'} pl-2`}>
+                {title}
+            </span>
+        </div>
+
+        <div class="w-fit h-[80%] flex items-center">
+            <label for="default-toggle" class="app-top-bar-btn bg-red-500">X</label>
+        </div>
+    </div>
+    <div class="flex-1 overflow-hidden">
+        <slot/>
+    </div>
+</div>
+
+<style>
+    .app {
+        @apply absolute flex flex-col bottom-0 left-0 w-full h-full opacity-0 transition-all duration-300 scale-[0.1] origin-bottom;
+    }
+
+    .app-top-bar {
+        @apply flex justify-between items-center px-1 h-10;
+    }
+
+    .app-top-bar-btn {
+        @apply w-10 h-full rounded-md m-1 flex items-center justify-center text-white font-bold;
+    }
+</style>

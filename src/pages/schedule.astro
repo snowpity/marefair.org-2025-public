@@ -1,0 +1,538 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+import { getAssignment, generateTableMaps, generateTimeSlots, separateAssignments, combineAssignments, type EventDetails } from '@components/ScheduleTable.astro';
+import ScheduleRow from '@components/ScheduleRow.astro';
+import ScheduleModal from '@components/ScheduleModal.astro';
+import Banner from "@components/Banner.astro";
+import { Image, getImage } from "astro:assets";
+
+import clipRaw from "@assets/schedules/schedule_ring.png"
+const clip = await getImage({ src: clipRaw, format:"avif", height: 100});
+
+// Generate time slots in 30-minute increments
+const timeSlots = generateTimeSlots(9,26.5); // 9 AM to 4 AM
+
+// Configure the rooms, by order, and their alternate names
+const roomConfig = [
+    {
+        primary: "Mare Stage",
+        alternates: ["Mare Events"]
+    },
+    {
+        primary: "Fort Reckless",
+        alternates: []
+    },
+    {
+        primary: "The Snow Pit",
+        alternates: []
+    },
+    {
+        primary: "Faust's Home for Abandoned OCs",
+        alternates: []
+    },
+    {
+        primary: "Raggie's Room",
+        alternates: []
+    },
+    {
+        primary: "Renegade Stage",
+        alternates: []
+    },
+    {
+        primary: "Floor Bored's Battle Station",
+        alternates: []
+    },
+    {
+        primary: "Mare Gallery",
+        alternates: []
+    },
+    {
+        primary: "Vendor Stalls",
+        alternates: []
+    },
+    {
+        primary: "Milky Way's Parlor",
+        alternates: []
+    },
+    {
+        primary: "Marechandise Store",
+        alternates: []
+    },
+    {
+        primary: "Registration",
+        alternates: []
+    },
+    {
+        primary: "Fair Flyer's Charity Room",
+        alternates: []
+    },
+];
+
+// Put the rating string displayed by the API here
+const ratings = [
+    "Unrated",
+    "Safe - Nothing sexual.",
+    "Questionable - sexual discussion but nothing displayed on monitors.",
+    "Suggestive - slightly sexual topics and innuendo.",
+    "Explicit - we're going to be showing clop images and/or reading actual clop fics."
+]
+
+// Fetch schedule data from API and store it
+//const SCHEDULE_API = import.meta.env.SCHEDULE_API + "?c=panel";
+//const response = await fetch(SCHEDULE_API);
+//const scheduleData = await response.json();
+import scheduleData from '@data/schedules/panel.json';
+
+//const MUSICIAN_API = import.meta.env.SCHEDULE_API + "?c=musician";
+//const responseMusician = await fetch(MUSICIAN_API);
+//const musicianData = await responseMusician.json();
+import musicianData from '@data/schedules/musician.json';
+
+// Separate assignments by day using specific date ranges
+const fridayAssignments = separateAssignments(scheduleData.assignments, "2025-09-05 08:00:00", "2025-09-06 04:00:00");
+const saturdayPanels  = separateAssignments(scheduleData.assignments, "2025-09-06 08:00:00", "2025-09-07 04:00:00");
+const sundayAssignments = separateAssignments(scheduleData.assignments, "2025-09-07 08:00:00", "2025-09-08 04:00:00");
+
+const saturdayMusicians = separateAssignments(musicianData.assignments, "2025-09-06 08:00:00", "2025-09-07 04:00:00");
+
+// Combine schedule and musician
+const saturdayAssignments = combineAssignments(saturdayPanels, saturdayMusicians);
+
+// Mapping the table, first pre-process the API to Record datatype, then use it to map the days.
+const fridayEvents: Record<string, Record<string, EventDetails>> = await getAssignment(fridayAssignments, roomConfig)
+const friday = generateTableMaps(timeSlots, fridayEvents);
+const saturdayEvents: Record<string, Record<string, EventDetails>> = await getAssignment(saturdayAssignments, roomConfig)
+const saturday = generateTableMaps(timeSlots, saturdayEvents);
+const sundayEvents: Record<string, Record<string, EventDetails>> = await getAssignment(sundayAssignments, roomConfig)
+const sunday = generateTableMaps(timeSlots, sundayEvents);
+
+const allDays = [
+    { events: fridayEvents},
+    { events: saturdayEvents},
+    { events: sundayEvents}
+];
+
+---
+
+<Layout title="Schedule | Mare Fair 2025">
+    <Banner/>
+    <Back />
+    <input type="radio" name="schedule-event-toggle" id="default-event-toggle" class="hidden" checked />
+    {/* Oh the bane of working with key-value */}
+    <div class="reddit-sans relative z-50">
+        {(() => {
+            const processedEvents = new Set();
+
+            return allDays.flatMap(({ events }) =>
+                Object.keys(events).flatMap((timeSlot) =>
+                    Object.values(events[timeSlot])
+                        .filter(event => {
+                            if (event.name === "") return false;
+
+                            return !processedEvents.has(`${event.name}-${event.startTime.toString().replace(/\s+/g, '-')}`);
+                        })
+                        .map(event => {
+                            processedEvents.add(`${event.name}-${event.startTime.toString().replace(/\s+/g, '-')}`);
+                            return <ScheduleModal event={event} ratings={ratings} />;
+                        })
+                )
+            );
+        })()}
+    </div>
+
+    <div class="relative overflow-hidden flex justify-center items-center w-screen h-auto">
+        {/* I don't know what I did, but I need this to fix the header spacing */}
+    </div>
+
+    <div class="relative z-10 container mx-auto mb-6 mt-20 reddit-sans">
+        <input type="radio" name="room-block-toggle" id="first-block-toggle" class="hidden" checked/>
+        <input type="radio" name="room-block-toggle" id="second-block-toggle" class="hidden"/>
+
+        <input type="radio" name="day-toggle" id="fri-block-toggle" class="hidden" checked/>
+        <input type="radio" name="day-toggle" id="sat-block-toggle" class="hidden"/>
+        <input type="radio" name="day-toggle" id="sun-block-toggle" class="hidden"/>
+
+        <input type="radio" name="time-toggle" id="full-hr-toggle" class="hidden"/>
+        <input type="radio" name="time-toggle" id="half-hr-toggle" class="hidden" checked/>
+
+        <div id="header" class="w-full accent-dark text-white">
+            <div class="h-[100px] w-[90%] mx-[5%] absolute top-0 left-0 bg-repeat-x bg-size-[auto_100px] -mt-[30px]" style={`background-image: url(${clip.src});`}> </div>
+            <h class="flex justify-center md:text-[10rem] sm:text-[6rem] text-[18vw] pt-20"> SCHEDULE </h>
+
+            {allDays.map((day, index) => {
+                const dayNames = ['friday', 'saturday', 'sunday'];
+                const currentEvents = day.events;
+                const roomsToShow = ["Floor Bored's Battle Station", "Mare Gallery", "Vendor Stalls", "Milky Way's Parlor", "Marechandise Store", "Registration", "Fair Flyer's Charity Room"];
+
+                return (
+                    <div id={`${dayNames[index]}-hours`} class="flex justify-center flex-wrap flex-row">
+                        <div class="w-full text-center font-bold text-2xl mb-4">
+                            {dayNames[index].toUpperCase()}
+                        </div>
+                        {roomsToShow.map(roomName => {
+                            // Get all events for this room
+                            const roomEvents = Object.keys(currentEvents).flatMap((timeSlot) =>
+                                Object.values(currentEvents[timeSlot])
+                                    .filter(event => event.room === roomName)
+                            );
+
+                            // Remove duplicates based on time and application name
+                            const seen = new Set();
+                            const uniqueEvents = roomEvents.filter(event => {
+                                const uniqueKey = `${event.startTime}-${event.endTime}-${event.name}`;
+                                if (seen.has(uniqueKey)) return false;
+                                seen.add(uniqueKey);
+                                return true;
+                            });
+
+                            if (uniqueEvents.length === 0) return null;
+
+                            return (
+                                <div class="text-white m-2 p-4 bg-gray-800 rounded-lg w-[24rem]">
+                                    <div class="font-bold mb-2 text-center text-lg">{roomName}</div>
+                                    {uniqueEvents.map(event => (
+                                        <div class="mb-1 text-center">
+                                            {event.name}: {new Date(event.startTime).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} - {new Date(event.endTime).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
+                                        </div>
+                                    ))}
+                                </div>
+                            );
+                        })}
+                    </div>
+                );
+            })}
+
+            <div class="flex justify-center flex-wrap max-w-xs mx-auto sm:max-w-none sm:flex-row sm:space-x-4 gap-2 sm:gap-0 py-5">
+                <div id="legend-safe" class="items-center flex space-x-2 w-[calc(50%-0.5rem)] sm:w-auto">
+                    <div class="bg-green-300 w-4 h-4"></div>
+                    <div>
+                        Safe
+                    </div>
+                </div>
+                <div id="legend-suggestive" class="items-center flex space-x-2 w-[calc(50%-0.5rem)] sm:w-auto">
+                    <div class="bg-amber-300 w-4 h-4"></div>
+                    <div>
+                        Suggestive
+                    </div>
+                </div>
+                <div id="legend-questionable" class="items-center flex space-x-2 w-[calc(50%-0.5rem)] sm:w-auto">
+                    <div class="bg-cyan-300 w-4 h-4"></div>
+                    <div>
+                        Questionable
+                    </div>
+                </div>
+                <div id="legend-explicit" class="items-center flex space-x-2 w-[calc(50%-0.5rem)] sm:w-auto">
+                    <div class="bg-red-300 w-4 h-4"></div>
+                    <div>
+                        Explicit
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table-fixed w-full border-collapse">
+
+            <thead class="sticky top-0 relative z-10 border border-gray-900"> {/* Header */}
+                <tr id="date" class="accent-dark text-white">
+                    <th id="toggle-wrapper-mobile" class="accent-light relative md:hidden" colspan="4">
+                        <div class="flex w-full">
+                            <div id="fri-toggle" class="toggleable w-1/3 h-10 flex items-center justify-center">
+                                <label for="fri-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                                    Friday
+                                </label>
+                            </div>
+                            <div id="sat-toggle" class="toggleable w-1/3 h-10 flex items-center justify-center">
+                                <label for="sat-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                                    Saturday
+                                </label>
+                            </div>
+                            <div id="sun-toggle" class="toggleable w-1/3 h-10 flex items-center justify-center">
+                                <label for="sun-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                                    Sunday
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+
+                    <!-- Desktop version (md and up) - colspan="6" -->
+
+                    <th id="toggle-wrapper-desktop" class="accent-light relative hidden md:table-cell" colspan="7">
+                        <div class="flex w-full">
+                            <div id="fri-toggle" class="toggleable w-1/3 h-10 flex items-center justify-center">
+                                <label for="fri-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                                    Friday
+                                </label>
+                            </div>
+                            <div id="sat-toggle" class="toggleable w-1/3 h-10 flex items-center justify-center">
+                                <label for="sat-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                                    Saturday
+                                </label>
+                            </div>
+                            <div id="sun-toggle" class="toggleable w-1/3 h-10 flex items-center justify-center">
+                                <label for="sun-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                                    Sunday
+                                </label>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                <tr id="selector" class="accent-light md:hidden table-row text-white">
+                    <th id="toggle-wrapper" class="relative" colspan="4">
+                        <div class="flex w-full">
+                        <div id="first-toggle" class="toggleable w-1/2 h-10 flex items-center justify-center">
+                            <label for="first-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                            Room 1 - 3
+                            </label>
+                        </div>
+
+                        <div id="second-toggle" class="toggleable w-1/2 h-10 flex items-center justify-center">
+                            <label for="second-block-toggle" class="w-full h-full cursor-pointer text-center flex items-center justify-center">
+                            Room 4 - 6
+                            </label>
+                        </div>
+                        </div>
+                    </th>
+                </tr>
+                <tr id="time-room-header" class="accent-dark text-white">
+                    <th class="w-24 p-2">
+                        Time
+                        <div class="time-toggle-wrapper flex text-sm">
+                            <label for="half-hr-toggle" class="w-full cursor-pointer text-center transition-colors p-1 rounded-l bg-gray-600">
+                                12hr
+                            </label>
+                            <label for="full-hr-toggle" class="w-full cursor-pointer text-center transition-colors p-1 rounded-r bg-gray-600">
+                                24hr
+                            </label>
+                        </div>
+                    </th>
+                    <th class="md:w-1/6 w-1/3 border p-2 first-block">{roomConfig[0].primary}</th>
+                    <th class="md:w-1/6 w-1/3 border p-2 first-block">{roomConfig[1].primary}</th>
+                    <th class="md:w-1/6 w-1/3 border p-2 first-block">{roomConfig[2].primary}</th>
+                    <th class="md:w-1/6 w-1/3 border p-2 second-block hidden md:table-cell">{roomConfig[3].primary}</th>
+                    <th class="md:w-1/6 w-1/3 border p-2 second-block hidden md:table-cell">{roomConfig[4].primary}</th>
+                    <th class="md:w-1/6 w-1/3 border p-2 second-block hidden md:table-cell">{roomConfig[5].primary}</th>
+                </tr>
+            </thead>
+            {/* Consult ScheduleRow.stro */}
+            <tbody id="fri-block" class="hidden">
+                {timeSlots.map((time, index) => (
+                    <ScheduleRow
+                        time={time}
+                        rowBg={index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"}
+                        eventData={friday}
+                        events={fridayEvents}
+                        ratings={ratings}
+                    />
+                ))}
+            </tbody>
+
+            <tbody id="sat-block" class="hidden">
+                {timeSlots.map((time, index) => (
+                    <ScheduleRow
+                        time={time}
+                        rowBg={index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"}
+                        eventData={saturday}
+                        events={saturdayEvents}
+                        ratings={ratings}
+                    />
+                ))}
+            </tbody>
+
+            <tbody id="sun-block" class="hidden">
+                {timeSlots.map((time, index) => (
+                    <ScheduleRow
+                        time={time}
+                        rowBg={index % 2 === 0 ? "bg-gray-700" : "bg-gray-800"}
+                        eventData={sunday}
+                        events={sundayEvents}
+                        ratings={ratings}
+                    />
+                ))}
+            </tbody>
+        </table>
+    </div>
+</Layout>
+
+<style is:global>
+    .tableCell{
+        --cellHeight-sm: 2rem;
+        --cellHeight-nm: 3rem;
+        @apply max-h-[var(--cellHeight-nm)] min-h-[var(--cellHeight-nm)] h-[var(--cellHeight-nm)] md:max-h-[var(--cellHeight-sm)] md:min-h-[var(--cellHeight-sm)] md:h-[var(--cellHeight-sm)];
+    }
+
+    .tableCell p{
+        @apply absolute w-full h-full top-0 pointer-events-none overflow-hidden flex items-center justify-center;
+    }
+
+    .accent-light{
+        @apply bg-gray-700;
+    }
+    .accent-dark{
+        @apply bg-gray-900;
+    }
+    th, td {
+        @apply text-center border-gray-900;
+    }
+    .time-cell {
+        @apply font-bold text-white;
+    }
+
+    .fullHR {
+        @apply block;
+    }
+
+    .halfHR {
+        @apply hidden;
+    }
+
+    #full-hr-toggle:checked ~ table .time-cell .fullHR {
+        @apply block;
+    }
+    #full-hr-toggle:checked ~ table .time-cell .halfHR {
+        @apply hidden;
+    }
+
+    #half-hr-toggle:checked ~ table .time-cell .fullHR {
+        @apply hidden;
+    }
+    #half-hr-toggle:checked ~ table .time-cell .halfHR {
+        @apply block;
+    }
+    #full-hr-toggle:checked ~ table .time-toggle-wrapper label[for="full-hr-toggle"] {
+        @apply bg-gray-700;
+    }
+
+    #half-hr-toggle:checked ~ table .time-toggle-wrapper label[for="half-hr-toggle"] {
+        @apply bg-gray-700;
+    }
+
+    .absolute-centered{
+        @apply absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2;
+    }
+
+    input[type="radio"][name="schedule-event-toggle"]:checked + div {
+        @apply fixed opacity-100 pointer-events-auto backdrop-blur-sm transition-[opacity,backdrop-filter] duration-200;
+    }
+
+    .toggleable{
+        @apply transition-all duration-300 rounded-md;
+    }
+
+    /* Radio toggle system */
+    @media (max-width: 767px) {
+        /* Show first block by default on mobile */
+        .second-block {
+            @apply hidden;
+        }
+
+        /* When first block is selected */
+        #first-block-toggle:checked ~ table .first-block {
+            @apply table-cell;
+        }
+        #first-block-toggle:checked ~ table .second-block {
+            @apply hidden;
+        }
+        #first-block-toggle:checked ~ table #selector #toggle-wrapper #first-toggle {
+            @apply bg-gray-900;
+        }
+
+        /* When second block is selected */
+        #second-block-toggle:checked ~ table .first-block {
+            @apply hidden;
+        }
+        #second-block-toggle:checked ~ table .second-block {
+            @apply table-cell;
+        }
+        #second-block-toggle:checked ~ table #selector #toggle-wrapper #second-toggle {
+            @apply bg-gray-900;
+        }
+    }
+
+    #fri-block, #sat-block, #sun-block {
+        @apply hidden;
+    }
+
+    #friday-hours, #saturday-hours, #sunday-hours {
+        @apply hidden;
+    }
+
+    /* When Friday is selected */
+    #fri-block-toggle:checked ~ #header #friday-hours,
+    #sat-block-toggle:checked ~ #header #saturday-hours,
+    #sun-block-toggle:checked ~ #header #sunday-hours {
+        @apply flex;
+    }
+
+    /* When Friday is selected */
+    #fri-block-toggle:checked ~ table #fri-block {
+        @apply table-row-group;
+    }
+    #fri-block-toggle:checked ~ table #date #toggle-wrapper-mobile #fri-toggle,
+    #fri-block-toggle:checked ~ table #date #toggle-wrapper-desktop #fri-toggle {
+        @apply bg-gray-900;
+    }
+
+    /* When Saturday is selected */
+    #sat-block-toggle:checked ~ table #sat-block {
+        @apply table-row-group;
+    }
+    #sat-block-toggle:checked ~ table #date #toggle-wrapper-mobile #sat-toggle,
+    #sat-block-toggle:checked ~ table #date #toggle-wrapper-desktop #sat-toggle {
+        @apply bg-gray-900;
+    }
+
+    /* When Sunday is selected */
+    #sun-block-toggle:checked ~ table #sun-block {
+        @apply table-row-group;
+    }
+    #sun-block-toggle:checked ~ table #date #toggle-wrapper-mobile #sun-toggle,
+    #sun-block-toggle:checked ~ table #date #toggle-wrapper-desktop #sun-toggle {
+        @apply bg-gray-900;
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', async () => {
+
+        function toggleDay(targetToggle: string)
+        {
+            const toggleElement = document.getElementById(targetToggle) as HTMLInputElement;
+            if (toggleElement) {
+                toggleElement.checked = true;
+            }
+        }
+
+        function handleHash() // check what the client put in after /schedule#
+        {
+            const hash = window.location.hash.toLowerCase().substring(1);
+
+            let targetToggle = ["fri-block-toggle", "sat-block-toggle", "sun-block-toggle"];
+
+            switch (hash)
+            {
+                case "friday":
+                case "fri":
+                    toggleDay(targetToggle[0]);
+                    break;
+                case "saturday":
+                case "sat":
+                    toggleDay(targetToggle[1]);
+                    break;
+                case "sunday":
+                case "sun":
+                    toggleDay(targetToggle[2]);
+                    break;
+                default:
+                    toggleDay(targetToggle[0]);
+                    break;
+            }
+        }
+
+        // Init page load
+        handleHash();
+
+        // When user manually changes hash
+        window.addEventListener('hashchange', handleHash);
+    });
+</script>

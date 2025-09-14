@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import type { NewsArticle } from '@data/NewsArticle';
+import headerImage from "@assets/pages/news/header.png";
+import soireeImage from "@assets/pages/news/soiree.png";
+import featuredNoteImage from "@assets/pages/news/featured_note.png";
+import dividerImage from "@assets/pages/news/divider.png";
+import backdropImage from "@assets/pages/news/backdrop.png";
+
+interface Props {
+	article: NewsArticle;
+}
+
+const { article } = Astro.props;
+---
+
+<div>
+	<div id="header-wrapper" class="relative flex justify-center max-w-full mx-auto w-fit bg-center inset-0 z-0">
+		<Image src={backdropImage} format="avif" alt="" class="absolute mx-auto bottom-0 min-w-[1200px] -mb-[2%]" width={1200}/>
+		<div id="featured-wrapper">
+			<Image src={headerImage} format="avif" alt="Latest News" class="relative lg:-mb-[5%] mb-[5%] z-10 lg:mt-16 mt-0 " width={700}/>
+			<a href={`/news/${article.slug}`} aria-label="Latest News" id="content-wrapper" class="block relative w-fit mx-auto hover:scale-105 transition-transform duration-200">
+				<Image src={featuredNoteImage} format="avif" alt="Featured Article" class="mx-auto" width={600}/>
+				<div id="text-wrapper" class="absolute top-[11%] left-[50%] -translate-x-[50%] w-[90%] h-[80%]">
+
+					<h1 id="header" class="min-[400px]:text-2xl text-md text-red-900 lg:text-center"> Featured Article </h1>
+					<img id="hero-image"
+					src={article.heroImage || "/placeholder-image.png"}
+					alt={article.title}
+					class="absolute aspect-[3/2] top-[25%] left-0 w-[50%] object-cover"
+					/>
+
+					<div id="textWrapper" class="absolute right-0 w-[45%] top-[20%] h-[80%] ">
+						<h3 class="sm:text-2xl min-[450px]:text-xl text-md font-bold">{article.title}</h3>
+						<p class="sm:text-sm text-xs text-gray-500 sm:mb-4 smb=0">
+							{new Date(article.createdAt).toLocaleDateString()}
+						</p>
+
+						<p class="sm:text-base text-xs text-black mb-6 line-clamp-5 sm:break-words break-words">{article.previewText}</p>
+					</div>
+				</div>
+			</a>
+
+			<Image src={soireeImage} transition:name="news" format="avif" alt="" class="absolute top-[10%] right-0 w-[40%] lg:hidden block max-w-[235px] " width={300}/>
+
+		</div>
+		<div class="-ml-[7%] lg:block hidden z-10" >
+			<Image src={soireeImage} transition:name="news" format="avif" alt="" class="transition-transform duration-200 hover:rotate-[3deg]" width={600}/>
+		</div>
+	</div>
+	<Image src={dividerImage} format="avif" alt="" class="relative mx-auto z-10" width={700}/>
+</div>

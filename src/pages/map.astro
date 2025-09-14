@@ -1,0 +1,395 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+import {rooms} from "@components/VenueMap.astro"
+import { Icon } from "astro-icon/components";
+import { combineAssignments } from '@components/ScheduleTable.astro';
+import Tapes from '@components/Tapes.astro';
+
+import Map2 from "@assets/map/Map_2nd.png";
+import Map1 from "@assets/map/Map_Ground.png";
+
+import paperRaw from "@assets/misc/textured-paper.png"
+const paper = await getImage({ src: paperRaw, format:"avif", width: 500});
+
+import foldLine from "@assets/map/fold_line.png"
+import foldLineHorizontal from "@assets/venue/fold_line.png"
+
+//const SCHEDULE_API = import.meta.env.SCHEDULE_API + "?c=panel";
+//const response = await fetch(SCHEDULE_API);
+//const scheduleData = await response.json();
+import scheduleData from '@data/schedules/panel.json';
+
+//const MUSICIAN_API = import.meta.env.SCHEDULE_API + "?c=musician";
+//const responseMusician = await fetch(MUSICIAN_API);
+//const musicianData = await responseMusician.json();
+import musicianData from '@data/schedules/musician.json';
+
+const allAssignments = combineAssignments(scheduleData.assignments, musicianData.assignments);
+
+// Group schedule data by room
+const panelsByRoom = allAssignments.reduce((acc: any, panel: any) => { // TODO: LOOK INTO SETTING THE RIGHT TYPES FOR THESE
+    const roomId = panel["room-or-table-id"];
+    if (!acc[roomId]) {
+        acc[roomId] = [];
+    }
+    acc[roomId].push(panel);
+    return acc;
+}, {}) || {};
+
+// Helper function to get rating class
+function getRatingClass(rating: string) {
+    if (rating?.toLowerCase().includes('safe')) return 'bg-green-100 border-green-300';
+    if (rating?.toLowerCase().includes('questionable')) return 'bg-cyan-100 border-cyan-300';
+    if (rating?.toLowerCase().includes('suggestive')) return 'bg-amber-100 border-amber-300';
+    if (rating?.toLowerCase().includes('explicit')) return 'bg-red-100 border-red-300';
+    if (rating?.toLowerCase().includes('NOT A PANEL')) return 'bg-white';
+    return 'bg-gray-100 border-gray-300';
+}
+
+// Helper function to format time
+function formatTime(timeString: string) {
+    const date = new Date(timeString);
+    return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+}
+
+// Helper function to get day name from date string
+function getDayName(timeString: string) {
+    const date = new Date(timeString);
+    return date.toLocaleDateString('en-US', { weekday: 'long' });
+}
+
+// Helper function to group panels by day
+function groupPanelsByDay(panels: any[]) {
+    return panels.reduce((acc: any, panel: any) => {
+        const dayName = getDayName(panel["start-time"]);
+        if (!acc[dayName]) {
+            acc[dayName] = [];
+        }
+        acc[dayName].push(panel);
+        return acc;
+    }, {});
+}
+
+// Sort panels by start time within each day
+function sortPanelsByTime(panels: any[]) {
+    return panels.sort((a: any, b: any) => {
+        return new Date(a["start-time"]).getTime() - new Date(b["start-time"]).getTime();
+    });
+}
+---
+
+<Layout title="Map | Mare Fair 2025">
+    <Back />
+
+    <input type="checkbox" id="verticalCheck" class="hidden">
+
+    <div id="scroll-top" class="fixed top-6 right-6 z-1000 sm:w-20 sm:h-20 w-10 h-10 z-50">
+        <label for="verticalCheck" class="flex items-center justify-center w-full h-full switch-button cursor-pointer">
+            <Icon name="mdi:phone-rotate-landscape" class="text-white sm:text-4xl text-2xl pointer-events-none" />
+        </label>
+    </div>
+
+    <input type="radio" name="modal-toggle" id="default-modal-toggle" class="hidden" checked />
+
+    <!-- Room Panel Modals -->
+    {rooms.map((room) => {
+        const roomPanels = panelsByRoom[room.room] || [];
+        const panelsByDay = groupPanelsByDay(roomPanels);
+        const sortedDays = Object.keys(panelsByDay).sort((a, b) => {
+            // Sort days chronologically
+            const dateA = new Date(panelsByDay[a][0]["start-time"]);
+            const dateB = new Date(panelsByDay[b][0]["start-time"]);
+            return dateA.getTime() - dateB.getTime();
+        });
+
+        return (
+            <div>
+                <input type="radio" name="modal-toggle" id={`${room.room.replace(/\s+/g, '-')}-toggle`} class="hidden"/>
+                <div id={`${room.room.replace(/\s+/g, '-')}-modal`} class="fixed w-screen h-screen z-30 opacity-0 pointer-events-none bg-black bg-opacity-60 transition-[opacity,backdrop-filter] duration-200">
+                    <label for="default-modal-toggle" class="absolute inset-0 w-full h-full cursor-pointer"/>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[50rem] max-w-[95vw] max-h-[80vh] rounded-xl p-6 shadow-xl shadow-black/30 overflow-y-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold">{room.room}</h2>
+                            <label for="default-modal-toggle" class="text-gray-500 hover:text-gray-700 cursor-pointer text-2xl font-bold">&times;</label>
+                        </div>
+
+                        {room.desc && (
+                            <p class="text-gray-600 mb-4">{room.desc}</p>
+                        )}
+
+                        {roomPanels.length > 0 ? (
+                            <div class="space-y-6">
+                                {sortedDays.map((dayName) => (
+                                    <div class="space-y-4">
+                                        <h4 class="text-lg font-semibold text-blue-600 border-b border-blue-200 pb-1">
+                                            {dayName}:
+                                        </h4>
+                                        <div class="space-y-3 ml-4">
+                                            {sortPanelsByTime(panelsByDay[dayName]).map((panel: any) => {
+                                                const rating = panel.questions?.find((q: any) => q.title === "Rate your panel")?.answer || "Not rated";
+                                                const ratingClass = getRatingClass(rating);
+                                                const description = panel.questions?.find((q: any) => q.title.toLowerCase().includes("description"))?.answer || (rating != "NOT A PANEL" ? "No description available" : '');
+
+                                                return (
+                                                    <div class={`border rounded-lg p-4 ${ratingClass}`}>
+                                                        <div class="flex justify-between items-start mb-2">
+                                                            <h5 class="font-semibold text-lg">{panel["application-name"]}</h5>
+                                                            <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                                                {formatTime(panel["start-time"])} - {formatTime(panel["end-time"])}
+                                                            </span>
+                                                        </div>
+
+                                                        { rating != "NOT A PANEL" ?(
+                                                            <p class="text-sm text-gray-600 mb-2">by {panel["business-name"]}</p>
+                                                            ):''
+                                                        }
+
+                                                        <p class="text-gray-800 mb-2">{description}</p>
+
+                                                        { rating != "NOT A PANEL" ?(
+                                                            <p class="text-xs text-gray-600">Rating: {rating}</p>
+                                                            ):''
+                                                        }
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p class="text-gray-500 italic">No panels scheduled for this room.</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    })}
+
+    <div id="map" class="w-screen h-screen overflow-auto overflow-hidden overflow-y-auto">
+        <div id="wrapper" class="bg-white paper max-w-[90vw] mx-auto my-[5%] mb-0 p-[5%] rounded-xl flex flex-row" style={`--paper-bg: url('${paper.src}')`}>
+
+            <label for={`default-highlight`} class="absolute top-0 left-0 w-full h-full opacity-0 bg-opacity-0"/> {/* The default label has to be on top so it wouldn't be affected by highlighting */}
+
+            <input type="radio" name="map-highlight" id="default-highlight" class="hidden" checked/> {/* For + label to work, it has to be right above it */}
+            <Tapes/>
+            <div id="map1" class="relative pointer-events-none">
+                <Image src={Map1} format="avif" alt="" class=""/>
+
+                {rooms.slice(0, 5).map((room) => (
+                <>
+                    <input type="radio" name="map-highlight" id={`${room.room.replace(/\s+/g, '')}-highlight`} class="hidden" />
+                    <label id={`${room.room.replace(/\s+/g, '')}-map`} for={`${room.room.replace(/\s+/g, '-')}-toggle`} class="pointer-events-auto highlight bg-black bg-opacity-0 hover:bg-opacity-20 cursor-pointer absolute tooltip-trigger transition-all duration-300"
+                        style={`
+                            width: ${room.w};
+                            height: ${room.h};
+                            top: ${room.t};
+                            left: ${room.l};`
+                        }>
+                        <span class="tooltip !text-xl">{room.room}</span>
+                    </label>
+                </>
+                ))}
+            </div>
+            <Image src={foldLine} format="avif" alt="" class="verticalLine h-full absolute top-0 left-1/2 -translate-x-1/2 z-50 pointer-events-none" height={1200}/>
+            <Image src={foldLineHorizontal} format="avif" alt="" class="horizontalLine hidden w-full h-auto absolute left-0 top-1/2 -translate-y-1/2 z-50 pointer-events-none" width={1000}/>
+            <div id="map2" class="relative pointer-events-none">
+                <Image src={Map2} format="avif" alt="" class=""/>
+
+                {rooms.slice(5).map((room) => (
+                <>
+                    <input type="radio" name="map-highlight" id={`${room.room.replace(/\s+/g, '')}-highlight`} class="hidden" />
+                    <label id={`${room.room.replace(/\s+/g, '')}-map`} for={`${room.room.replace(/\s+/g, '-')}-toggle`} class="pointer-events-auto highlight bg-black bg-opacity-0 hover:bg-opacity-20 cursor-pointer absolute tooltip-trigger transition-all duration-300"
+                        style={`
+                            width: ${room.w};
+                            height: ${room.h};
+                            top: ${room.t};
+                            left: ${room.l};`
+                        }>
+                        <span class="tooltip !text-xl">{room.room}</span>
+                    </label>
+                </>
+                ))}
+            </div>
+        </div>
+
+        <div id="room-list" style={`--paper-bg: url('${paper.src}')`} class="sticky paper sm:bottom-6 bottom-16 mx-auto xl:w-[60%] lg:w-[70%] w-[90%] mt-5 transition-[width] max-h-[25vh] h-fit m-0 mb-14 bg-white rounded-xl shadow-[0_0_15px_5px] shadow-black/50 reddit-sans overflow-y-auto z-20">
+            <ol class="list-decimal list-inside p-[2%] px-[5%] md:columns-3 columns-2 gap-8">
+                {rooms.map((room) => (
+                <li class="break-inside-avoid text-lg">
+                    <label for={`${room.room.replace(/\s+/g, '')}-highlight`} class="highlight-trigger hover:underline cursor-pointer"> {room.room} </label>
+                    {room.desc ?
+                    (
+                        <div class="text-sm ml-10 text-zinc-800"> {room.desc} </div>
+                    ) : ""
+                    }
+                </li>
+                ))}
+            </ol>
+        </div>
+    </div>
+
+</Layout>
+
+<style is:global>
+    #footer-space {
+        display: none;
+    }
+
+    input[type="radio"][name="map-highlight"]:checked + label {
+        @apply bg-blue-500 bg-opacity-30 border-4 border-red-400;
+        animation: highlight-pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes highlight-pulse {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
+
+<style>
+    .switch-button{
+        @apply h-full object-cover bg-black/90 rounded-[24px] border-4 border-black p-2;
+    }
+    input[type="radio"][name="modal-toggle"]:checked + div {
+        @apply opacity-100 pointer-events-auto backdrop-blur-sm transition-[opacity,backdrop-filter] duration-200;
+    }
+
+    #verticalCheck:checked ~ #map #wrapper{
+        @apply flex-col;
+    }
+
+    #verticalCheck:checked ~ #map #wrapper .verticalLine {
+        @apply hidden;
+    }
+    #verticalCheck:checked ~ #map #wrapper .horizontalLine {
+        @apply block;
+    }
+
+    .paper {
+        background-image: var(--paper-bg);
+        filter: drop-shadow(0 5px 5px #000);
+    }
+
+    .tooltip {
+        @apply absolute -bottom-6 left-1/2 -translate-x-1/2 pointer-events-none
+        bg-gray-800/80 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10 opacity-0 transition-opacity;
+    }
+
+    .tooltip-trigger:hover .tooltip {
+        @apply opacity-100;
+    }
+</style>
+
+<script>
+    function initializeMobileToggle() {
+        const checkbox = document.getElementById("verticalCheck") as HTMLInputElement;
+        let preferredScreen = 1; //1 for horizontal, 2 for vertical
+        let hasPreferredScreen = false;
+
+        // Check if screen is small (tailwind's sm breakpoint is 640px)
+        function checkScreenSize() {
+            if (!hasPreferredScreen)
+            {
+                if (window.innerWidth < 640) // turn to vertical view on mobile
+                {
+                    checkbox.checked = true;
+                }
+                else
+                {
+                    checkbox.checked = false;
+                }
+            }
+        }
+
+        checkbox.addEventListener('click', function() // When the user clicks on the button, they have set a preferred type
+        {
+            if(!hasPreferredScreen)
+            {
+                hasPreferredScreen = true;
+                preferredScreen = (checkbox.checked ? 2 : 1);
+                console.log("PREFERS " + preferredScreen)
+            }
+        });
+
+        // Check on load
+        checkScreenSize();
+
+        // Check on resize
+        window.addEventListener('resize', checkScreenSize);
+    }
+
+    // Although this is based on /vendors, it's different because I used a wrapper with w-screen and h-screen and overflow-none
+    function eventScrollHandler(queryName: string, highlightSuffix: string, mapSuffix: string)
+    {
+        const vendorRadios = document.querySelectorAll(queryName);
+
+        vendorRadios.forEach(radio => {
+            radio.addEventListener('change', function(event) {
+                const target = event.currentTarget as HTMLInputElement;
+
+                if (target.checked) {
+                    // Get the corresponding label using the radio button's ID
+                    const labelId = target.id.replace(highlightSuffix, mapSuffix);
+                    const targetLabel = document.getElementById(labelId);
+
+                    if (targetLabel) {
+                        // Get the label's position and dimensions
+                        const mapContainer = document.getElementById('map');
+                        if (!mapContainer) {
+                            console.error('Map container not found');
+                            return;
+                        }
+
+                        const labelRect = targetLabel.getBoundingClientRect();
+                        const containerRect = mapContainer.getBoundingClientRect();
+
+                        // Calculate the label's position within the scrollable container
+                        const labelRelativeTop = labelRect.top - containerRect.top + mapContainer.scrollTop;
+                        const labelCenterY = labelRelativeTop + labelRect.height / 2;
+
+                        // Calculate scroll position to center the label in the container
+                        const containerHeight = mapContainer.clientHeight;
+                        const scrollY = labelCenterY - containerHeight / 2;
+
+                        // Smooth scroll to the calculated position
+                        mapContainer.scrollTo({
+                            top: Math.max(0, scrollY),
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    }
+
+    function initializeEventHandlers() {
+        eventScrollHandler('input[name="map-highlight"]:not(#default-highlight)', '-highlight', '-map');
+    }
+
+    document.addEventListener('astro:page-load', () => {
+        initializeEventHandlers();
+        initializeMobileToggle();
+    });
+
+    if (document.readyState !== 'loading') {
+        initializeEventHandlers();
+        initializeMobileToggle();
+    }
+</script>

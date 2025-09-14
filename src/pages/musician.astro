@@ -1,0 +1,961 @@
+---
+import { Image, getImage } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+import header from "@assets/musicians/header.png"
+import guitar from "@assets/musicians/guitar.png"
+import guitarSilhouette from "@assets/musicians/guitarSilhouette.png"
+
+import head from "@assets/musicians/MusiciansPage_Mimosa_Head.png"
+import hoof from "@assets/musicians/MusiciansPage_Mimosa_hoof.png"
+
+import Cantersoft from "@assets/musicians/CantersoftClosed.png"
+import CantoAcrylic from "@assets/musicians/CantoAcrylicClosed.png"
+import CindyKate from "@assets/musicians/CindyKateClosed.png"
+import DJWeinerSchnitzel from "@assets/musicians/DJWeinerSchnitzelClosed.png"
+import ElectroKaplosion from "@assets/musicians/ElectroKaplosionClosed.png"
+import HorseHeresy from "@assets/musicians/HorseHeresyClosed.png"
+import MCMIAG from "@assets/musicians/MCMIAGClosed.png"
+import ManehattanJazzQuartet from "@assets/musicians/ManehattanJazzQuartet.png"
+import ShuffleFl0 from "@assets/musicians/ShuffleFl0Closed.png"
+import SoundBandit from "@assets/musicians/SoundBanditClosed.png"
+import Spinscissor from "@assets/musicians/SpinscissorClose.png"
+import Totalspark from "@assets/musicians/TotalsparkClosed.png"
+import TreyHusk from "@assets/musicians/TreyHuskClosed.png"
+import Trotmare from "@assets/musicians/trotmare.png"
+import PrincessChrysalis from "@assets/musicians/PrincessChrysalis.png"
+
+
+import paperRaw from "@assets/misc/textured-paper.png"
+const paper = await getImage({ src: paperRaw, format:"avif", width: 500});
+
+
+const musicians =
+[
+    {
+        name: "Cantersoft",
+        desc: "A powerful performance of picks from MLP, and ponytastic parodies of popular songs!",
+        art: Cantersoft,
+        time: "06:00 PM - 06:30 PM",
+    },
+    {
+        name: "Horse Heresy",
+        desc: "We are Horse Heresy: 6 mare-loving, Celestia worshipping, sweaty and devoted bronies dedicated to pumping out sick tunes! Our music gets the crowd moving and the mares raving, and we guarantee the thrill of heavy riffs, shrieking synths, and adrenaline pumping metal! Come one, come all, we'll see you tonight!",
+        art: HorseHeresy,
+        time: "06:30 PM - 07:15 PM",
+    },
+    {
+        name: "Canto Acrylic",
+        desc: "No description available",
+        art: CantoAcrylic,
+        time: "07:15 PM - 07:45 PM",
+    },
+    {
+        name: "Totalspark",
+        desc: "Totalspark is excited to bring to the stage their first performance of their music since joining the fandom back in 2012. They love writing about relatable topics over generally relaxed instrumentals, but have picked up the energy a bit for an exciting performance, bringing a range from old classics, to new spins on established ideas, spanning multiple genres.",
+        art: Totalspark,
+        time: "08:00 PM - 08:30 PM",
+    },
+    {
+        name: "SpinScissor",
+        desc: "SpinScissor is a young electronic music producer, guitarist, and vocalist, known for his unique musical style, vast and varied discography, and powerful vocal performances. Be ready for a wild ride through a host of vivid electronic soundscapes during his set!",
+        art: Spinscissor,
+        time: "08:30 PM - 09:00 PM",
+    },
+    {
+        name: "Electro Kaplosion",
+        desc: "I pretend like I can make music and video games sometimes. I really love mares.",
+        art: ElectroKaplosion,
+        time: "09:00 PM - 09:30 PM",
+    },
+    {
+        name: "Trey Husk",
+        desc: "No description available",
+        art: TreyHusk,
+        time: "09:30 PM - 10:15 PM",
+    },
+    {
+        name: "FL0 x Shuffle",
+        desc: "No description available",
+        art: ShuffleFl0,
+        time: "10:15 PM - 11:15 PM",
+    },
+    {
+        name: "cindykate",
+        desc: "No description available",
+        art: CindyKate,
+        time: "11:15 PM - 11:45 PM",
+    },
+    {
+        name: "DJ Wiener Schnitzel",
+        desc: "Hailing from across the pond, Anon brings you tunes from a time long past.",
+        art: DJWeinerSchnitzel,
+        time: "11:45 PM - 12:15 AM",
+    },
+    {
+        name: "Princess Chrysalis",
+        desc: "Ca-Dance err, Chrysalis comes back for more, a place to vibe and have your horse music too!",
+        art: PrincessChrysalis,
+        time: "12:15 AM - 1:00 AM",
+    },
+    {
+        name: "Sound Bandit",
+        desc: "DJ Sound Bandit Set Sound Bandit DJ Pony Ponychop Soundbandit Soundcheck Masterclass Pony Music Plunderphonic Sonic Silly Music Mare So Many Songs So Little Time #Go Music Sorry For Playing Music 200 Sounds Per Set",
+        art: SoundBandit,
+        time: "01:00 AM - 01:30 AM",
+    },
+    {
+        name: "mycutiemarkisagun",
+        desc: "some of you guys are alright dont go to the concert tomorrow",
+        art: MCMIAG,
+        time: "01:30 AM - 02:00 AM",
+    },
+]
+
+const rotAngle = [-1,1,0];
+const rotLength = rotAngle.length - 1;
+const tran = [0,-0.5,0.5]
+const tranLength = tran.length - 1;
+
+
+const cardColours = ["bcc1","bcc2", "bcc3", "bcc4", "bcc5"]
+
+---
+
+<Layout title="Musicians | Mare Fair 2025">
+    <Back />
+    <input type="radio" name="musician-toggle" id="default-toggle" class="hidden" checked/>
+    <label for="default-toggle" class="fixed w-screen h-screen"/>
+
+    <div class="w-screen overflow-hidden">
+        <div class="w-fit mx-auto flex lg:flex-row flex-col lg:justify-start justify-end">
+
+            <div id="musicians-wrapper" class="w-fit sm:p-10 p-0 flex flex-col items-center">
+                <Image src={header} width="800" alt="header" class="mx-auto"/>
+
+            {musicians.map((musician, index) => (
+            <input type="radio" name="musician-toggle" id={`#${musician.name.replace(/\s+/g, '')}-toggle`} class="hidden" />
+            <div id={`#${musician.name.replace(/\s+/g, '')}-toggle`} class="w-fit transition-musician flex lg:flex-row flex-col items-center space-x-2 pointer-events-none">
+
+                <label for={`#${musician.name.replace(/\s+/g, '')}-toggle`} class="pointer-events-auto relative z-10 musician-clickable transition-musician lg:translate-x-[50%] translate-x-0">
+                    <Image src={musician.art} height=`${327 * 2/3}`
+                            alt={`${musician.name}`}
+                            style={`transform: rotate(${rotAngle[index % rotLength]}deg) translate(${tran[index % tranLength]}rem, 0);)`}
+                            class="draggable-image"
+                            data-draggable-type="musician"/>
+                </label>
+
+                <div class="pointer-events-auto relative z-[1] my-auto lg:h-[180px] w-[320px] h-0 transition-musician opacity-0 lg:-translate-x-[11rem] translate-x-0">
+
+                    {/* Card container with flip effect */}
+                    <div class="card-container cursor-pointer relative block w-full h-full focus:outline-none" tabindex="0">
+                        <div class="card-inner w-full h-full relative">
+
+                            {/* Front side */}
+                            <div class={`card-face card-front ${cardColours[index % cardColours.length]}`}
+                            style={`--paper-bg: url('${paper.src}')`}>
+                                <h class="font-bold text-xl">{musician.name}</h>
+                                <p class="text-lg">{musician.time}</p>
+                                <p class="text-sm mt-2 opacity-60">Click to flip</p>
+                            </div>
+
+                            {/* Back side */}
+                            <div class={`card-face card-back ${cardColours[index % cardColours.length]}`}
+                            style={`--paper-bg: url('${paper.src}'); transform: scaleX(-1);` }>
+                                <p class="text-center text-sm">{musician.desc}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ))}
+            </div>
+            <div id="guitar-wrapper" class="relative w-fit h-fit mx-auto">
+                <Image id="guitarSilhouette" src={guitarSilhouette} width="500" alt="header" class="object-contain absolute top-0 left-0"/>
+                <div class="w-fit h-fit relative hover:rotate-[5deg] hover:translate-x-[2rem] transition-all duration-300">
+                    <Image id="guitar" src={guitar} width="500" alt="header" class="object-contain"/>
+                    <div id="guitar-string" class="noJS absolute top-[10%] left-1/2 -translate-x-1/2 mx-auto w-[20%] h-[70%] cursor-pointer"/>
+                    <Image id="hoof" src={hoof} width="600" alt="Mimosa Hoof" class="absolute top-1/2 left-0 max-w-none translate-x-[300%] opacity-0">
+                </div>
+                <div class="absolute top-1/4 -left-[50%] w-fit h-fit translate-x-[200%] opacity-0 pointer-events-none transition-all">
+                    <Image id="MimosaHead" src={head} width="800" alt="Mimosa Is Angry!" class="max-w-none" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="checkbox" id="cassette-toggle" class="hidden"> </input>
+    <div id="dropZone" class="noJS fixed bottom-5 left-1/2 -translate-x-1/2 h-fit w-fit">
+        <label for="cassette-toggle" id="toggle-button" class="">
+            <Icon name="mdi:arrow-up-down-bold-outline" class="relative text-white text-4xl" />
+        </label>
+        <Image src={Trotmare} transition:name="contact" format="avif" alt="Trotmare Cassette Player" class="relative !max-w-[100vw] relative z-[10] pointer-events-none" height=`${430* 2/3}`/>
+        <div id="playerBack" class="absolute w-[90%] h-[90%] bg-black top-0 m-5 cassette-bg"> </div>
+        <div id="imageZone" class="absolute max-w-[68%] z-[1] top-[6%] left-[18.7%] pointer-events-none"> </div>
+        <div id="control-eject"class="absolute right-[10%] bottom-0 w-[12%] h-[10%] z-10 cursor-pointer pointer-events-auto"> </div>
+        <div id="control-play"class="absolute right-[35%] bottom-0 w-[22%] h-[10%] z-10 cursor-pointer pointer-events-auto"> </div>
+        <div id="control-volume"class="absolute left-0 bottom-[17%] w-[5%] h-[20%] z-10 cursor-pointer pointer-events-auto"> </div>
+        <div id="control-next"class="absolute right-[25.5%] bottom-0 w-[15%] h-[10%] z-10 cursor-pointer pointer-events-auto"> </div>
+    </div>
+</Layout>
+
+<style>
+    /* Cross-browser card flip styles */
+    .card-container {
+        perspective: 1000px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-inner {
+        transition: transform 0.7s ease;
+        transform-style: preserve-3d;
+    }
+
+    .card-face {
+        @apply absolute top-0 left-0 w-full h-full p-[10px] flex flex-col items-center justify-center business-card;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    .card-front {
+        z-index: 2;
+    }
+
+    .card-back {
+        z-index: 1;
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
+    }
+
+    .noJS {
+        @apply lg:!hidden;
+    }
+    .cassette-bg {
+        background: linear-gradient(#6e6d6d 0%, #3d3d3c 30%,#2d2c2c 50%);
+    }
+    #dropZone {
+        @apply transform translate-y-[110%] transition-transform;
+    }
+    #cassette-toggle:checked ~ #dropZone {
+        @apply sm:translate-y-0 -translate-y-16;
+    }
+
+    #toggle-button {
+        @apply absolute-centered sm:-top-[20%] -top-28 cursor-pointer hover:scale-125 pointer-events-auto;
+        /* Add transition for the top property */
+        transition: transform 0.3s ease, top 0.3s ease;
+    }
+    #cassette-toggle:checked ~ #dropZone #toggle-button {
+        @apply -top-[20%];
+    }
+
+    .absolute-centered{
+        @apply absolute left-1/2 transform -translate-x-1/2;
+    }
+
+    .musician-clickable {
+        @apply w-fit h-fit cursor-pointer top-0;
+    }
+    .transition-musician {
+        @apply transition-all duration-300 transform;
+    }
+    input[type="radio"][name="musician-toggle"]:checked + div label{
+        @apply translate-x-0;
+    }
+    input[type="radio"][name="musician-toggle"]:checked + div div{
+        @apply translate-x-0 opacity-100;
+    }
+
+    @media (max-width: 1023px) {
+        input[type="radio"][name="musician-toggle"]:checked + div label{
+            @apply translate-y-0;
+        }
+        input[type="radio"][name="musician-toggle"]:checked + div div{
+            @apply h-[150px] opacity-100;
+        }
+    }
+
+    @keyframes vibrate {
+        0% {
+            transform-origin: 50% 50%;
+            transform: translate(0, 0) rotate(-1deg);
+        }
+        50% {
+            transform-origin: 50% 50%;
+            transform: translate(-1px, -1px) rotate(-1deg) scale(0.99);
+        }
+        100% {
+            transform-origin: 50% 50%;
+            transform: translate(1px, 1px) rotate(1deg);
+        }
+    }
+
+    .headPopOut{
+        @apply translate-x-0 opacity-100;
+    }
+
+    .business-card {
+        background-image: var(--paper-bg);
+        filter: drop-shadow(0 5px 5px #000);
+    }
+
+    .bcc1{
+        background-color: #fefefe;
+    }
+    .bcc2{
+        background-color: #f0e8da;
+    }
+    .bcc3{
+        background-color: #e6f0fc;
+    }
+    .bcc4{
+        background-color: #fce6f5;
+    }
+    .bcc5{
+        background-color: #fcf1e6;
+    }
+
+    .card-container:focus .card-inner {
+        transform: rotateY(180deg) !important;
+    }
+</style>
+
+<script>
+    function getAudioDuration(url: string): Promise<number> {
+        return new Promise((resolve, reject) => {
+            const element = new Audio(url);
+
+            element.addEventListener('loadedmetadata', () => {
+                resolve(element.duration);
+            });
+
+            element.addEventListener('error', (e) => {
+                reject(new Error(`Error loading audio file: ${e}`));
+            });
+
+            element.load();
+        });
+    }
+
+    function triggerVibration(element: HTMLElement, duration: number) {
+        // Create the animation string dynamically
+        const animation = `vibrate 0.1s linear ${duration / 100}`;
+
+        // Apply the animation to the element
+        element.style.animation = animation;
+
+        // Remove the animation after it's complete
+        setTimeout(() => {
+            element.style.animation = ""; // Reset animation
+        }, duration);
+    }
+
+    function preloadAudio(id: string): HTMLAudioElement
+    {
+        const element = new Audio(id);
+        element.load();
+        return element;
+    }
+
+
+
+
+
+
+    let TIMING = {
+        VIBRATION: 1000,
+        HEAD_APPEAR: 1000,
+        HEAD_DELAY: 500,
+        HOOF_APPEARING: 1000,
+        HOOF_ANIMATION: 500,
+        GUITAR_DISAPPEAR: 300,
+        MIMOSA_MAD: 1000,
+    };
+
+    let guitarRiff: HTMLAudioElement;
+
+    let clickCount = 0
+    let takenAway = false;
+    let hasWarned = false;
+    let isAnimating = false;
+
+    // Cleanup variables
+    let activeTimeouts: number[] = [];
+    let clickHandler: ((event: Event) => void) | null = null;
+    let beforeUnloadHandler: ((event: BeforeUnloadEvent) => void) | null = null;
+
+    function cleanup() {
+        // Clear all active timeouts
+        activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+        activeTimeouts = [];
+
+        // Stop and cleanup all audio
+        if (guitarRiff) {
+            guitarRiff.pause();
+            guitarRiff.currentTime = 0;
+            guitarRiff = null as any;
+        }
+
+        // Remove event listeners
+        const guitarString = document.getElementById("guitar-string");
+        if (guitarString && clickHandler) {
+            guitarString.removeEventListener('click', clickHandler);
+            clickHandler = null;
+        }
+
+        if (beforeUnloadHandler) {
+            window.removeEventListener('beforeunload', beforeUnloadHandler);
+            beforeUnloadHandler = null;
+        }
+
+        // Reset state variables
+        clickCount = 0;
+        takenAway = false;
+        hasWarned = false;
+        isAnimating = false;
+    }
+
+    document.addEventListener('astro:page-load', async () => {
+
+    /* MARE FAIR 1 THEME */
+    const riff_MF =
+    [
+        "https://fair-filer.marefair.org/2025/musicians/MF_MF_1.ogg",
+        "https://fair-filer.marefair.org/2025/musicians/MF_MF_2.ogg",
+        "https://fair-filer.marefair.org/2025/musicians/MF_MF_3.ogg",
+    ]
+    var riff_MF_timing: number[] = [];
+
+    for (let i = 0; i < riff_MF.length; ++i) {
+        riff_MF_timing[i] = await getAudioDuration(riff_MF[i]) * 1000;
+    }
+
+    /* MARE FAIR 2 THEME */
+    const riff_Bigger =
+    [
+        "https://fair-filer.marefair.org/2025/musicians/MF_Bigger_1.ogg",
+        "https://fair-filer.marefair.org/2025/musicians/MF_Bigger_2.ogg",
+        "https://fair-filer.marefair.org/2025/musicians/MF_Bigger_3.ogg",
+        "https://fair-filer.marefair.org/2025/musicians/MF_Bigger_4.ogg",
+    ]
+    var riff_Bigger_timing: number[] = [];
+
+    for (let i = 0; i < riff_Bigger.length; ++i) {
+        riff_Bigger_timing[i] = await getAudioDuration(riff_Bigger[i]) * 1000;
+    }
+
+    const guitarString = document.getElementById("guitar-string") as HTMLElement;
+    const guitarWrapper = document.getElementById("guitar-wrapper") as HTMLElement;
+    const guitar = document.getElementById("guitar") as HTMLElement;
+    const hoof = document.getElementById("hoof") as HTMLElement;
+    const MimosaHead = document.getElementById("MimosaHead") as HTMLElement;
+
+    cleanup();
+
+    clickHandler = function()
+    {
+        // Debounce
+        if (isAnimating)
+            return;
+        isAnimating = true;
+
+        // Play FX
+        if (clickCount < riff_MF.length)
+        {
+            guitarRiff = preloadAudio(riff_MF[clickCount]);
+            TIMING.VIBRATION = riff_MF_timing[clickCount];
+        }
+        else if (clickCount >= riff_MF.length && clickCount < riff_MF.length + riff_Bigger.length)
+        {
+            const buffer = clickCount - riff_MF.length;
+            guitarRiff = preloadAudio(riff_Bigger[buffer]);
+            TIMING.VIBRATION = riff_Bigger_timing[buffer];
+        }
+
+        guitarRiff.play();
+        triggerVibration(guitar, TIMING.VIBRATION);
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, TIMING.VIBRATION)
+
+        // Head appearing
+        if (clickCount > riff_MF.length - 2 && !hasWarned)
+        {
+            const parent = MimosaHead.parentElement as HTMLElement;
+            setTimeout(() => {
+                parent.classList.add("headPopOut");
+                parent.style.transitionDuration = TIMING.HEAD_DELAY + "ms";
+
+                setTimeout(() => { // Wait for popping out
+                    triggerVibration(MimosaHead,TIMING.MIMOSA_MAD);
+                    setTimeout(() => { // wait for talking
+                        parent.classList.remove("headPopOut");
+                    }, TIMING.HEAD_APPEAR)
+                }, TIMING.HEAD_DELAY)
+            }, TIMING.VIBRATION)
+            hasWarned = true;
+        }
+        if(clickCount > riff_MF.length + riff_Bigger.length - 2 && !takenAway)
+        {
+            // Fair flyer shouts, "HEY!", and take the guitar away
+            setTimeout(() => {
+                //enough.play();
+                const parent = guitar.parentElement as HTMLElement;
+
+                // Hoof enter
+                hoof.style.transition = "transform " + TIMING.HOOF_ANIMATION + "ms ease-in-out, opacity " + TIMING.HOOF_ANIMATION + "ms ease-in-out";
+                hoof.style.opacity = "1";
+                hoof.style.transform = "translateX(0)";
+
+                // Div disappearing
+                setTimeout(() => {
+                    parent.style.transition = "transform " + TIMING.GUITAR_DISAPPEAR + "ms ease-in-out, opacity " + TIMING.GUITAR_DISAPPEAR + "ms ease-in-out";
+                    parent.style.transform = "translateX(200%)";
+                    parent.style.opacity = "0";
+
+                    // Get rid of the whole div
+                    setTimeout(() => {
+                        parent.style.pointerEvents = "none";
+                    }, TIMING.GUITAR_DISAPPEAR);
+                }, TIMING.HOOF_ANIMATION + 100);
+            }, TIMING.HOOF_APPEARING)
+
+            takenAway = true;
+        }
+        ++clickCount;
+    };
+
+    guitarString.addEventListener('click', clickHandler);
+
+    // Add beforeunload handler for browser navigation/refresh
+    beforeUnloadHandler = function(event: BeforeUnloadEvent) {
+        cleanup();
+    };
+    window.addEventListener('beforeunload', beforeUnloadHandler);
+    });
+
+    // Cleanup when navigating to a new page in Astro
+    document.addEventListener('astro:before-preparation', cleanup);
+
+    // Alternative cleanup event (some versions of Astro use different events)
+    document.addEventListener('astro:before-swap', cleanup);
+</script>
+
+<script>
+    function preloadAudio(src: string): Promise<HTMLAudioElement>
+        {
+        return new Promise((resolve, reject) => {
+            const audio = new Audio();
+            audio.src = src;
+            audio.preload = 'auto';
+
+            const cleanup = () => {
+                audio.oncanplaythrough = null;
+                audio.onerror = null;
+            };
+
+            audio.oncanplaythrough = () => {
+                cleanup();
+                resolve(audio);
+            };
+
+            audio.onerror = (e) => {
+                cleanup();
+                reject(new Error(`Failed to preload audio: ${src}`));
+            };
+
+            audio.load(); // Not strictly necessary, but explicit
+        });
+    }
+
+    let currentMusicianIndex = -1;
+    const musicianOrder = [
+        { name: "Cantersoft" },
+        { name: "Horse Heresy" },
+        { name: "Canto Acrylic" },
+        { name: "Totalspark" },
+        { name: "SpinScissor" },
+        { name: "Electro Kaplosion" },
+        { name: "Trey Husk" },
+        { name: "FL0 x Shuffle" },
+        { name: "cindykate" },
+        { name: "DJ Wiener Schnitzel" },
+        { name: "Princess Chrysalis" },
+        { name: "Sound Bandit" },
+        { name: "mycutiemarkisagun" }
+    ];
+
+    const musicURL = "https://fair-filer.marefair.org/2025/musicians/music/"
+    const musicMapping: Record<string, string> = {
+        "Cantersoft": musicURL + "Cantersoft.mp3",
+        "HorseHeresy": musicURL + "HorseHeresy.mp3",
+        "CantoAcrylic": musicURL + "CantoAcrylic.mp3",
+        "Totalspark": musicURL + "Totalspark.mp3",
+        "SpinScissor": musicURL + "SpinScissor.mp3",
+        "ElectroKaplosion": musicURL + "EK.mp3",
+        "TreyHusk": musicURL + "TreyHusk.mp3",
+        "FL0xShuffle": musicURL + "Fl0Shuffle.mp3",
+        "cindykate": musicURL + "Cindykate.mp3",
+        "DJWienerSchnitzel": musicURL + "DJWienerSchnitzel.mp3",
+        "PrincessChrysalis": musicURL + "PrincessChrysalis.mp3",
+        "SoundBandit": musicURL + "SoundBandit.mp3",
+        "mycutiemarkisagun": musicURL + "MCMIAG.mp3",
+    };
+    // Create audio context
+    let audioContext: AudioContext;
+    let isAudioInitialized = false;
+    let currentAudio: HTMLAudioElement | null = null;
+    let currentMusicKey: string = '';
+    let isPlaying: boolean = false;
+
+    // Volume control variables
+    let isDraggingVolume = false;
+    let startY = 0;
+    let startVolume = 0.7; // Default volume
+    let currentVolume = 0.7;
+
+    function cleanupAudio()
+    {
+        if (currentAudio)
+        {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            currentAudio = null;
+        }
+        isPlaying = false;
+        currentMusicKey = '';
+    }
+
+    // Page navigation cleanup
+    document.addEventListener('astro:before-preparation', cleanupAudio);
+    document.addEventListener('astro:before-swap', cleanupAudio);
+    window.addEventListener('beforeunload', cleanupAudio);
+    window.addEventListener('pagehide', cleanupAudio);
+
+
+    document.addEventListener('astro:page-load', async () => {
+
+        document.querySelectorAll('div.noJS').forEach(div => {
+            div.classList.toggle('noJS');
+        });
+
+        // AUDIO FX
+        const cassette_click = await preloadAudio("https://fair-filer.marefair.org/2025/musicians/sound/vhs_click.ogg");
+        const cassette_insert = await preloadAudio("https://fair-filer.marefair.org/2025/musicians/sound/vhs_insert.ogg");
+
+        function playCassetteClickAudio()
+        {
+            setTimeout(() => {
+                cassette_click.play();
+            }, cassette_click.duration);
+        }
+        function playCassetteInsertAudio()
+        {
+            setTimeout(() => {
+                cassette_insert.play();
+            }, cassette_insert.duration);
+        }
+
+        function initializeAudio() {
+            if (!isAudioInitialized) {
+                audioContext = new window.AudioContext;
+                isAudioInitialized = true;
+            }
+        }
+
+        function playDropSound(altName: string) {
+            // Play the cassette insert FX
+            playCassetteInsertAudio();
+
+            const musicKey = altName.replace(/\s+/g, '');
+            console.log("isPlaying " + musicKey);
+
+            // Find the index of this musician in our order array
+            const musicianIndex = musicianOrder.findIndex(m => m.name === altName);
+            if (musicianIndex !== -1) {
+                currentMusicianIndex = musicianIndex;
+            }
+
+            // Check if we have a music file for this artist
+            if (musicMapping[musicKey]) {
+                // Stop current audio if playing
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+
+                // Create new audio instance
+                currentAudio = new Audio(musicMapping[musicKey]);
+                currentAudio.volume = currentVolume;
+                currentMusicKey = musicKey;
+
+                // Set up event listeners
+                currentAudio.addEventListener('ended', () => {
+                    isPlaying = false;
+                    console.log('Finished');
+                });
+
+                currentAudio.addEventListener('loadstart', () => {
+                    console.log('Loading...');
+                });
+
+                currentAudio.addEventListener('canplay', () => {
+                    console.log('Ready to play');
+                });
+
+                // Play the audio
+                currentAudio.play().then(() => {
+                    isPlaying = true;
+                    console.log('Playing');
+                }).catch(e => {
+                    console.log('Could not play audio:', e);
+                    console.log('Error playing');
+                });
+            }
+        }
+
+        function loadMusicianByIndex(index: number) {
+            if (index < 0 || index >= musicianOrder.length) return;
+
+            const musician = musicianOrder[index];
+
+            // Find the corresponding image element
+            const musicianImage = document.querySelector(`img[alt="${musician.name}"]`) as HTMLImageElement;
+
+            if (musicianImage) {
+                // Simulate the drop functionality
+                playDropSound(musicianImage.alt);
+
+                // Display the image in the cassette player
+                const img = document.createElement('img');
+                img.src = musicianImage.src;
+                img.alt = musicianImage.alt;
+                img.className = 'dropped-image';
+
+                const imageZone = document.getElementById('imageZone') as HTMLElement;
+                imageZone.innerHTML = '';
+                imageZone.appendChild(img);
+
+                // Update the current index
+                currentMusicianIndex = index;
+            }
+        }
+        // Function to handle next button
+        function handleNextControl() {
+            // Play FX
+            playCassetteClickAudio();
+
+            // Calculate next index
+            let nextIndex;
+
+            if (currentMusicianIndex === -1) {
+                // No musician loaded, start with first one
+                nextIndex = 0;
+            } else {
+                // Move to next musician, wrap around to beginning if at end
+                nextIndex = (currentMusicianIndex + 1) % musicianOrder.length;
+            }
+
+            // Load the next musician
+            loadMusicianByIndex(nextIndex);
+        }
+
+
+        function handlePlayControl()
+        {
+            // Play FX
+            playCassetteClickAudio();
+
+            if (!currentAudio) {
+                console.log('No music loaded');
+                return;
+            }
+
+            if (isPlaying) {
+                // Pause the music
+                currentAudio.pause();
+                isPlaying = false;
+                console.log('Paused');
+            } else {
+                // Play or resume the music
+                if (currentAudio.ended) {
+                    // If ended, restart from beginning
+                    currentAudio.currentTime = 0;
+                }
+
+                currentAudio.play().then(() => {
+                    isPlaying = true;
+                    console.log('Playing');
+                }).catch(e => {
+                    console.log('Could not play audio:', e);
+                    console.log('Error playing');
+                });
+            }
+        }
+
+        function handleEjectControl()
+        {
+            // Stop current audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+            }
+
+            // Play the cassette insert FX
+            playCassetteInsertAudio();
+
+            // Clear the image zone
+            const imageZone = document.getElementById('imageZone') as HTMLElement;
+            imageZone.innerHTML = '';
+
+            // Reset state
+            isPlaying = false;
+            currentMusicKey = '';
+            currentMusicianIndex = -1;
+
+            console.log('Ejected');
+        }
+
+        // Initialize elements
+        const draggableImages = document.querySelectorAll('.draggable-image') as NodeListOf<HTMLElement>;
+        const dropZone = document.getElementById('dropZone') as HTMLElement;
+        const imageZone = document.getElementById('imageZone') as HTMLElement;
+        const controlPlay = document.getElementById('control-play') as HTMLElement;
+        const controlEject = document.getElementById('control-eject') as HTMLElement;
+        const controlVolume = document.getElementById('control-volume') as HTMLElement;
+        const controlNext = document.getElementById('control-next') as HTMLElement;
+
+        // Control event listeners
+        controlPlay.addEventListener('click', handlePlayControl);
+        controlEject.addEventListener('click', handleEjectControl);
+        controlNext.addEventListener('click', handleNextControl);
+
+        // Prevent volume control from triggering drop zone drag events
+        controlVolume.addEventListener('mousedown', (e) => {
+            e.stopPropagation(); // Prevent event from bubbling up to dropZone
+
+            isDraggingVolume = true;
+            startY = e.clientY;
+            startVolume = currentVolume;
+
+            // Visual feedback
+            controlVolume.style.cursor = 'grabbing';
+            document.body.style.userSelect = 'none';
+
+            e.preventDefault();
+        });
+
+        // Also prevent dragstart on volume control
+        controlVolume.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        // Volume control event listeners
+        document.addEventListener('mousemove', (e) => {
+            if (!isDraggingVolume) return;
+
+            e.preventDefault();
+
+            // Calculate volume change based on vertical drag
+            const deltaY = startY - e.clientY; // Negative when dragging down, positive when dragging up
+            const sensitivity = 0.005; // Adjust this value to make dragging more or less sensitive
+
+            // Calculate new volume
+            const newVolume = Math.max(0, Math.min(1, startVolume + (deltaY * sensitivity)));
+            currentVolume = newVolume;
+
+            // Apply volume to current audio
+            if (currentAudio) {
+                currentAudio.volume = currentVolume;
+            }
+
+            // Visual feedback
+            console.log(`Volume: ${Math.round(currentVolume * 100)}%`);
+
+            // Optional: Show volume percentage as tooltip or overlay
+            controlVolume.title = `Volume: ${Math.round(currentVolume * 100)}%`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isDraggingVolume) return;
+
+            isDraggingVolume = false;
+
+            // Remove visual feedback
+            controlVolume.style.cursor = 'pointer';
+            document.body.style.userSelect = '';
+
+            console.log(`Volume set to: ${Math.round(currentVolume * 100)}%`);
+        });
+
+        // Drag events for draggable images only
+        draggableImages.forEach(image => {
+            image.addEventListener('dragstart', (e) => {
+                const imgElement = e.target as HTMLImageElement;
+                console.log("Setting alt data:", imgElement.alt);
+                e.dataTransfer!.setData('text/plain', imgElement.src);
+                e.dataTransfer!.setData('text/alt', imgElement.alt);
+                e.dataTransfer!.effectAllowed = 'copy';
+
+                const draggableType = imgElement.dataset.draggableType;
+                e.dataTransfer!.setData('text/draggable-type', draggableType || '');
+            });
+        });
+
+        // Drop zone events
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer!.dropEffect = 'copy';
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+                if (!dropZone.contains(e.relatedTarget as Node)) {
+                    dropZone.classList.remove('dragover');
+                }
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+
+            // Check if the dropped item has the correct marker
+            const draggableType = e.dataTransfer!.getData('text/draggable-type');
+
+            if (draggableType !== 'musician') {
+                // Reject the drop if it's not from a musician image
+                console.log('Drop rejected: Not a musician image');
+                return;
+            }
+
+            const imageSrc = e.dataTransfer!.getData('text/plain');
+            const imageAlt = e.dataTransfer!.getData('text/alt');
+
+            if (imageSrc) {
+                // Play appropriate sound based on alt name
+                playDropSound(imageAlt);
+                //showSoundIndicator();
+
+                // Display dropped image
+                const img = document.createElement('img');
+                img.src = imageSrc;
+                img.alt = imageAlt;
+                img.className = 'dropped-image';
+
+                imageZone.innerHTML = '';
+                imageZone.appendChild(img);
+            }
+        });
+
+        // Initialize audio on first user interaction
+        document.addEventListener('click', initializeAudio, { once: true });
+        document.addEventListener('dragstart', initializeAudio, { once: true });
+    });
+</script>

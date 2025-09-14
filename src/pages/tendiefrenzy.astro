@@ -1,0 +1,21 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+export const TendieFrenzyLink = 'https://html-classic.itch.zone/html/14220834/BUILD-WEB/index.html';
+---
+
+<Layout title="Tendie Frenzy | Mare Fair 2025" backgroundClass="bg-plain-brick-texture-sm">
+    <Back />
+    <div class="w-screen h-screen">
+        <iframe class="absolute-centered bg-white shadow-xl rounded-xl" width="1000" height="700" allowfullscreen="true" scrolling="no" allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated; web-share" id="game_drop"
+            src={TendieFrenzyLink} allowtransparency="true" ></iframe>
+    </div>
+</Layout>
+
+<style>
+    .absolute-centered{
+        @apply absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2;
+    }
+</style>

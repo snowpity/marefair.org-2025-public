@@ -1,0 +1,113 @@
+---
+import { Icon } from "astro-icon/components";
+---
+<footer>
+  <input type="checkbox" id="footer-toggle" class="hidden peer" />
+  <label for="footer-toggle" id="footer-button" class="fixed bottom-0 right-0 bg-black bg-opacity-20 z-50 sm:hidden flex rounded-lg items-center justify-center cursor-pointer w-full h-14 peer-checked:w-14 peer-checked:aspect-1/2 transition-width duration-300 ease-in-out">
+    <Icon name="mdi:menu" class="relative text-white text-4xl" />
+  </label>
+  <div id="footer" class="fixed w-full bottom-0 px-4 z-50 flex flex-col-reverse sm:flex-row justify-between items-center gap-y-4 pointer-events-none translate-y-[150%] peer-checked:translate-y-0 sm:translate-y-0 transition-transform duration-300 ease-in-out">
+
+  <div class="text-center sm:text-left" style="filter: drop-shadow(0 0 0.1rem rgba(0, 0, 0, 0.75));">
+    <a aria-label="Snowpity, Inc."
+      href="https://snowpity.org"
+      target="_blank"
+      class="pointer-events-auto text-white hover:underline underline-offset-4 font-bold tracking-wide text-sm sm:text-base">© 2025 Snowpity, Inc.
+    </a>
+    <span class="text-white font-bold text-sm sm:text-base">|</span>
+    <a aria-label="Privacy Policy"
+    href="/privacy"
+    class="pointer-events-auto text-white hover:underline underline-offset-4 font-bold tracking-wide text-sm sm:text-base">Privacy Policy
+  </a>
+  </div>
+  <div class="gap-6 items-center justify-center flex">
+    <a aria-label="Twitter"
+      href="https://twitter.com/MareFairCon"
+      target="_blank"
+      class="group relative p-3 rounded-full bg-transparent hover:scale-110 transition-transform duration-300 ease-in-out">
+      <div class="absolute inset-0 rounded-full group-hover:animate-spin-slow">
+        <span class="pointer-events-auto absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-400 to-indigo-600 opacity-50 blur-lg"></span>
+      </div>
+      <Icon name="X" class="relative text-white text-2xl group-hover:animate-bounce" />
+    </a>
+    <a aria-label="YouTube"
+      href="https://www.youtube.com/@MareFair"
+      target="_blank"
+      class="group relative p-3 rounded-full bg-transparent hover:scale-110 transition-transform duration-300 ease-in-out">
+      <div class="absolute inset-0 rounded-full group-hover:animate-pulse">
+        <span class="pointer-events-auto absolute inset-0 bg-gradient-to-r from-red-500 via-pink-400 to-orange-500 opacity-50 blur-lg"></span>
+      </div>
+      <Icon name="mdi:youtube" class="relative text-white text-3xl group-hover:animate-bounce" />
+    </a>
+    <a aria-label="Mastodon"
+      href="https://pone.social/@MareFair/"
+      target="_blank"
+      class="group relative p-3 rounded-full bg-transparent hover:scale-110 transition-transform duration-300 ease-in-out">
+      <div class="absolute inset-0 rounded-full group-hover:animate-spin-reverse">
+        <span class="pointer-events-auto absolute inset-0 bg-gradient-to-r from-green-400 via-yellow-300 to-teal-500 opacity-50 blur-lg"></span>
+      </div>
+      <Icon name="mdi:mastodon" class="relative text-white text-3xl group-hover:animate-bounce" />
+    </a>
+    <a aria-label="GitHub"
+      href="https://github.com/snowpity/"
+      target="_blank"
+      class="group relative p-3 rounded-full bg-transparent hover:scale-110 transition-transform duration-300 ease-in-out">
+      <div class="absolute inset-0 rounded-full group-hover:animate-pulse">
+        <span class="pointer-events-auto absolute inset-0 bg-gradient-to-r from-gray-400 via-white to-silver opacity-50 blur-lg"></span>
+      </div>
+      <Icon name="mdi:github" class="relative text-white text-3xl group-hover:animate-bounce" />
+    </a>
+  </div>
+  </div>
+</footer>
+
+<style>
+/* Spin animations */
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Glow animations */
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+  }
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+</style>

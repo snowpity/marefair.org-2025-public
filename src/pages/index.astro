@@ -1,0 +1,77 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+import comics from "@assets/comics/comics.png";
+---
+<Layout title="Thank you for coming to Mare Fair 2025!">
+    <Back />
+    <div class="w-[80%] mx-auto my-10">
+        <div class="relative inline-block" style="filter: drop-shadow(0px 0px 1rem);">
+            <Image src={comics} format="avif" alt="Finale Comics" width="2048" />
+
+            <input type="checkbox" id="step10" class="hidden peer/step10" autocomplete="off" />
+            <label for="step10" class="peer-checked/step10:opacity-0 peer-checked/step10:pointer-events-none">
+                <div class="dark-frame inset-x-0 bottom-0 h-[27%] "> </div>
+            </label>
+
+            <input type="checkbox" id="step9" class="hidden peer/step9" autocomplete="off" />
+            <label for="step9" class="peer-checked/step9:opacity-0 peer-checked/step9:pointer-events-none">
+                <div class="dark-frame right-0 bottom-0 h-[43.5%] w-[50%]"> </div>
+            </label>
+
+            <input type="checkbox" id="step8" class="hidden peer/step8" autocomplete="off" />
+            <label for="step8" class="peer-checked/step8:opacity-0 peer-checked/step8:pointer-events-none">
+                <div class="dark-frame inset-x-0 bottom-0 h-[43.5%] "> </div>
+            </label>
+
+            <input type="checkbox" id="step7" class="hidden peer/step7" autocomplete="off" />
+            <label for="step7" class="peer-checked/step7:opacity-0 peer-checked/step7:pointer-events-none">
+                <div class="dark-frame right-0 bottom-0 h-[60%] w-[50%]"> </div>
+            </label>
+
+            <input type="checkbox" id="step6" class="hidden peer/step6" autocomplete="off" />
+            <label for="step6" class="peer-checked/step6:opacity-0 peer-checked/step6:pointer-events-none">
+                <div class="dark-frame inset-x-0 bottom-0 h-[60%] "> </div>
+            </label>
+
+            <input type="checkbox" id="step5" class="hidden peer/step5" autocomplete="off" />
+            <label for="step5" class="duration-300 peer-checked/step5:opacity-0 peer-checked/step5:pointer-events-none">
+                <div class="dark-frame right-0 bottom-0 h-[73%] w-[25%]"> </div>
+            </label>
+
+            <input type="checkbox" id="step4" class="hidden peer/step4" autocomplete="off" />
+            <label for="step4" class="duration-300 peer-checked/step4:opacity-0 peer-checked/step4:pointer-events-none">
+                <div class="dark-frame right-0 bottom-0 h-[73%] w-[50%]"> </div>
+            </label>
+
+            <input type="checkbox" id="step3" class="hidden peer/step3" autocomplete="off" />
+            <label for="step3" class="duration-300 peer-checked/step3:opacity-0 peer-checked/step3:pointer-events-none">
+                <div class="dark-frame right-0 bottom-0 h-[73%] w-[75%]"> </div>
+            </label>
+
+            <input type="checkbox" id="step2" class="hidden peer/step2" autocomplete="off" />
+            <label for="step2" class="duration-300 peer-checked/step2:opacity-0 peer-checked/step2:pointer-events-none">
+                <div class="dark-frame inset-x-0 bottom-0 h-[75.5%] "> </div>
+            </label>
+
+            <input type="checkbox" id="step1" class="hidden peer/step1" autocomplete="off" />
+            <label for="step1" class="duration-300 peer-checked/step1:opacity-0 peer-checked/step1:pointer-events-none">
+                <div class="inset-0 dark-frame flex pt-48 justify-center text-white md:text-6xl sm:text-5xl text-3xl font-bold"> CLICK TO ADVANCE </div>
+            </label>
+
+        </div>
+    </div>
+</Layout>
+
+<style>
+    label {
+        @apply w-full h-full absolute bottom-0 transition-opacity duration-300 cursor-pointer;
+    }
+    .dark-frame {
+        @apply bg-black absolute;
+    }
+    input[type="checkbox"] {
+        display: none;
+    }
+</style>

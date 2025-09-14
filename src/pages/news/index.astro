@@ -1,0 +1,105 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Back from '@components/Back.astro';
+import Article from '@components/Article.astro';
+import LatestNews from '@components/LatestNews.astro';
+import { getCollection } from 'astro:content';
+
+const newsCollection = await getCollection('news') ?? [];
+const hasNews = newsCollection.length > 0;
+
+// Only get a featuredArticle if news exists
+const featuredArticle = hasNews
+  ? newsCollection.find((article: any) => article.data.isFeatured)?.data || newsCollection[0]?.data
+  : null;
+---
+
+<Layout title="Latest News | Mare Fair 2025" backgroundClass="bg-news-brick-texture">
+  <Back />
+
+  <!-- Conditional: Only display news section if there is existing news -->
+  { hasNews ? (
+    <div class="flex items-center justify-center merriweather-regular overflow-hidden">
+      <div class="mt-20">
+        {featuredArticle && <LatestNews article={featuredArticle} />}
+
+        <!-- News Articles Grid -->
+        <div id="news-grid" class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {newsCollection.map(({ data: article }: { data: any }, index: number) => (
+            <div class="article-wrapper relative transition-transform duration-500 ease-out">
+              <a href={`/news/${article.slug}`} class="block w-full h-full">
+                <Article article={article} index={index} />
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="flex items-center justify-center merriweather-regular overflow-hidden mt-20">
+      <p>No news to display at this time.</p>
+    </div>
+  )}
+</Layout>
+
+<style>
+    #news-grid .article-wrapper:nth-child(6n+1) {
+      transform: rotate(-5deg);
+    }
+    #news-grid .article-wrapper:nth-child(6n+2) {
+      transform: rotate(5deg);
+    }
+    #news-grid .article-wrapper:nth-child(6n+3) {
+      transform: rotate(-3deg);
+    }
+    #news-grid .article-wrapper:nth-child(6n+4) {
+      transform: rotate(3deg);
+    }
+    #news-grid .article-wrapper:nth-child(6n+5) {
+      transform: rotate(-8deg);
+    }
+    #news-grid .article-wrapper:nth-child(6n+6) {
+      transform: rotate(8deg);
+    }
+
+    html {
+        overflow-x: hidden;
+    }
+
+    /* News Header Image */
+    .news-header {
+        filter: drop-shadow(6px 10px 0px rgba(0, 0, 0, 0.5)); /* Drop shadow directly on image */
+    }
+
+    /* Floating Featured Article */
+    .featured-article-wrapper {
+        transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+    }
+
+    .featured-article {
+        transition: transform 0.3s ease-in-out, z-index 0.3s ease-in-out;
+    }
+
+    .featured-article-wrapper:hover .featured-article {
+        transform: scale(1.1); /* Popout effect on hover */
+        z-index: 20;
+    }
+
+    /* Grid layout styles */
+    #news-grid {
+        position: relative;
+        overflow: visible;
+    }
+
+    /* Article Wrapper Styling */
+    .article-wrapper {
+        display: inline-block;
+        transform-origin: center;
+        transition: transform 0.2s ease-in-out, z-index 0.1s ease-in-out;
+    }
+
+    .article-wrapper:hover {
+        transform: scale(1.1) rotate(0deg) !important;
+        z-index: 20;
+    }
+</style>

@@ -1,0 +1,116 @@
+---
+import { Image, getImage } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+import balloonImage from "@assets/logo/balloon.png";
+import headerString from "@assets/about/about_string.png";
+import headerClip from "@assets/about/about_clips.png";
+import fairFlyer from "@assets/about/sunbeam.png";
+
+import polaroid1 from "@assets/about/polaroid1.png";
+import polaroid2 from "@assets/about/polaroid2.png";
+import polaroid3 from "@assets/about/polaroid3.png";
+import polaroid4 from "@assets/about/polaroid4.png";
+
+import newsRaw from  "@assets/about/newsButton.png";
+import newsHoverRaw from  "@assets/about/newsButtonHover.png";
+
+const news = await getImage({ src: newsRaw, format:"avif", width:200 });
+const newsHover = await getImage({ src: newsHoverRaw, format:"avif", width:200 });
+
+import about from "@assets/corkboard/About_us.png";
+
+const newsButtonRatio = newsRaw.width / newsRaw.height;
+
+---
+
+<Layout title="About | Mare Fair 2025">
+    <Back />
+    <div id="header-string" class="relative overflow-hidden w-full h-auto flex justify-center items-center w-screen z-10 -mb-[2rem]">
+        <Image src={headerString} format="avif" alt="" class="max-w-none w-[220vw] md:w-auto" width={1700}/>
+        <Image src={headerClip} format="avif" alt="" class="absolute top-0 max-w-none w-[220vw] md:w-auto" width={1700}/>
+    </div>
+    <div id="card" class="relative flex justify-center max-w-full mx-auto bg-center inset-0 lg:mb-10 -mb-[4rem]" style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));">
+        <div class="relative min-h-[35rem] bg-white max-w-[60rem] w-full ">
+            {/* Decorations */}
+            <div id="balloon-wrapper" class="absolute w-full h-full top-0 overflow-hidden">
+                <Image src={balloonImage} format="avif" alt="" class="absolute lg:-right-10 md:-right-32 -right-56 bottom-0 opacity-20 rotate-[10deg]" width={500}/>
+                <Image src={fairFlyer} format="avif" alt="" class="absolute lg:right-72 md:right-48 right-0 bottom-0 rotate-[5deg]" width={170}/>
+            </div>
+
+            {/* Texts */}
+            <div id="card-text" class="relative lg:w-3/5 md:w-4/5  w-full p-10 sm:pb-32 pb-40">
+                <h1 class="pb-10 text-6xl caveat pb-5"> About Mare&nbsp;Fair </h1>
+                <div id="line" class="block h-0.5 w-full bg-black mb-5"> </div>
+                <p class="text-xl reddit-sans">
+                    <b>Mare Fair</b> is a convention for adult fans of <i> My
+                    Little Pony: Friendship is Magic</i> dedicated to
+                    celebrating our <b>love of ponies</b> and all the very
+                    special people that continue to make the ride what
+                    it is - <b>that means you!</b>
+                    <br><br>
+                    We do our best to deliver a convention that is
+                    memorable and unique! We don't have VIP guests,
+                    guests of honor, or community guests, instead we
+                    foster an environment where you and your friends can
+                    get together for a fun weekend focused on ponies.
+                </p>
+            </div>
+            {/* NEWS LINK */}
+            <a href="/news" aria-label="News" id="newsButton" class="absolute sm:bottom-10 bottom-20 left-9 bg-cover" style={`width:150px; height:${150/newsButtonRatio}px;`} >
+
+            </a>
+            {/* Polaroid to the side */}
+            <Image src={about} transition:name="about" format="avif" alt="" class="absolute -right-40 top-[10%] rotate-[5deg] lg:block hidden" width={400} style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));"/>
+        </div>
+    </div>
+    <div id="content-wrapper" class="overflow-hidden">
+        <Image src={about} transition:name="about"  format="avif" alt="About Us" class="relative rotate-[5deg] lg:hidden block mx-auto m-6" width={400} style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));"/>
+        <div id="polaroid-wrapper" class="w-fit mx-auto mb-6 grid md:grid-cols-2 grid-cols-1 justify-items-center">
+            <Image
+             src={polaroid1}
+             format="avif"
+             alt={`Polaroid image 1`}
+             class={`hover:rotate-0 hover:z-10 rotate-[-5deg] ease-in-out origin-top duration-300 mt-10`}
+             style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));"
+             width="400"
+            />
+            <Image
+             src={polaroid2}
+             format="avif"
+             alt={`Polaroid image 2`}
+             class={`hover:rotate-0 hover:z-10 rotate-[3deg] ease-in-out origin-top duration-300 mt-10`}
+             style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));"
+             width="400"
+            />
+            <Image
+             src={polaroid3}
+             format="avif"
+             alt={`Polaroid image 3`}
+             class={`hover:rotate-0 hover:z-10 rotate-[-3deg] ease-in-out origin-top duration-300 mt-10`}
+             style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));"
+             width="400"
+            />
+            <Image
+             src={polaroid4}
+             format="avif"
+             alt={`Polaroid image 4`}
+             class={`hover:rotate-0 hover:z-10 rotate-[5deg] ease-in-out origin-top duration-300 mt-10`}
+             style="filter: drop-shadow(5px 5px 0rem rgba(0, 0, 0, 0.601));"
+             width="400"
+            />
+        </div>
+    </div>
+</Layout>
+
+<style define:vars={{ newsImage: `url(${news.src})`, newsHoverImage: `url(${newsHover.src})` }}>
+    #newsButton {
+        background-image: var(--newsImage);
+        transition: background-image 0.1s ease-in-out, transform 0.1s ease-in-out;
+    }
+    #newsButton:hover {
+        background-image: var(--newsHoverImage);
+        transform: scale(1.05);
+    }
+</style>

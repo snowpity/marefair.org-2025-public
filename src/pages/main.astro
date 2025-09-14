@@ -1,0 +1,414 @@
+---
+import { Image, getImage } from "astro:assets";
+import { getEntry } from 'astro:content';
+import type {Sponsor, SponsorCollection} from '@data/Sponsor';
+
+import Layout from '@layouts/Layout.astro';
+import Banner from "@components/Banner.astro";
+
+// SCRAPBOOK
+import scrapbook_header from "@assets/gallery/scrapbook.png";
+
+import titleLogo from "@assets/corkboard/sign_frame.png";
+import titleNeon from "@assets/corkboard/sign_neon.png";
+
+import corkboardRaw from "@assets/corkboard/corktile.png";
+import frameTop from "@assets/corkboard/frametop.png";
+import frameSidesRaw from "@assets/corkboard/framesides.avif";
+import frameBottom from "@assets/corkboard/framebottom.png";
+import frameTopTrinket from "@assets/corkboard/frametop_stuff3.png";
+import frameTopTrinket_mobile from "@assets/corkboard/frametop_stuff3_mobile.png";
+import frameBottomTrinket from "@assets/corkboard/framebottom_stuff4.png";
+import frameBottomTrinket_mobile from "@assets/corkboard/framebottom_stuff4_mobile.png";
+
+import about from "@assets/corkboard/About_us.png";
+import news from "@assets/corkboard/News_Link.png";
+import contact from "@assets/contact/contact_full.png";
+import contact_phone from "@assets/contact/Mare_Fair_3_Contacts_phone.png";
+import conduct from "@assets/corkboard/coc.png";
+import venue from "@assets/corkboard/Venue_Poster_Mare_Fair_2025_pinned.png"
+import apply from "@assets/corkboard/apply_flyer_pinned.png"
+import registration from "@assets/corkboard/2025_Registration_Button_pinned.png"
+import soon from "@assets/corkboard/coming_soon.png"
+import mascots from "@assets/corkboard/OurMascotsButton.png"
+import mascots1 from "@assets/corkboard/OurMascots_MoveableStrip.png"
+import events from "@assets/corkboard/events/events.png"
+import cinema from "@assets/events/brochure_cinemare.png"
+import cruise from "@assets/events/brochure_cruise.png"
+import poniinspace from "@assets/corkboard/events/poniinspace.png"
+import conbook from "@assets/conbook/cover.png"
+
+/*
+import FairFlyerPin from "@assets/corkboard/FairFlyerPin.png"
+import SoireePin from "@assets/corkboard/SoireePin.png"
+import SwirlyMimosa from "@assets/corkboard/Swirly_Mimosa.png"
+*/
+import Credit from "@assets/corkboard/TV.png"
+
+import music from "@assets/corkboard/1MusicianCassetteClosed.png"
+import music2 from "@assets/corkboard/4MusicianCassetteBottom.png"
+import music3 from "@assets/corkboard/5MusicianCassetteTop.png"
+
+import schedule from "@assets/schedules/schedule.png"
+import map from "@assets/map-venue/map.png"
+import vendor from "@assets/vendors/YardSard.png"
+import tendieFrenzy from "@assets/misc/TendieFrenzy.png"
+
+const frameSides = await getImage({ src: frameSidesRaw, format:"avif" });
+const corkboard = await getImage({ src: corkboardRaw, format:"avif" });
+
+import sponsorTop from "@assets/sponsor/sponsor_top.png";
+import sponsorMiddleRaw from "@assets/sponsor/sponsor_middle.png";
+import sponsorBottom from "@assets/sponsor/sponsor_bottom.png";
+import gigachadRaw from "@assets/sponsor/gigachad.png";
+const sponsorMiddle = await getImage({ src: sponsorMiddleRaw, format:"avif", width: sponsorBottom.width / 2});
+const gigachad = await getImage({ src: gigachadRaw, format:"avif", width: sponsorBottom.width / 3 });
+
+
+import soireeImage from "@assets/pages/news/soiree.png";
+
+const sponsorNameExtractor = (sponsors : SponsorCollection|null|undefined) => {
+    return sponsors?.sponsors.map((s: Sponsor) => s.sponsorName) ?? []
+}
+
+const sponsorsMareSchizo = sponsorNameExtractor((await getEntry('sponsors', 'Mare Schizo'))?.data)
+const sponsorsMareFanatic = sponsorNameExtractor((await getEntry('sponsors', 'Mare Fanatic'))?.data)
+const sponsorsMareAficionado = sponsorNameExtractor((await getEntry('sponsors', 'Mare Aficionado'))?.data)
+const sponsorsMareConnoisseur = sponsorNameExtractor((await getEntry('sponsors', 'Mare Connoisseur'))?.data)
+const sponsorsMareEnthusiast = sponsorNameExtractor((await getEntry('sponsors', 'Mare Enthusiast'))?.data)
+const sponsorsMareAdmirer = sponsorNameExtractor((await getEntry('sponsors', 'Mare Admirer'))?.data)
+const sponsorsMareEnjoyer = sponsorNameExtractor((await getEntry('sponsors', 'Mare Enjoyer'))?.data)
+const sponsorsMareSupporter = sponsorNameExtractor((await getEntry('sponsors', 'Mare Supporter'))?.data)
+
+---
+<Layout>
+    <Banner/>
+
+    <main class="">
+        {/* Weirdest shit, but it needs relative to hide overflow correctly */}
+        <div class="relative overflow-hidden w-full h-auto flex justify-center items-center w-screen h-auto md:-mb-[17rem] -mb-[35%]">
+            <Image src={titleLogo} format="avif" alt="Mare Fair 2025, September 5 through 7 in Orlando, Florida" class="max-w-none w-[220vw] md:w-auto" width={1700}/>
+            <Image src={titleNeon} format="avif" alt="Mare Fair 2025, September 5 through 7 in Orlando, Florida" class="absolute top-0 max-w-none w-[220vw] md:w-auto neon-glow" width={1700}/>
+        </div>
+
+        <div class="relative">
+            {/* If we have another tiling layer on top of vignette layer, this might be an approach
+            <div id="corkboard"       class="absolute max-w-full mx-auto bg-center inset-0 m-auto h-[calc(100% - 25rem)] bg-cover" style={`background-image: url(${backdrop.src}), url(${corkboard.src}); width:calc(${frameSides.width}px - 150px); height: calc(100% - 150px); background-size: 200% ,400px; box-shadow: inset 0 0 200px #803722;`}> </div>
+            <div id="corkboard-layer" class="absolute max-w-full mx-auto bg-center inset-0 m-auto h-[calc(100% - 25rem)] bg-cover" style={`background-image: url(${backdrop.src}); width:calc(${frameSides.width}px - 150px); height: calc(100% - 150px); background-size: 170%;`}></div>
+            */}
+            <div id="board" class="relative h-full overflow-hidden">
+                <div id="top" class="relative flex flex-wrap justify-center pointer-events-none">
+                    <Image src={frameTop} alt="" format="avif" width={frameTop.width} height={frameTop.height} class=`block mx-auto` style=`min-width: ${frameTop.width}px`/>
+                    <Image src={frameTopTrinket} format="avif" alt="" class="absolute sm:block hidden mx-auto z-10 translate-y-7" width={frameTopTrinket.width} style=`min-width: ${frameTopTrinket.width}px`/>
+                    <Image src={frameTopTrinket_mobile} format="avif" alt="" class="absolute sm:hidden block mx-auto z-10 translate-y-7" width={frameTopTrinket.width} style=`min-width: ${frameTopTrinket.width}px`/>
+                </div>
+                {/* change height to Auto if using height affecting divs i.e. texts or relative images*/}
+                <div id="cen" class="relative max-w-full mx-auto bg-top flex flex-wrap items-center justify-center px-0 h-auto" style={`background-image: url(${frameSides.src});width: ${frameSidesRaw.width}px;`}>
+                    <div id="corkboard" class="absolute max-w-full mx-auto bg-center inset-0 bg-cover -z-10 -mt-[20rem]" style={`background-image: url(${corkboard.src}); width:calc(${frameSidesRaw.width}px - 150px); height: calc(${20}rem + 100%); background-size: 100%; box-shadow: inset 0 0 200px #803722;`}> </div>
+                    <div id="corkboard-container" class="flex flex-col md:grid gap-2.5 relative justify-center -translate-y-56 -mb-44 lg:w-[1000px] w-[720px]
+                                                        md:grid-cols-[repeat(auto-fit,_50px)] md:auto-rows-[50px] z-[1]" style="grid-auto-flow: row dense;">
+
+                        <a href="/schedule" class="corkboard-item origin-top -rotate-[1deg] translate-y-0 sm:translate-y-0 z-[0]"
+                            style="grid-row: span 9 / span 9; grid-column: span 6 / span 6;">
+                            <Image src={schedule} transition:name="schedules" format="avif" width="600" alt="Schedules"  class="w-full h-auto">
+                        </a>
+                        <a href="/venue" class="col-span-5 row-span-7 corkboard-item origin-top rotate-[1deg] translate-y-0 sm:-translate-y-3 -translate-x-0 z-[1]">
+                            <Image src={venue} transition:name="venue" format="avif" width="600" alt="Venue" class="w-full h-auto" />
+                        </a>
+
+                        <a href="/map" class="col-span-5 row-span-5 corkboard-item origin-top -rotate-[1deg] translate-y-0 sm:-translate-y-3 -translate-x-0 z-[1]">
+                            <Image src={map} transition:name="map" format="avif" width="600" alt="Venue Map" class="w-full h-auto">
+                        </a>
+
+                        <a href="/vendors" class="col-span-5 row-span-5 corkboard-item origin-top -rotate-[1deg] translate-y-0 sm:-translate-y-3 -translate-x-0 z-[1]">
+                            <Image src={vendor} transition:name="vendor" format="avif" width="600" alt="Vendors" class="w-full h-auto">
+                        </a>
+
+                        <a href="/register" class="col-span-6 row-span-3 corkboard-item origin-top rotate-[5deg] translate-y-0 sm:translate-y-0 z-[0]">
+                            <Image src={registration} transition:name="register" format="avif" width="600" alt="Register" class="w-full h-auto" />
+                        </a>
+
+                        <a href="/musician" class="sm:col-span-5 row-span-5 col-span-6 corkboard-item origin-center translate-y-0 sm:translate-y-3 translate-x-0 z-[1]"  id="tape" style="perspective: 1000px;">
+                            <div class="rotate-90 translate-y-10 tape-wrapper transition-transform duration-500">
+                                <Image src={music3} transition:name="music3" format="avif" width="400" alt="Concert" class="w-full absolute tape-down" />
+                                <Image src={music2} transition:name="music2" format="avif" width="400" alt="Concert" class="w-full cover absolute tape-down" />
+                                <Image src={music} transition:name="music1" format="avif" width="400" alt="Concert" class="w-full cover relative backface-hidden tape-down" />
+                            </div>
+                        </a>
+                        {/* Reserving space for the cassete, only activate on low */}
+                        <div class="w-full h-28 relative md:hidden block invisible" ></div>
+
+                        <a href="/news" class="col-span-6 row-span-7 corkboard-item origin-center -rotate-[3deg] translate-y-0 lg:translate-x-0 z-[0]">
+                            <Image src={news} transition:name="newspaper" format="avif" width="600" alt="News" class="w-full h-auto" />
+                            <Image src={soireeImage} transition:name="news" format="avif" width="100" alt="" class="absolute top-[27%] right-[10%]" />
+                        </a>
+
+                        <a href="/apply" class="col-span-5 row-span-7 corkboard-item origin-top rotate-[-2deg] translate-y-0 sm:translate-y-1 -translate-x-0 z-[1]">
+                            <Image src={apply} transition:name="apply" format="avif" width="600" alt="Apply" class="w-full h-auto" />
+                        </a>
+
+                        <a href="/events" class="col-span-6 row-span-4 corkboard-item origin-top rotate-[-2deg] translate-y-0 sm:translate-y-0 md:-translate-x-5 z-[2] group">
+                            <div class="h-auto flex flex-row items-center justify-between">
+                                <Image src={cruise} transition:name="cruise" format="avif" width="100" alt="" class="events-hover md:translate-x-[90%] translate-x-[10%] -rotate-[5deg] group-hover:translate-x-[10%] group-hover:-rotate-[5deg]" />
+                                <Image src={poniinspace} transition:name="charity" format="avif" width="100" alt="" class="relative w-[33%]" />
+                                <Image src={cinema} transition:name="cinema" format="avif" width="100" alt="" class="events-hover md:-translate-x-[90%] -translate-x-[10%] rotate-[5deg] group-hover:-translate-x-[10%] group-hover:rotate-[5deg]" />
+                                <Image src={events} format="avif" width="150" alt="Events" class="absolute left-1/2 -translate-x-1/2 -top-[5%] w-[50%] z-10" />
+                            </div>
+                        </a>
+
+                        <a href="/about" class="col-span-4 row-span-4 corkboard-item origin-top rotate-[1deg] translate-y-0 sm:-translate-y-2 z-[1]">
+                            <Image src={about} transition:name="about" format="avif" width="600" alt="About" class="w-full h-auto" id="about"/>
+                        </a>
+
+                        <a href="/contact" class="lg:hidden block col-span-6 row-span-5 corkboard-item origin-top rotate-[-5deg] translate-y-0 sm:translate-y-0 md:-translate-x-5 z-[2]">
+                            <div class="h-auto flex flex-row items-center">
+                                <div transition:name="phoneScreen"> </div>
+                                <Image src={contact_phone} transition:name="phone" format="avif" width="300" alt="" class="w-2/5 -rotate-[5deg] translate-x-2"/>
+                                <Image src={contact} transition:name="contact" format="avif" width="400" alt="Contact Us" class="w-3/5" />
+                            </div>
+                        </a>
+
+                        <a href="/contact" class="lg:block hidden col-span-6 row-span-6 corkboard-item origin-top rotate-[-5deg] translate-y-0 sm:translate-y-0 md:-translate-x-5 z-[2]">
+                            <div class="h-auto flex flex-row items-center">
+                                <div transition:name="phoneScreen"> </div>
+                                <Image src={contact_phone} transition:name="phone" format="avif" width="300" alt="" class="w-2/5 -rotate-[5deg] translate-x-2"/>
+                                <Image src={contact} transition:name="contact" format="avif" width="400" alt="Contact Us" class="w-3/5" />
+                            </div>
+                        </a>
+
+                        <a id="mascot-selectable" href="/mascots" class="col-span-6 row-span-6 corkboard-item origin-top rotate-[3deg] translate-y-0 sm:translate-y-0 translate-x-0 z-[2]">
+                            <Image id="mascot-move" src={mascots1} format="avif" width="400" alt="" class="w-full h-auto absolute pointer-events-none" />
+                            <Image src={mascots} format="avif" width="400" alt="Our Mascots" class="w-full h-auto" />
+                        </a>
+
+                        <a href="https://fair-filer.marefair.org/2025/conbook/MareFair2025_ConBook_Digital.pdf" class="col-span-5 row-span-8 corkboard-item origin-top rotate-[-1deg] translate-y-0 z-[1] hover:!rotate-0">
+                            <Image src={conbook} transition:name="tf" format="avif" width="600" alt="Code of Conduct" class="w-full h-auto pointer-events-none">
+                        </a>
+
+                        <a href="/coc" class="col-span-4 row-span-4 corkboard-item origin-center rotate-[-1deg] sm-translate-y-10 translate-y-0 z-[2] hover:!rotate-12">
+                            <Image src={conduct} transition:name="coc" format="avif" width="600" alt="Code of Conduct" class="w-full h-auto sm:-translate-y-10 pointer-events-none md:scale-125 scale-100">
+                        </a>
+
+                        <a href="/scrapbook" class="col-span-6 row-span-3 corkboard-item origin-top rotate-[-3deg] translate-y-0 sm:translate-y-2 z-[1]">
+                            <Image src={scrapbook_header} transition:name="scrapbook" format="avif" width="600" alt="Scrapbook" class="w-full h-auto" id="about"/>
+                        </a>
+
+                        <a href="/tendiefrenzy" class="lg:col-span-4 lg:row-span-5 col-span-5 row-span-6 corkboard-item origin-top rotate-[-1deg] translate-y-0 z-[1] hover:!rotate-0">
+                            <Image src={tendieFrenzy} transition:name="tf" format="avif" width="600" alt="Code of Conduct" class="w-full h-auto pointer-events-none">
+                        </a>
+
+                        {/*
+                        <div id="SoireePin" class="corkboard-static col-span-1 row-span-1"> <Image src={SoireePin} format="avif" width="200" alt="" class="w-full h-auto" /> </div>
+                        <div id="FairFlyerPin" class="corkboard-static col-span-1 row-span-1"> <Image src={FairFlyerPin} format="avif" width="200" alt="" class="w-full h-auto translate-y-10" /> </div>
+                        <div id="MimosaPin" class="corkboard-static col-span-2 row-span-2"> <Image src={SwirlyMimosa} format="avif" width="200" alt="" class="w-full h-auto translate-y-20" /> </div>
+                        <div id="spacing" class="col-span-2 row-span-2"></div>
+                         */}
+
+                        {/*
+                        <div id="soon" class="lg:col-span-4 col-span-3 lg:row-span-4 row-span-3 corkboard-item origin-top rotate-[6deg] translate-y-0 z-[2] hover:!rotate-0 lg:block hidden">
+                            <Image src={soon} transition:name="soon" format="avif" width="600" alt="More coming soon" class="w-full h-auto sm:-translate-y-0 pointer-events-none" />
+                        </div>
+                        */}
+
+                    </div>
+
+                </div>
+                <div id="bot" class="relative flex flex-wrap justify-center pointer-events-none z-[0] bottom-64 w-full ">
+                    <Image src={frameBottom} alt="" format="avif" width={frameBottom.width} height={frameBottom.height} class=`block mx-auto` style=`min-width: ${frameBottom.width}px`/>
+                    <Image src={frameBottomTrinket} format="avif" alt="" class="absolute sm:block hidden block bottom-0 mx-auto z-10 translate-y-[10.5rem]" width={frameBottomTrinket.width} style=`min-width: ${frameBottomTrinket.width}px`/>
+                    <Image src={frameBottomTrinket_mobile} format="avif" alt="" class="absolute sm:hidden block block bottom-0 mx-auto z-10 translate-y-[10.5rem]" width={frameBottomTrinket.width} style=`min-width: ${frameBottomTrinket.width}px`/>
+                </div>
+            </div>
+
+            <div class="2xl:sticky relative flex md:right-0 bottom-0 z-20 scroll-container pointer-events-none md:mt-[-15rem] mt-[-5rem] harsh-shadow">
+                <a href="/credits" class="credit-link 2xl:mr-0 mr-auto ml-auto pointer-events-auto">
+                  <Image src={Credit} width={400} alt="Credits" class="2xl:md:translate-x-10 hover:translate-x-0 hover:scale-105 transition duration-150 ease-in-out" />
+                </a>
+            </div>
+
+            {/* Plaque */}
+            <div id="plaque" class="relative overflow-x-hidden h-full">
+                <div id="top-plaque" class="relative flex flex-wrap justify-center pointer-events-none">
+                    <Image src={sponsorTop} alt="" format="avif" width={sponsorTop.width / 2} height={sponsorTop.height / 2} class=`block mx-auto` style=`min-width: ${sponsorTop.width / 2}px`/>
+                </div>
+                {/* change height to Auto if using height affecting divs i.e. texts or relative images*/}
+                <div id="cen-plaque" class="relative max-w-full mx-auto bg-top flex flex-wrap items-center justify-center px-0 h-auto reddit-sans" style={`background-image: url(${sponsorMiddle.src});width: ${sponsorTop.width / 2}px; `}>
+                    <div class="absolute -mt-[5rem] w-[550px] bg-fixed bg-no-repeat bg-contain bg-center pointer-events-none opacity-20 z-10" style=`background-image: url(${gigachad.src}); height: calc(100% + 6rem) `> </div>
+                    {/* CHANGE -mt and -mb here to make the top and bottom of the plaque not space out */}
+                    <div class="relative -mt-20 sm:w-[70%] w-[90%] flex flex-col mx-auto rounded-lg h-auto p-2 text-white text-center items-center justify-center z-10 opacity-90 z-20">
+                        <svg class="sm:w-[500px] w-[400px] mb-6 mt-3 "viewBox="0 0 376.417 87.502" xmlns="http://www.w3.org/2000/svg"> <title>Sponsors</title> <g id="svgGroup" stroke-linecap="round" fill-rule="evenodd" font-size="9pt" stroke="#000" stroke-width="0" fill="#ffffff" style="stroke:#000;stroke-width:0;fill:#ffffff"><path d="M 160.548 86.72 L 143.751 86.72 L 143.751 0.782 L 161.426 0.782 L 169.337 41.944 L 169.337 0.782 L 185.938 0.782 L 185.938 86.72 L 169.141 86.72 L 160.548 43.751 L 160.548 86.72 Z M 0.001 62.989 L 0.001 54.591 L 16.993 54.591 L 16.993 65.333 A 15.962 15.962 0 0 0 17.081 67.068 Q 17.275 68.838 17.896 69.996 A 3.033 3.033 0 0 0 20.097 71.594 A 4.92 4.92 0 0 0 21.046 71.681 A 6.294 6.294 0 0 0 22.189 71.584 Q 23.629 71.317 24.293 70.313 A 4.21 4.21 0 0 0 24.769 69.287 Q 25.101 68.263 25.175 66.737 A 18.956 18.956 0 0 0 25.196 65.821 A 33.177 33.177 0 0 0 25.086 63.037 Q 24.972 61.686 24.739 60.531 A 15.733 15.733 0 0 0 24.415 59.205 A 14.21 14.21 0 0 0 22.597 55.351 A 17.146 17.146 0 0 0 21.705 54.127 Q 19.776 51.71 16.358 48.487 L 8.643 41.163 Q 0.001 33.009 0.001 22.511 A 37.89 37.89 0 0 1 0.499 16.154 Q 1.081 12.738 2.344 10.019 A 17.475 17.475 0 0 1 5.103 5.763 A 16.463 16.463 0 0 1 13.735 0.689 Q 16.444 0.022 19.665 0.001 A 32.2 32.2 0 0 1 19.874 0.001 A 34.75 34.75 0 0 1 25.939 0.492 Q 29.172 1.067 31.674 2.313 A 14.377 14.377 0 0 1 36.646 6.3 Q 41.602 12.598 41.602 25.44 L 24.122 25.44 L 24.122 19.532 Q 24.122 17.774 23.121 16.798 A 3.342 3.342 0 0 0 21.456 15.926 A 4.926 4.926 0 0 0 20.411 15.821 Q 18.36 15.821 17.408 16.969 A 4.034 4.034 0 0 0 16.568 18.759 A 5.735 5.735 0 0 0 16.456 19.923 Q 16.456 21.729 17.432 23.829 Q 18.409 25.929 21.29 28.663 L 31.202 38.184 A 57.234 57.234 0 0 1 36.671 44.166 Q 39.161 47.315 40.675 51.49 Q 41.949 55.004 42.15 59.816 A 44.32 44.32 0 0 1 42.188 61.671 A 53.488 53.488 0 0 1 41.752 68.727 Q 41.257 72.438 40.201 75.489 A 23.454 23.454 0 0 1 37.72 80.64 A 14.148 14.148 0 0 1 29.818 86.454 Q 26.498 87.501 22.169 87.501 A 37.314 37.314 0 0 1 16.069 87.037 Q 12.838 86.501 10.304 85.342 A 15.112 15.112 0 0 1 5.201 81.641 A 17.561 17.561 0 0 1 1.932 76.006 Q 0.121 71.111 0.008 63.954 A 61.019 61.019 0 0 1 0.001 62.989 Z M 191.798 62.989 L 191.798 54.591 L 208.79 54.591 L 208.79 65.333 A 15.962 15.962 0 0 0 208.878 67.068 Q 209.072 68.838 209.693 69.996 A 3.033 3.033 0 0 0 211.894 71.594 A 4.92 4.92 0 0 0 212.842 71.681 A 6.294 6.294 0 0 0 213.986 71.584 Q 215.426 71.317 216.09 70.313 A 4.21 4.21 0 0 0 216.566 69.287 Q 216.898 68.263 216.972 66.737 A 18.956 18.956 0 0 0 216.993 65.821 A 33.177 33.177 0 0 0 216.883 63.037 Q 216.769 61.686 216.536 60.531 A 15.733 15.733 0 0 0 216.212 59.205 A 14.21 14.21 0 0 0 214.394 55.351 A 17.146 17.146 0 0 0 213.502 54.127 Q 211.573 51.71 208.155 48.487 L 200.44 41.163 Q 191.798 33.009 191.798 22.511 A 37.89 37.89 0 0 1 192.296 16.154 Q 192.878 12.738 194.141 10.019 A 17.475 17.475 0 0 1 196.9 5.763 A 16.463 16.463 0 0 1 205.532 0.689 Q 208.241 0.022 211.462 0.001 A 32.2 32.2 0 0 1 211.671 0.001 A 34.75 34.75 0 0 1 217.736 0.492 Q 220.969 1.067 223.471 2.313 A 14.377 14.377 0 0 1 228.443 6.3 Q 233.399 12.598 233.399 25.44 L 215.919 25.44 L 215.919 19.532 Q 215.919 17.774 214.918 16.798 A 3.342 3.342 0 0 0 213.253 15.926 A 4.926 4.926 0 0 0 212.208 15.821 Q 210.157 15.821 209.205 16.969 A 4.034 4.034 0 0 0 208.365 18.759 A 5.735 5.735 0 0 0 208.253 19.923 Q 208.253 21.729 209.229 23.829 Q 210.206 25.929 213.087 28.663 L 222.999 38.184 A 57.234 57.234 0 0 1 228.467 44.166 Q 230.958 47.315 232.471 51.49 Q 233.746 55.004 233.947 59.816 A 44.32 44.32 0 0 1 233.985 61.671 A 53.488 53.488 0 0 1 233.549 68.727 Q 233.054 72.438 231.997 75.489 A 23.454 23.454 0 0 1 229.517 80.64 A 14.148 14.148 0 0 1 221.615 86.454 Q 218.295 87.501 213.966 87.501 A 37.314 37.314 0 0 1 207.866 87.037 Q 204.635 86.501 202.1 85.342 A 15.112 15.112 0 0 1 196.998 81.641 A 17.561 17.561 0 0 1 193.729 76.006 Q 191.918 71.111 191.805 63.954 A 61.019 61.019 0 0 1 191.798 62.989 Z M 334.229 62.989 L 334.229 54.591 L 351.221 54.591 L 351.221 65.333 A 15.962 15.962 0 0 0 351.31 67.068 Q 351.504 68.838 352.125 69.996 A 3.033 3.033 0 0 0 354.325 71.594 A 4.92 4.92 0 0 0 355.274 71.681 A 6.294 6.294 0 0 0 356.418 71.584 Q 357.858 71.317 358.521 70.313 A 4.21 4.21 0 0 0 358.998 69.287 Q 359.329 68.263 359.403 66.737 A 18.956 18.956 0 0 0 359.425 65.821 A 33.177 33.177 0 0 0 359.315 63.037 Q 359.201 61.686 358.968 60.531 A 15.733 15.733 0 0 0 358.643 59.205 A 14.21 14.21 0 0 0 356.826 55.351 A 17.146 17.146 0 0 0 355.933 54.127 Q 354.005 51.71 350.587 48.487 L 342.872 41.163 Q 334.229 33.009 334.229 22.511 A 37.89 37.89 0 0 1 334.727 16.154 Q 335.31 12.738 336.573 10.019 A 17.475 17.475 0 0 1 339.332 5.763 A 16.463 16.463 0 0 1 347.963 0.689 Q 350.673 0.022 353.894 0.001 A 32.2 32.2 0 0 1 354.102 0.001 A 34.75 34.75 0 0 1 360.168 0.492 Q 363.401 1.067 365.902 2.313 A 14.377 14.377 0 0 1 370.875 6.3 Q 375.831 12.598 375.831 25.44 L 358.35 25.44 L 358.35 19.532 Q 358.35 17.774 357.349 16.798 A 3.342 3.342 0 0 0 355.685 15.926 A 4.926 4.926 0 0 0 354.639 15.821 Q 352.589 15.821 351.636 16.969 A 4.034 4.034 0 0 0 350.797 18.759 A 5.735 5.735 0 0 0 350.684 19.923 Q 350.684 21.729 351.661 23.829 Q 352.637 25.929 355.518 28.663 L 365.43 38.184 A 57.234 57.234 0 0 1 370.899 44.166 Q 373.389 47.315 374.903 51.49 Q 376.177 55.004 376.379 59.816 A 44.32 44.32 0 0 1 376.417 61.671 A 53.488 53.488 0 0 1 375.98 68.727 Q 375.485 72.438 374.429 75.489 A 23.454 23.454 0 0 1 371.949 80.64 A 14.148 14.148 0 0 1 364.047 86.454 Q 360.727 87.501 356.397 87.501 A 37.314 37.314 0 0 1 350.297 87.037 Q 347.066 86.501 344.532 85.342 A 15.112 15.112 0 0 1 339.429 81.641 A 17.561 17.561 0 0 1 336.16 76.006 Q 334.35 71.111 334.237 63.954 A 61.019 61.019 0 0 1 334.229 62.989 Z M 305.714 86.72 L 288.331 86.72 L 288.331 0.782 L 314.698 0.782 Q 321.29 0.782 324.659 3.785 A 13.422 13.422 0 0 1 328.002 8.473 A 18.993 18.993 0 0 1 329.175 12.183 A 48.58 48.58 0 0 1 329.96 17.264 Q 330.232 19.888 330.3 22.845 A 87.332 87.332 0 0 1 330.323 24.854 A 45.299 45.299 0 0 1 330.131 29.164 Q 329.738 33.263 328.541 36.085 A 9.842 9.842 0 0 1 323.497 41.233 A 14.034 14.034 0 0 1 321.827 41.895 Q 325.88 42.725 327.515 45.924 Q 328.801 48.438 329.076 52.114 A 27.984 27.984 0 0 1 329.151 54.2 L 329.151 86.72 L 312.208 86.72 L 312.208 53.077 Q 312.208 49.317 310.67 48.414 A 5.063 5.063 0 0 0 309.525 47.938 Q 308.389 47.606 306.716 47.532 A 22.742 22.742 0 0 0 305.714 47.511 L 305.714 86.72 Z M 64.796 86.72 L 47.901 86.72 L 47.901 0.782 L 70.606 0.782 A 25.939 25.939 0 0 1 75.158 1.157 Q 77.666 1.605 79.676 2.586 A 13.369 13.369 0 0 1 81.91 3.956 Q 86.085 7.13 87.891 12.989 A 37.871 37.871 0 0 1 89.158 18.76 Q 89.698 22.521 89.698 26.954 A 68.08 68.08 0 0 1 89.418 33.294 Q 89.129 36.387 88.538 39.077 A 38.022 38.022 0 0 1 88.184 40.553 A 20.039 20.039 0 0 1 86.486 44.97 A 14.865 14.865 0 0 1 82.789 49.513 A 12.827 12.827 0 0 1 78.436 51.791 Q 76.575 52.371 74.328 52.576 A 28.191 28.191 0 0 1 71.778 52.686 L 64.796 52.686 L 64.796 86.72 Z M 94.434 63.282 L 94.434 22.462 A 36.072 36.072 0 0 1 94.961 16.085 Q 96.12 9.641 99.83 5.714 Q 104.725 0.53 113.74 0.05 A 35.428 35.428 0 0 1 115.626 0.001 A 30.215 30.215 0 0 1 121.775 0.587 Q 125.5 1.362 128.328 3.161 A 16.199 16.199 0 0 1 131.422 5.714 Q 136.817 11.427 136.817 22.462 L 136.817 63.282 A 40.833 40.833 0 0 1 136.285 70.096 Q 135.116 76.995 131.373 81.275 Q 125.928 87.501 115.626 87.501 A 27.303 27.303 0 0 1 109.388 86.831 Q 104.405 85.662 101.013 82.455 A 17.235 17.235 0 0 1 99.879 81.275 A 20.122 20.122 0 0 1 95.926 74.083 Q 94.434 69.442 94.434 63.282 Z M 239.014 63.282 L 239.014 22.462 A 36.072 36.072 0 0 1 239.541 16.085 Q 240.7 9.641 244.41 5.714 Q 249.305 0.53 258.32 0.05 A 35.428 35.428 0 0 1 260.206 0.001 A 30.215 30.215 0 0 1 266.355 0.587 Q 270.08 1.362 272.908 3.161 A 16.199 16.199 0 0 1 276.002 5.714 Q 281.397 11.427 281.397 22.462 L 281.397 63.282 A 40.833 40.833 0 0 1 280.865 70.096 Q 279.696 76.995 275.953 81.275 Q 270.508 87.501 260.206 87.501 A 27.303 27.303 0 0 1 253.968 86.831 Q 248.985 85.662 245.593 82.455 A 17.235 17.235 0 0 1 244.459 81.275 A 20.122 20.122 0 0 1 240.506 74.083 Q 239.014 69.442 239.014 63.282 Z M 119.678 64.112 L 119.678 22.169 A 15.819 15.819 0 0 0 119.545 20.012 Q 119.212 17.614 118.057 16.588 A 3.172 3.172 0 0 0 115.87 15.821 A 3.613 3.613 0 0 0 112.425 17.819 Q 111.573 19.423 111.573 22.315 L 111.573 64.21 A 26.347 26.347 0 0 0 111.634 66.07 Q 111.817 68.647 112.55 69.947 A 3.221 3.221 0 0 0 114.85 71.598 A 4.872 4.872 0 0 0 115.772 71.681 Q 119.254 71.681 119.632 65.668 A 24.819 24.819 0 0 0 119.678 64.112 Z M 264.258 64.112 L 264.258 22.169 A 15.819 15.819 0 0 0 264.125 20.012 Q 263.793 17.614 262.637 16.588 A 3.172 3.172 0 0 0 260.45 15.821 A 3.613 3.613 0 0 0 257.005 17.819 Q 256.153 19.423 256.153 22.315 L 256.153 64.21 A 26.347 26.347 0 0 0 256.214 66.07 Q 256.397 68.647 257.13 69.947 A 3.221 3.221 0 0 0 259.43 71.598 A 4.872 4.872 0 0 0 260.352 71.681 Q 263.834 71.681 264.212 65.668 A 24.819 24.819 0 0 0 264.258 64.112 Z M 64.796 16.456 L 64.796 37.257 L 65.772 37.257 A 13.028 13.028 0 0 0 67.75 37.119 Q 70.801 36.648 71.632 34.571 A 11.807 11.807 0 0 0 72.198 32.645 Q 72.634 30.589 72.696 27.647 A 47.324 47.324 0 0 0 72.706 26.661 A 36.648 36.648 0 0 0 72.608 23.892 Q 72.409 21.276 71.804 19.519 A 9.745 9.745 0 0 0 71.656 19.117 A 3.892 3.892 0 0 0 69.008 16.758 Q 68.016 16.456 66.7 16.456 L 64.796 16.456 Z M 305.811 16.7 L 305.811 32.618 L 309.962 32.618 A 2.741 2.741 0 0 0 312.46 31.024 Q 313.212 29.667 313.433 27.156 A 26.311 26.311 0 0 0 313.526 24.854 A 51.129 51.129 0 0 0 313.489 22.82 Q 313.355 19.483 312.745 18.263 A 2.683 2.683 0 0 0 310.804 16.798 A 4.682 4.682 0 0 0 309.815 16.7 L 305.811 16.7 Z" vector-effect="non-scaling-stroke"/></g></svg>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                        <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                            <div class="flex justify-center w-full items-center text-4xl tracking-wider">
+                                <div class="flex items-center justify-center font-extrabold">MARE SCHIZO</div>
+                            </div>
+                            <div
+                                class="py-2 w-full text-xl md:text-3xl tracking-wider text-center"
+
+                            >
+                                {sponsorsMareSchizo?.length ? sponsorsMareSchizo.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                        <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                            <div class="flex justify-center w-full items-center text-3xl tracking-wider">
+                                <div class="flex items-center justify-center font-extrabold">MARE FANATIC</div>
+                            </div>
+                            <div
+                                class="py-2 flex justify-center w-full items-center text-base md:text-xl tracking-wider text-center"
+
+                            >
+                                {sponsorsMareFanatic?.length ? sponsorsMareFanatic.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                        <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                            <div class="flex justify-center w-full items-center text-2xl tracking-wider">
+                                <div class="flex items-center justify-center font-extrabold">MARE AFICIONADO</div>
+                            </div>
+                            <div
+                                class="py-2 flex justify-center w-full items-center text-sm md:text-base tracking-wider text-center"
+
+                            >
+                                {sponsorsMareAficionado?.length ? sponsorsMareAficionado.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                        <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                            <div class="flex justify-center w-full items-center text-xl tracking-wider">
+                                <div class="flex items-center justify-center font-extrabold">MARE CONNOISSEUR</div>
+                            </div>
+                            <div
+                                class="py-2 flex justify-center w-full items-center text-sm md:text-base tracking-wider text-center"
+
+                            >
+                                {sponsorsMareConnoisseur?.length ? sponsorsMareConnoisseur.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                            <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                                <div class="flex justify-center w-full items-center text-lg tracking-wider">
+                                    <div class="flex items-center justify-center font-extrabold">MARE ADMIRER</div>
+                                </div>
+                                <div
+                                    class="py-2 flex justify-center w-full items-center text-sm md:text-base tracking-wider text-center"
+
+                                >
+                                    {sponsorsMareAdmirer?.length ? sponsorsMareAdmirer.join(", ") : "No one yet!"}
+                                </div>
+                            </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                            <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                                <div class="flex justify-center w-full items-center text-lg tracking-wider">
+                                    <div class="flex items-center justify-center font-extrabold">MARE ENTHUSIAST</div>
+                                </div>
+                            <div
+                                class="py-2 flex justify-center w-full items-center text-sm md:text-base tracking-wider text-center"
+
+                            >
+                                {sponsorsMareEnthusiast?.length ? sponsorsMareEnthusiast.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                        <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                            <div class="flex justify-center w-full items-center text-lg tracking-wider">
+                                <div class="flex items-center justify-center font-extrabold">MARE ENJOYER</div>
+                            </div>
+                            <div
+                                class="py-2 flex justify-center w-full items-center text-sm md:text-base tracking-wider text-center"
+
+                            >
+                                {sponsorsMareEnjoyer?.length ? sponsorsMareEnjoyer.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+
+                            <hr class="border-white border-2 sm:w-[90%] w-full mx-auto" />
+                        <div class="w-full md:w-5/6 pt-8 pb-7 decoration-black">
+                            <div class="flex justify-center w-full items-center text-lg tracking-wider">
+                                <div class="flex items-center justify-center font-extrabold">MARE SUPPORTER</div>
+                            </div>
+                            <div
+                                class="py-2 flex justify-center w-full items-center text-sm md:text-base tracking-wider text-center"
+
+                            >
+                                {sponsorsMareSupporter?.length ? sponsorsMareSupporter.join(", ") : "No one yet!"}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="bot-plaque" class="relative flex flex-wrap justify-center pointer-events-none z-[0] -mb-[15rem] bottom-64 w-full ">
+                    <Image src={sponsorBottom} alt="" format="avif" width={sponsorBottom.width / 2} height={sponsorBottom.height / 2 } class=`block mx-auto` style=`min-width: ${sponsorBottom.width / 2}px`/>
+                </div>
+            </div>
+        </div>
+
+
+        {/* Some spacing since the bottom is extra large */}
+        <div id="Spacing" class="h-20"/>
+
+
+    </main>
+</Layout>
+
+<style>
+    .unavailable {
+        @apply grayscale;
+    }
+    .events-hover {
+        @apply md:-rotate-[0deg] md:translate-y-[0%] transition-transform delay-200 duration-300 translate-y-[2%] group-hover:translate-y-[2%] w-[33%];
+    }
+    .harsh-shadow {
+        filter: drop-shadow(5px 10px 0rem rgba(0, 0, 0, 0.301));
+    }
+    #mascot-selectable:focus #mascot-move {
+        @apply ease-in-out duration-300 opacity-0 transform translate-y-64;
+    }
+    #mascot-move {
+        @apply ease-in-out duration-300;
+    }
+    .tape-down {
+        @apply ease-in-out duration-500 translate-y-0;
+    }
+
+    /* Targeting with :hover here on the wrapper to make hovering more seamless*/
+    #tape:hover .tape-wrapper {
+        @apply translate-y-0 rotate-0;
+    }
+
+    .cover {
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease-in-out;
+        transform-origin: 50% calc(90%);
+    }
+
+    #tape:hover .cover {
+        transform: rotateX(-180deg);
+    }
+
+    .corkboard-item {
+        @apply harsh-shadow transition-transform duration-500 hover:rotate-0 hover:z-50 md:-mx-1 md:-my-1 /*bg-red-800*/;
+    }
+
+    .corkboard-static {
+        @apply hidden lg:block md:-mx-3 md:-my-3;
+    }
+
+    @media (max-width: 767px) { /* Tailwind's medium */
+        .corkboard-item {
+            grid-column: 1 / -1 !important; /* Forces items to span full width */
+            width: 80%;
+            margin-left: auto;
+            margin-right:auto;
+        }
+    }
+
+
+</style>

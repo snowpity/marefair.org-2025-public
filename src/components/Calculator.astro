@@ -1,0 +1,53 @@
+---
+// @ts-ignore virtual module
+import { Icon } from "astro-icon/components";
+---
+
+<div class="bg-[#c6c7c9] w-[20rem] aspect-[7/10] flex flex-col justify-center outline rounded-lg reddit-sans">
+    <div id="calc-display" class="w-[80%] h-[25%] mx-auto outline display p-2"> NO JS </div>
+    <div class="mx-auto my-[2.5%] text-[#4a534c]"> PONIES </div>
+    <div class="w-[80%] h-[13%] mx-auto flex flex-row justify-between">
+        <div id="calc-1" class="aspect-square calc-button"> <Icon name="mdi:numeric-1" class="icon" /> </div>
+        <div id="calc-2" class="aspect-square calc-button"> <Icon name="mdi:numeric-2" class="icon" /> </div>
+        <div id="calc-3" class="aspect-square calc-button"> <Icon name="mdi:numeric-3" class="icon" /> </div>
+        <div id="calc-4" class="aspect-square calc-button"> <Icon name="mdi:numeric-4" class="icon" /> </div>
+    </div>
+    <div class="mx-auto my-[2.5%] text-[#4a534c]"> NIGHTS </div>
+    <div class="w-[80%] h-[13%] mx-auto flex flex-row justify-between">
+        <div id="decrement" class="aspect-square calc-button"> <Icon name="mdi:minus" class="icon" /> </div>
+        <div id="calc-display2" class="aspect-[2.1] h-full flex items-center justify-center outline display ">0</div>
+        <div id="increment" class="aspect-square calc-button"> <Icon name="mdi:plus" class="icon" /> </div>
+    </div>
+
+    <div class="w-[80%] h-[13%] mx-auto mt-[5%] flex flex-row justify-between">
+        <div id="split" class="aspect-[2.1] calc-button"> <b> SPLIT EVENLY </b> </div>
+        <div id="reset" class="aspect-[2.1] calc-button"> <b> RESET </b> </div>
+    </div>
+</div>
+
+<style>
+.outline {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.display {
+    @apply bg-[#b2ccb8];
+}
+
+.calc-button {
+    @apply h-full bg-[#e1e2ea] hover:bg-gray-300 flex items-center justify-center outline cursor-pointer;
+}
+
+.icon {
+    @apply relative text-black text-3xl;
+}
+
+.toggled {
+    @apply bg-green-800 hover:bg-green-700; /* Change to desired toggled color */
+}
+</style>
+
+<script>
+    import { setupCalculator } from "@components/CalculatorScript";
+    await setupCalculator();
+</script>

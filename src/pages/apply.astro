@@ -1,0 +1,140 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Back from "@components/Back.astro";
+
+import apply from "@assets/corkboard/apply_flyer.png"
+import apply_header from "@assets/apply/apply_header.png"
+import apply_back from "@assets/apply/back.png"
+import apply_back_l from "@assets/apply/back_l.png"
+import apply_back_r from "@assets/apply/back_r.png"
+import apply_front_l from "@assets/apply/curtain_l.png"
+import apply_front_r from "@assets/apply/curtain_r.png"
+
+import vendor from "@assets/apply/Vendor.png"
+import musician from "@assets/apply/Musician.png"
+import staff from "@assets/apply/Staff.png"
+import panelist from "@assets/apply/Panelist.png"
+
+const staffRegLink = "https://reg.marefair.org/staff";
+const panelistRegLink = "https://reg.marefair.org/apply/application.php?c=panel";
+const vendorRegLink = "https://reg.marefair.org/apply/application.php?c=vendor";
+const musicianRegLink = "https://reg.marefair.org/apply/application.php?c=musician";
+
+---
+
+<Layout title="Apply | Mare Fair 2025">
+    <Back />
+    <div id="widescreen-wrapper" class="md:block hidden">
+        <div class="flex justify-center items-center w-screen h-screen" style="filter: drop-shadow(10px 10px 0rem rgba(0, 0, 0, 0.2));">
+            <div transition:name="apply" id="apply-wrapper-hover">
+                <div id="apply-wrapper" class="relative rotate3D ">
+                    <Image src={apply_back} format="avif" height="900" alt="" class="back pointer-events-none absolute top-0 h-[900px]" />
+
+                    <div id="grid-wrapper" class="absolute space-y-4 back flex flex-col justify-center items-center w-full h-full">
+                        <div class=" flex flex-row space-x-4">
+                            <a target="_blank" href={staffRegLink} class="button">
+                                <Image src={staff} format="avif" height="150" alt="Apply As Staff" />
+                            </a>
+                            <a target="_blank" href={panelistRegLink} class="button">
+                                <Image src={panelist} format="avif" height="150" alt="Apply As Panelist" />
+                            </a>
+                        </div>
+                        <div class=" flex flex-row space-x-4">
+                            <a target="_blank" href={vendorRegLink} class="button">
+                                <Image src={vendor} format="avif" height="150" alt="Apply As Vendor" />
+                            </a>
+                            <a target="_blank" href={musicianRegLink} class="button">
+                                <Image src={musician} format="avif" height="150" alt="Apply As Musician" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <Image src={apply_front_l} format="avif" height="900" alt="" class="flaps left-0" id="back_l" style="transform-origin: left center;"/>
+                    <Image src={apply_front_r} format="avif" height="900" alt="" class="flaps right-0" id="back_r" style="transform-origin: right center;"/>
+                    <Image src={apply_back_r} format="avif" height="900" alt="" class="flaps left-0 backface-hidden" id="back_l" style="transform-origin: left center;"/>
+                    <Image src={apply_back_l} format="avif" height="900" alt="" class="flaps right-0 backface-hidden" id="back_r" style="transform-origin: right center;"/>
+                    <Image src={apply} format="avif" height="900" alt="" class="relative pointer-events-none h-[900px] backface-hidden" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-wrapper" class="md:hidden block min-h-screen flex flex-col items-center justify-center" style="filter: drop-shadow(10px 10px 0rem rgba(0, 0, 0, 0.2));">
+        <div id="apply-wrapper" class="relative w-auto h-auto">
+            <Image src={apply_header} transition:name="apply" format="avif" height="900" alt="Apply" class="relative w-[90%] mx-auto h-auto mb-5 rotate-[0.5deg] hide-lowHeight" />
+            <Image src={apply_back} transition:name="apply" format="avif" height="900" alt="Apply" class="relative w-full max-w-[600px] mx-auto h-auto" />
+            <div id="grid-wrapper" class="absolute flex flex-col space-y-4 items-center bottom-0 w-[90%] bottom-[20%] left-1/2 transform -translate-x-1/2">
+                <div class="flex flex-row space-x-4">
+                    <a target="_blank" href={staffRegLink} class="button">
+                        <Image src={staff} format="avif" height="150" alt="Apply As Staff" />
+                    </a>
+                    <a target="_blank" href={panelistRegLink} class="button">
+                        <Image src={panelist} format="avif" height="150" alt="Apply As Panelist" />
+                    </a>
+                </div>
+                <div class="flex flex-row space-x-4">
+                    <a target="_blank" href={vendorRegLink} class="">
+                        <Image src={vendor} format="avif" height="150" alt="Apply As Vendor" />
+                    </a>
+                    <a target="_blank" href={musicianRegLink} class="button">
+                        <Image src={musician} format="avif" height="150" alt="Apply As Musician" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style is:global>
+    #footer-space {
+        display: none;
+    }
+</style>
+
+<style>
+    .button {
+        @apply p-2 hover:scale-105 hover:drop-shadow-[10px_10px_0_rgba(0,0,0,0.5)] transition-all duration-200;
+    }
+
+    .flaps{
+        @apply absolute pointer-events-none h-[900px] rotate3D;
+        transition-delay: 0.5s;
+    }
+
+    .rotate3D {
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    #apply-wrapper-hover:hover #apply-wrapper #back_l{
+        transform: rotateY(160deg);
+    }
+
+    #apply-wrapper-hover:hover #apply-wrapper #back_r{
+        transform: rotateY(-160deg);
+    }
+
+    #apply-wrapper-hover:hover #apply-wrapper{
+        transform: rotateY(-180deg) rotateX(-20deg);;
+    }
+
+    .back{ /* to use on back elements */
+        transform: rotateY(180deg);
+    }
+
+    @media (max-height: 800px) {
+        #widescreen-wrapper {
+            display: none;
+        }
+
+        #mobile-wrapper {
+            display: block;
+        }
+
+        .hide-lowHeight {
+            display: none;
+        }
+    }
+
+</style>

@@ -1,0 +1,37 @@
+---
+// Tape that will automatically conform to non-absolute container and put 4 tapes, one on each corner
+import { Image } from "astro:assets";
+
+import tape1 from "@assets/coc/tape1.png"
+import tape2 from "@assets/coc/tape4.png"
+---
+<div id="Tapes" class="pointer-events-none absolute top-0 left-0 w-full h-full">
+    <Image
+    src={tape1}
+    format="avif"
+    alt={`tape`}
+    class="absolute top-0 left-0 -ml-16 -rotate-45"
+    width="200"
+    />
+    <Image
+    src={tape2}
+    format="avif"
+    alt={`tape`}
+    class="absolute top-0 right-0 -mr-16 rotate-45"
+    width="200"
+    />
+    <Image
+    src={tape1}
+    format="avif"
+    alt={`tape`}
+    class="absolute bottom-0 left-0 -ml-16 rotate-45"
+    width="200"
+    />
+    <Image
+    src={tape2}
+    format="avif"
+    alt={`tape`}
+    class="absolute bottom-0 right-0 -mr-16 -rotate-45"
+    width="200"
+    />
+</div>
