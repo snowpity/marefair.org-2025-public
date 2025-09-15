@@ -10,3 +10,6 @@ Node 22 comes with NPM 10.x and the project builds fine with it.
 
 
 For questions, contact [tech@marefair.org](mailto:tech@marefair.org)
+
+# Contributors
+<img width="940" height="1097" alt="image" src="https://github.com/user-attachments/assets/f0f73074-84e1-4a07-ad38-312fb163cf7a" />
