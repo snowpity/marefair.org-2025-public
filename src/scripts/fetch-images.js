@@ -653,6 +653,95 @@ const vendorIcons = [
     },
 ];
 
+const signageDir = './src/assets/signage/';
+const Signages = [
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Fair%20Flyer_s%20Charity%20Room%20-%20Welost.png",
+        path: signageDir + 'charity.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Faust_s%20Home%20For%20Abandoned%20OCs%20-%20Jargon%20Scott.png",
+        path: signageDir + 'fausthome.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Fort%20Reckless%20-%20PonyQuarantine.jpg",
+        path: signageDir + 'fortreckless.jpg',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Good%20Boy%20Gelding%20Center%20-%20Wenni.png",
+        path: signageDir + 'goodboy.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/InfoDeskBannerFinalReview2.png",
+        path: signageDir + 'infodesk.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Mare%20Square%20-%20Eel.png",
+        path: signageDir + 'maresquare.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Marechandise%20-%20Jack.jpg",
+        path: signageDir + 'marechandise.jpg',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Milky%20Way_s%20Parlor%20-%20AnonTheAnon.png",
+        path: signageDir + 'milkyway.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/Raggie_s%20Room%20-%20Lockheart.png",
+        path: signageDir + 'raggie.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/The%20Snow%20Pit%20-%20Seafood%20Dinner.png",
+        path: signageDir + 'snowpit.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/standee_fair.png",
+        path: signageDir + 'fair.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/standee_fun_raiser.png",
+        path: signageDir + 'fr.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/standee_mimosa.png",
+        path: signageDir + 'mm.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/standee_twins.png",
+        path: signageDir + 'twin.png',
+    },
+
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Floorbored_s%20Battlestation%20Thumb%20-%20CowsRTasty.png",
+        path: signageDir + 'floorboredThumb.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Janny%20Closet%20Thumb%20-%20LoogiefiedLemon.png",
+        path: signageDir + 'jannyThumb.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Map%20Thumb%20-%20Quote%20%26%20Anon.png",
+        path: signageDir + 'mapSThumb.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Mare%20Stage%20Thumb%20-%20Quote.png",
+        path: signageDir + 'marestageThumb.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Registration%20Desk%20Thumb-%20Crade.png",
+        path: signageDir + 'registrationThumb.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Renegade%20Stage%20Thumb%20-%20Zajice.png",
+        path: signageDir + 'renegadeThumb.png',
+    },
+    {
+        url: "https://fair-filer.marefair.org/2025/Signage/thumb/Vendor%20Stalls%20Thumb%20-%20Batsy.png",
+        path: signageDir + 'vendorThumb.png',
+    },
+];
+
 async function fetchImages(imageList) {
   for (const { url, path, isReplace } of imageList) {
     if (!fs.existsSync(path) || isReplace)
@@ -674,3 +763,4 @@ async function fetchImages(imageList) {
 
 fetchImages(imageList);
 fetchImages(vendorIcons);
+fetchImages(Signages);
