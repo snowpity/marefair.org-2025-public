@@ -544,8 +544,8 @@ const vendorIcons = [
         path: vendorDir + 'FAP.png',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1776276322253197312/GAZJ5lF5_400x400.jpg',
-        path: vendorDir + 'Manehattan.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/Manehattan.avif',
+        path: vendorDir + 'Manehattan.avif',
     },
     {
         url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/LytletheLemur_icon.png',
@@ -616,8 +616,8 @@ const vendorIcons = [
         path: vendorDir + 'pixxpal.png',
     },
     {
-        url: 'https://treebrary.pone.social/accounts/avatars/000/025/499/original/6a148ded5e92cd81.png',
-        path: vendorDir + 'Darkdoomer.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/Darkdoomer.avif',
+        path: vendorDir + 'Darkdoomer.avif',
     },
     {
         url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/512x512%2BPixel%2BLogo.png',

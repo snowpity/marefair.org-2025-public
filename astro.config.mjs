@@ -21,11 +21,6 @@ export default defineConfig({
     tailwind(),
     icon()
   ],
-  vite: {
-    define: {
-      'process.env': process.env,
-    },
-  },
   image: {
     domains: ['fair-filer.marefair.org']
   },
