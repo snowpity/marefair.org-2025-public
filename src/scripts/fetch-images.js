@@ -444,11 +444,11 @@ const imageList = [
 const vendorDir = './src/assets/vendors/';
 const vendorIcons = [
     {
-        url: "https://a.deviantart.net/avatars-big/q/t/qtpony.jpg?14",
+        url: "https://fair-filer.marefair.org/2025/vendors/vendor_icon/qtpony.jpg",
         path: vendorDir + 'qtPony.png',
     },
     {
-        url: 'https://i.etsystatic.com/10530958/r/isla/52c39b/66916442/isla_200x200.66916442_cnh2ktbh.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/earthponycreation.jpg',
         path: vendorDir + 'earthponycreation.png',
     },
     {
@@ -460,7 +460,7 @@ const vendorIcons = [
         path: vendorDir + 'Saphy_Moon.png',
     },
     {
-        url: 'https://i.etsystatic.com/17530418/r/isla/3b647f/43034214/isla_200x200.43034214_dh25rb44.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/taurson.jpg',
         path: vendorDir + 'Taurson.png',
     },
     {
@@ -468,7 +468,7 @@ const vendorIcons = [
         path: vendorDir + 'StudioWhy.png',
     },
     {
-        url: 'https://a.deviantart.net/avatars-big/a/z/azgchip.png?15',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/azgchip.png',
         path: vendorDir + 'AZGchip.png',
     },
     {
@@ -488,7 +488,7 @@ const vendorIcons = [
         path: vendorDir + 'czubox.png',
     },
     {
-        url: 'https://cdn.bsky.app/img/avatar/plain/did:plc:lotkmi2rtorsux22a6ptaxdy/bafkreigjt6oshoxei3w6awzyl754lm7zup7xa2dkh4hoftge53cosiscdm@jpeg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/gifter.jpg',
         path: vendorDir + 'Gifter.png',
     },
     {
@@ -496,31 +496,31 @@ const vendorIcons = [
         path: vendorDir + 'Twoshoesmcgee.png',
     },
     {
-        url: 'https://cdn.ko-fi.com/cdn/useruploads/f3a9bf29-6d1b-4426-946d-54b0a11e4d53.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/floral.png',
         path: vendorDir + 'Floral.png',
     },
     {
-        url: 'https://derpicdn.net/avatars/2019/7/12/1940549575539575536071528647029384935840.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/twipie.jpg',
         path: vendorDir + 'Twipie.png',
     },
     {
-        url: 'https://static.wixstatic.com/media/e3c381_9e7bb050843c469f9b52b5d702ea9bff~mv2.png/v1/fill/w_224,h_148,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/fannytastical%20logo%20trans%20with%20stroke.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/fanny.png',
         path: vendorDir + 'fannytastical.png',
     },
     {
-        url: 'https://fallenoak.org/_astro/logo.De2q6rki_27ML4n.avif',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/fallenoaks.avif',
         path: vendorDir + 'fallenoaks.avif',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1608691355903234049/zbWyUSzd_400x400.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/sigil.jpg',
         path: vendorDir + 'Sigil.png',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1628868069970804738/Ewm_ODPH_400x400.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/zizzy.jpg',
         path: vendorDir + 'zizzy.png',
     },
     {
-        url: 'https://rocketlawnchart.wordpress.com/wp-content/uploads/2022/09/pfp-1.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/rocket.png',
         path: vendorDir + 'rocket.png',
     },
     {
@@ -532,7 +532,7 @@ const vendorIcons = [
         path: vendorDir + 'Dandy.png',
     },
     {
-        url: 'https://sekuponi.carrd.co/assets/images/image02.png?v=f44f7594',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/seku.png',
         path: vendorDir + 'Seku.png',
     },
     {
@@ -540,7 +540,7 @@ const vendorIcons = [
         path: vendorDir + 'Metal.png',
     },
     {
-        url: 'https://i.etsystatic.com/28599777/r/isla/e39a0e/73759783/isla_200x200.73759783_e4mtlacx.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/FAP.jpg',
         path: vendorDir + 'FAP.png',
     },
     {
@@ -552,11 +552,11 @@ const vendorIcons = [
         path: vendorDir + 'Lytle.png',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1832644926074499072/uWrUJhEy_400x400.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/kuri.jpg',
         path: vendorDir + 'KuriNpony.png',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1206356087429115906/gBUHEX8c_400x400.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/dakimakura.jpg',
         path: vendorDir + 'Dakimakura.png',
     },
     {
@@ -564,27 +564,19 @@ const vendorIcons = [
         path: vendorDir + 'Oxfordinary.png',
     },
     {
-        url: 'https://64.media.tumblr.com/avatar_3f631848a7f8_96.pnj',
-        path: vendorDir + 'fleebites.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/cora.avif',
+        path: vendorDir + 'cora.avif',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1845004620554268674/kx5IteQ-_400x400.jpg',
-        path: vendorDir + 'Cora.png',
-    },
-    {
-        url: 'https://64.media.tumblr.com/avatar_3f631848a7f8_96.pnj',
-        path: vendorDir + 'effles.png',
-    },
-    {
-        url: 'https://pbs.twimg.com/profile_images/1644550760846307332/RcLvt8FY_400x400.jpg',
-        path: vendorDir + 'Nicklusious.png',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/Nicklusious.avif',
+        path: vendorDir + 'Nicklusious.avif',
     },
     {
         url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/bonepone_icon.png',
         path: vendorDir + 'bonepone.png',
     },
     {
-        url: 'https://pbs.twimg.com/profile_images/1693663449836929037/wm_gIcGW_400x400.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/andes.jpg',
         path: vendorDir + 'Ande.png',
     },
     {
@@ -596,11 +588,11 @@ const vendorIcons = [
         path: vendorDir + 'ButtercupSaiyan.png',
     },
     {
-        url: 'https://i.etsystatic.com/59018911/c/2066/2066/366/266/isla/cfe57b/76540076/isla_200x200.76540076_3sf588f0.jpg',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/dinohorse.jpg',
         path: vendorDir + 'DinoHorse.png',
     },
     {
-        url: 'https://ugc.production.linktr.ee/aff289bd-c753-4fd8-8440-72d34d995f21_Untitled-Artwork.jpeg?io=true&size=avatar-v3_0',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/midnightberri.jpeg',
         path: vendorDir + 'MidnightBerri.png',
     },
     {
@@ -608,7 +600,7 @@ const vendorIcons = [
         path: vendorDir + 'Oddities.png',
     },
     {
-        url: 'https://ugc.production.linktr.ee/9cfbc321-a1f2-4036-ba20-d14864c1ff04_cofee.jpeg?io=true&size=avatar-v3_0',
+        url: 'https://fair-filer.marefair.org/2025/vendors/vendor_icon/Ostarbito.jpeg',
         path: vendorDir + 'Ostarbito.png',
     },
     {
